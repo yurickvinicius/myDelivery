@@ -1,0 +1,210 @@
+<?php ///dd($order->orderPizzas->find(8)->pizzaBuilts)  ?>
+
+@extends('app')
+@section('content')
+
+<div class="col-md-12" style="margin-bottom: 10%">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" contenteditable="true">Dados do Cliente</h3>
+        </div>
+        <div class="panel-body" contenteditable="true">
+            <div class="col-md-4">
+                <div>
+                    <label>Nome do Cliente:</label>
+                    {{ $order->user->name }}
+                </div>
+                <div>
+                    <label>Cep:</label>
+                    {{ $order->user->client->cep }}
+                </div> 
+                <div>
+                    <label>Estado:</label>
+                    {{ $order->user->client->state }}
+                </div>
+                <div>
+                    <label>Cidade:</label>
+                    {{ $order->user->client->city }}
+                </div> 
+                <div>
+                    <label>Bairro:</label>
+                    {{ $order->user->client->neighborhood }}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <label>Endereço do Cliente:</label>
+                    {{ $order->user->client->address }}
+                </div>
+                <div>
+                    <label>Numero:</label>
+                    {{ $order->user->client->number }}
+                </div>
+                <div>
+                    <label>Complemento:</label>
+                    {{ $order->user->client->complement }}
+                </div>
+                <div>
+                    <label>Telefone Celular:</label>
+                    {{ $order->user->client->cell_phone }}
+                </div> 
+                <div>
+                    <label>Telefone Fixo:</label>
+                    {{ $order->user->client->phone }}
+                </div> 
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <label>Data do Pedido:</label>
+                    {{ $order->created_at }}
+                </div>  
+                <div>
+                    <label>Meio de Entrega:</label>
+                    {{ $order->deliveryMean->name }}
+                    <b>Valor: </b> R$ {{ $order->deliveryMean->price }}
+                </div>
+
+                <div>
+                    <label>Forma de Pagamento:</label>
+                    {{ $order->paymentForm->form }}
+                </div>
+
+                <div>
+                    <label>Troco para pagamento:</label>
+                    R$ {{ $order->paymentForm->exchange_money }}
+                </div> 
+
+                <div>
+                    <label>Total:</label>
+                    {{ $order->total }}
+                </div> 
+            </div>
+        </div>
+    </div>
+
+    @foreach($order->orderPizzas as $orderPizza)
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Dados da Pizza
+                <a style="float: right" href="#" class="btn-link">Clique para Alterar Pizza</a>
+            </h3>
+        </div>
+
+        <div class="panel-body">
+
+            <div>
+
+                <div>  
+
+                    <div>
+                        <label>Tamanho:</label>
+                        {{ $orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->sizePizza->size }}
+                    </div>
+                    <div>
+                        <label>Preço da Pizza:</label>
+                        R$ {{ $orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->sizePizza->price }}
+                    </div>
+                    <div>
+                        <label>Borda:</label>
+                        {{ $orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->edgePizza->name }}
+                        <b>Valor</b>: R$ {{ $orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->edgePizza->price }}
+                    </div>
+                </div>
+
+                <div>
+                    <table class="table table-hover table-condensed" contenteditable="true">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Sabor</th>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $cont=1 ?>
+                            @foreach($orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->flavorsPizza as $flavoPizza)                            
+                            <tr>
+                                <td>{{ $cont++ }}</td>
+                                <td>{{ $flavoPizza->flavor->name }}</td>
+                                <td>{{ $flavoPizza->flavor->description }}</td>
+                                <td>R$ {{ $flavoPizza->flavor->price }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>                   
+
+                    <div>
+                        <label>Observação:</label>
+                        {{ $orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->observation }}
+                    </div> 
+
+                </div>
+            </div>
+        </div>                
+    </div>   
+    @endforeach
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" contenteditable="true">
+                Opcionais 
+                <a style="float: right" href="#" class="btn-link">Clique para Alterar Opicionais</a>
+            </h3>
+        </div>
+        <div class="panel-body" contenteditable="true"> 
+            @foreach($order->orderDrinks as $orderDrinks)            
+            <div>
+                <label>Bebida:</label>
+                <?php $drink = $orderDrinks->find($orderDrinks->id)->drinks ?>                
+                <?= $drink[0]['name'] ?>                
+                <b>Valor:</b> R$ <?= $drink[0]['price'] ?>
+            </div>
+            @endforeach
+        </div>
+    </div>
+
+
+    {!! Form::open(['route'=>'order.send']) !!}
+
+    <div id="div_exchange_money">
+        <label>Pizza já foi Entrega?</label>
+        <div class="radio"> 
+            <label>
+                <input type="radio" name="pizza_delivered" value="sim">
+                Sim
+            </label>
+            <label>
+                <input type="radio" name="pizza_delivered" value="nao">
+                Não
+            </label>
+        </div> 
+    </div>
+
+    {!! Form::label('deliverymean_id','Entregadores:') !!}
+    <input type="hidden" name="order_id" value="{{ $order->id }}">
+    <select name="deliverymean_id" class="form-control">
+        <option value="0">Selecione Meio de Entrega</option>
+        @foreach($deliverymens as $deliverymen)
+        <option value="{{ $deliverymen->id }}">Entregador: {{ $deliverymen->name }}</option>
+        @endforeach        
+    </select>    
+
+    <div class="form-group" style="margin-top: 2%; float: left">
+        <input type="submit" class="btn btn-success btn-lg" value="Encaminhar">
+        <input type="button" class="btn btn-primary btn-lg" value="Adicionar Desconto">
+        <input type="button" class="btn btn-primary btn-lg" value="Versão para Impresão">
+    </div>
+
+    {!! Form::close() !!}
+
+    <div style="font-size: 30px; float: right; margin-top: 2%">
+        <label>Total</label>
+        R$ {{ $order->total }}
+    </div>
+
+</div>
+
+@endsection

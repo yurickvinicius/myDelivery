@@ -1,0 +1,32 @@
+.font-18{font-size: 18px}
+.font-19{font-size: 19px}
+.font-20{font-size: 20px}
+.font-21{font-size: 21px}
+.font-22{font-size: 22px}
+.font-23{font-size: 23px}
+.font-24{font-size: 24px}
+.font-25{font-size: 25px}
+.font-26{font-size: 26px}
+.font-27{font-size: 27px}
+
+.f_left{float: left}
+.f_right{float: right}
+
+.marg_right_5{margin-right: 5px}
+.marg_right_10{margin-right: 10px}
+.marg_right_15{margin-right: 15px}
+
+.canto {
+    position: fixed;
+    _position:absolute;
+    _margin-bottom:0;
+    _margin-right:0;
+    right:5%;
+    bottom:4%;
+    z-index:100;
+    background-color: #0088cc;
+    width: 15%;
+    border-radius: 3px;
+    padding: 3px;
+    color: #ffffff;
+}
