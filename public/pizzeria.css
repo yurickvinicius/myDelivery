@@ -30,3 +30,5 @@
     padding: 3px;
     color: #ffffff;
 }
+
+.searchName:hover{background-color: #bcd4ef; cursor: pointer;}

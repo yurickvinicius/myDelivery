@@ -6,8 +6,6 @@
             <file>file:/var/www/html/pizzas/myDelivery/app/Http/routes.php</file>
             <file>file:/var/www/html/pizzas/myDelivery/public/js/orders.js</file>
             <file>file:/var/www/html/pizzas/myDelivery/resources/views/orders/create.blade.php</file>
-            <file>file:/var/www/html/pizzas/myDelivery/resources/views/orders/partials/modal_flavors_pizza.blade.php</file>
-            <file>file:/var/www/html/pizzas/myDelivery/app/Http/Controllers/OrdersController.php</file>
         </group>
     </open-files>
 </project-private>

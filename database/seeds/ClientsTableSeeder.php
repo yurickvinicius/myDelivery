@@ -31,10 +31,36 @@ class ClientsTableSeeder extends Seeder {
             'neighborhood' => 'Vila Carli',
             'address' => 'Padre Sagrado',
             'number' => '25',
-            'complement' => 'prox aos colegio municipal',
+            'complement' => '',
             'phone' => '(42)3225-5343',
             'cell_phone' => '(42)9621-1332',
             'user_id' => 2
+        ]);
+
+        factory(Client::class)->create([
+            'cep' => '84567-712',
+            'state' => 'PR',
+            'city' => 'Guarapuava',
+            'neighborhood' => 'Bairro dos Estados',
+            'address' => 'Ana Joaquina',
+            'number' => '112',
+            'complement' => '',
+            'phone' => '(42)3213-4432',
+            'cell_phone' => '(42)9621-1223',
+            'user_id' => 3
+        ]);
+
+        factory(Client::class)->create([
+            'cep' => '85067-112',
+            'state' => 'PR',
+            'city' => 'Guarapuava',
+            'neighborhood' => 'Vila Bela',
+            'address' => 'Rua Sagrado',
+            'number' => '554',
+            'complement' => 'prox a um lugar secreto',
+            'phone' => '(42)4433-5343',
+            'cell_phone' => '(42)9621-1123',
+            'user_id' => 4
         ]);
     }
 

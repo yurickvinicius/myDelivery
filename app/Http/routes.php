@@ -64,5 +64,7 @@ Route::group(['middleware' => 'authPizzeria', 'where' => ['id' => '[0-9]+']], fu
     Route::post('order/store', ['as' => 'order.store', 'uses' => 'OrdersController@store']);
     
     Route::get('flavor/{id}/show', ['uses' => 'FlavorsController@showJson']);
+    
+    Route::get('user/search/client/{data}', ['uses' => 'UsersController@searchClient']);    
         
 });

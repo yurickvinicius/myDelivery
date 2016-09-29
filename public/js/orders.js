@@ -1,6 +1,74 @@
 
 var url = 'http://localhost:8000';
 
+function searchCEP() {
+
+    var cep = $('#cadCEP').val();
+
+    $.getScript("http://cep.republicavirtual.com.br/web_cep.php?formato=javascript&cep="+cep, function () {
+
+        if (resultadoCEP["resultado"] != 0) {            
+            $("#cadCity").val(unescape(resultadoCEP["cidade"]));                
+            $('#cadState option:selected').text(unescape(resultadoCEP["uf"]));
+            $('#cadState option:selected').val(unescape(resultadoCEP["uf"]));            
+            $("#cadAddress").val(unescape(resultadoCEP["logradouro"]));
+            $("#cadNeighborhood").val(unescape(resultadoCEP["bairro"]));
+        }
+    })
+
+}
+
+function searchClient() {
+
+    var data = $('#inpSearchClient').val();
+
+    if (data.length > 0) {
+        $.ajax({
+            url: url + '/user/search/client/' + data + '',
+            dataType: "json",
+            cache: false,
+            success: function (data) {
+                if (typeof data[0].phone != "undefined") {
+                    var ul = '<ul style="list-style-type: none; margin-left: -8%">';
+                    for (var i = 0; i < data.length; i++) {
+                        ul += "<li onclick='fillFields(\"" + data[i]['user'].name + "\", \"" + data[i].cep + "\", \"" + data[i].neighborhood + "\", \"" + data[i].address + "\", \"" + data[i].number + "\", \"" + data[i].complement + "\", \"" + data[i].cell_phone + "\", \"" + data[i].phone + "\")' class='searchName'>" + data[i]['user'].name + " - " + data[i].cell_phone + " - " + data[i].phone + "</li>";
+                    }
+                    ul += '<ul>';
+
+                } else {
+
+                    var ul = '<ul style="list-style-type: none; margin-left: -8%">';
+                    for (var i = 0; i < data.length; i++) {
+                        ul += "<li onclick='fillFields(\"" + data[i].name + "\", \"" + data[i]['client'].cep + "\", \"" + data[i]['client'].neighborhood + "\", \"" + data[i]['client'].address + "\", \"" + data[i]['client'].number + "\", \"" + data[i]['client'].complement + "\", \"" + data[i]['client'].cell_phone + "\", \"" + data[i]['client'].phone + "\")' class='searchName'>" + data[i].name + " - " + data[i]["client"].cell_phone + " - " + data[i]["client"].phone + "</li>";
+                    }
+                    ul += '<ul>';
+                }
+                $('div[id=divSearchClient]').html(ul);
+            },
+        });
+    }
+
+    if (data.length <= 0) {
+        $('div[id=divSearchClient]').html('');
+    }
+
+}
+
+function fillFields(name, cep, neighborhood, address, number, complement, cell_phone, phone) {
+    ///alert('test: '+state);
+    $('#cadName').attr('value', name);
+    $('#cadCEP').attr('value', cep);
+    $('#cadNeighborhood').attr('value', neighborhood);
+    $('#cadAddress').attr('value', address);
+    $('#cadNumber').attr('value', number);
+    $('#cadComplement').attr('value', complement);
+    $('#cadTelCellPhone').attr('value', cell_phone);
+    $('#cadTelPhone').attr('value', phone);
+
+    $('input[id=inpSearchClient]').val('');
+    $('div[id=divSearchClient]').html('');
+}
+
 function maxPiecesPizza() {
     var maxPieces = $('#maxPiecesPizza').val();
     $('#spanMaxPiecesPizza').html(maxPieces);

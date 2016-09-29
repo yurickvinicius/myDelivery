@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder {
         ]);
 
         factory(User::class)->create([
-            'name' => 'Pedro Ribeiro Campos',
+            'name' => 'Yara Ribeiro Campos',
             'email' => 'pedro@gmail.com',
             'password' => Hash::make('12345'),
             'role' => 'Entregador',
