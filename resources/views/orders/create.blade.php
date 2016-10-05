@@ -132,16 +132,10 @@
                 </div>
 
                 <div class="col-md-3" style="">  
-                    <input type="hidden" id="maxPiecesPizza">                            
-                    <!---
-                    <div class="input-group" style="height: 80px">
-                        <input onkeyup="showFlavorCod()" id="inp_flavor_cod" type="text" class="form-control" style="width: 100px" placeholder="código">
-                        <div id="showFlavorCod"></div>                        
-                    </div>
-                    --->
+                    <input type="hidden" id="maxPiecesPizza">
                     <div class="col-md-12"> 
                         <div class="input-group col-xs-6"> 
-                            <input onkeyup="showFlavorCod()" id="inp_flavor_cod" type="text" class="form-control" style="width: 100px" placeholder="código"> 
+                            <input onkeyup="showFlavorCod(1)" id="inp_flavor_cod_1" type="text" class="form-control" style="width: 100px" placeholder="código"> 
                             <span class="input-group-btn"> 
                                 <button style="margin-left: -3%; margin-top: -1%" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-plus"></i></button> 
                             </span> 
@@ -149,14 +143,14 @@
                     </div>
 
                     <div style="height: 40px" class="col-md-12">
-                        <div id="showFlavorCod"></div> 
+                        <div id="showFlavorCod_1"></div> 
                     </div>
 
                     <div class="col-md-12" style="margin-bottom: 15%">
                         <label>Sabores:</label>
                         <div id="cad_flavors_1"></div>                        
                     </div>
-                    
+
                     <div class="col-md-12">
                         <div id="total_pizza_1" style="background-color: #dce7f7; border-radius: 3px"></div>
                     </div>
@@ -165,43 +159,43 @@
             </div>
         </div>
     </div>
-    
-    <button style="margin-top: -1%; margin-bottom: 0.5%" type="button" class="btn btn-primary add_new_pizza"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Pizza</button>
-    <div id="generate_pizzas"></div>
+
+    <div id="generate_pizzas"></div>    
 
     <!--------------    -------------->
 
-    <div class="panel panel-default">
+    <div class="panel panel-default f_left" style="margin-top: 1%; width: 300px">
         <div class="panel-heading">
             <h3 class="panel-title">Opção 1</h3>
         </div>
-        <div class="panel-body">      
-
-            <div class="col-md-12 column ui-sortable">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Opção</label>
-                        <select onchange="valTotalPizza(1)" name="option[1]" id="option_id_1" class="form-control">
-                            <option value="0" price="0">Selecione</option>
-                            @foreach($drinks as $drink)
-                            <option value="{{ $drink->id }}" price='{{ $drink->price }}'>{{ $drink->name }} - R$ {{$drink->price}}</option>                
-                            @endforeach
-                        </select>
-                    </div>                    
-                </div>                
-
-            </div>
+        <div class="panel-body">           
+            <div class="form-group">
+                <select onchange="valTotalPizza(1)" name="option[1]" id="option_id_1" class="form-control">
+                    <option value="0" price="0">Selecione</option>
+                    @foreach($drinks as $drink)
+                    <option value="{{ $drink->id }}" price='{{ $drink->price }}'>{{ $drink->name }} - R$ {{$drink->price}}</option>                
+                    @endforeach
+                </select>
+            </div>                                    
         </div>
     </div>
 
-    <button type="button" id="btt_add_new_option" class="btn btn-default">Adicionar Nova Opção</button>
-    <div id="generate_options"></div>
-
-    <!------------   ------------>
+    <div style="margin-bottom: 12%">
+        <div id="generate_options"></div>
+    </div>
 
     <div>
-        meio de pagamento, meio de entrega
-        <button class="btn btn-primary btn-lg" type="submit">Cadastrar</button>
+        <select class="form-control">
+            <option>Selecione uma Forma de Entrega</option>
+            <option>Retirar no Balcão</option>
+            <option>Envio</option>
+        </select>
+    </div>
+
+    <div style="margin-top: 2%">
+        <button type="button" class="btn btn-primary btn-lg add_new_pizza"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Pizza</button>
+        <button type="button" id="btt_add_new_option" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Opção</button>
+        <button class="btn btn-success btn-lg" type="submit">Finalizar Cadastrar</button>
     </div>    
 
 </div>

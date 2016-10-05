@@ -5,12 +5,12 @@ function searchCEP() {
 
     var cep = $('#cadCEP').val();
 
-    $.getScript("http://cep.republicavirtual.com.br/web_cep.php?formato=javascript&cep="+cep, function () {
+    $.getScript("http://cep.republicavirtual.com.br/web_cep.php?formato=javascript&cep=" + cep, function () {
 
-        if (resultadoCEP["resultado"] != 0) {            
-            $("#cadCity").val(unescape(resultadoCEP["cidade"]));                
+        if (resultadoCEP["resultado"] != 0) {
+            $("#cadCity").val(unescape(resultadoCEP["cidade"]));
             $('#cadState option:selected').text(unescape(resultadoCEP["uf"]));
-            $('#cadState option:selected').val(unescape(resultadoCEP["uf"]));            
+            $('#cadState option:selected').val(unescape(resultadoCEP["uf"]));
             $("#cadAddress").val(unescape(resultadoCEP["logradouro"]));
             $("#cadNeighborhood").val(unescape(resultadoCEP["bairro"]));
         }
@@ -79,22 +79,39 @@ function returnMaxPiecesPizza() {
     return maxPieces;
 }
 
-function showFlavorCod() {
+function showFlavorCod(pizza) {
 
-    var cod = $('input[id=inp_flavor_cod]').val();
+    var cod = $('input[id=inp_flavor_cod_'+pizza+']').val();
 
-    $.ajax({
-        url: url + '/flavor/' + cod + '/show',
-        dataType: "json",
-        cache: false,
-        success: function (data) {
-            if (data == 'error' || cod == '')
-                $('div[id=showFlavorCod]').html('');
+    if (cod.length > 0) {
 
-            $('div[id=showFlavorCod]').html(data[0].name);
-        },
-    });
+        $.ajax({
+            url: url + '/flavor/' + cod + '/show',
+            dataType: "json",
+            cache: false,
+            success: function (data) {
+                if (data == 'error' || cod == '')
+                    $('div[id=showFlavorCod_'+pizza+']').html('');
 
+                var result = '<span onclick="selectFlavor('+data[0].id+','+pizza+')" class="cursorPointer">'+data[0].name+'</span>';
+                $('div[id=showFlavorCod_'+pizza+']').html(result);
+            },
+        });
+    }
+    
+    if(cod.length <= 0){
+        $('div[id=showFlavorCod_'+pizza+']').html('');
+    }
+
+}
+
+function selectFlavor(cod, pizza){
+    $("input[type=checkbox][id='flavorCheckPizza_"+pizza+"'][value="+cod+"]").prop('checked', true);
+    generateGraficPizza(pizza);
+    valTotalPizza(pizza);
+    selectedFlavorsPizza(pizza);
+    $('input[id=inp_flavor_cod_'+pizza+']').val('');
+    $('div[id=showFlavorCod_'+pizza+']').html('');
 }
 
 function valTotalOption(id, option, totalAll) {
@@ -166,27 +183,35 @@ function valTotalPizza(id, option) {
 
 function selectedFlavorsPizza(id) {
 
-    ///generateGraficPizza();
-
     var camposMarcados = new Array();
+    var camposMarcadosId = new Array();
     $('#cad_flavors_' + id + '').html('');
 
     $("input[type=checkbox][id='flavorCheckPizza_" + id + "']:checked").each(function () {
         camposMarcados.push($(this).attr('flavor'));
+        camposMarcadosId.push($(this).attr('value'));
     });
 
     for (var i = 0; i < camposMarcados.length; i++) {
         $('#cad_flavors_' + id + '').append(
-                '' + camposMarcados[i] + '<br>'
+                '<div id="show_flavor_checked_'+id+camposMarcadosId[i]+'" class="col-md-12" style="border-bottom: 1px solid #bcd4ef">' + camposMarcados[i] + '<span onclick="uncheckedFlavor('+id+','+camposMarcadosId[i]+')" class="f_right cursorPointer glyphicon glyphicon-remove-sign" style="margin-top:2%"></span></div><br>'
                 );
     }
+}
+
+function uncheckedFlavor(pizza, flavor){
+    ///alert(pizza+' - '+flavor)
+    $("input[type=checkbox][id='flavorCheckPizza_"+pizza+"'][value="+flavor+"]").prop('checked', false);
+    $("#show_flavor_checked_"+pizza+flavor+"").remove();
+    
+    generateGraficPizza(pizza);
+    valTotalPizza(pizza, 0);
 }
 
 function selectedMaxParts(id) {
     var maxSize = parseInt($('select[id=cad_size_pizza_1] option:selected').attr('parts'));
     $('#maxPiecesPizza').attr('value', maxSize);
 }
-
 
 $(document).ready(function () {
     var campos_max = 20;
@@ -265,15 +290,14 @@ $(document).ready(function () {
 ";
             }
 
-            $('#generate_pizzas').append('<pizza><button onclick="valTotalPizza(' + x + ',0)" type="button" class="btn btn-default remover_pizza"><i class="marg_right_5 glyphicon glyphicon-minus"></i>Remover Pizza</button>\
-<button type="button" class="btn btn-default add_new_pizza"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Pizza</button>\
+            $('#generate_pizzas').append('<pizza>\
     <div class="panel panel-default">\
         <div class="panel-heading">\
             <h3 class="panel-title" contenteditable="true">Pizza ' + x + '</h3>\
         </div>\
         <div class="panel-body" contenteditable="true">\
             <div class="col-md-12 column ui-sortable font-25">\
-                <div class="col-md-5">\
+                <div class="col-md-4">\
                     <div class="form-group">\
                         <label>Borda</label>\
                         <select name="pizza[' + x + '][edge]" onchange="valTotalPizza(' + x + ')" class="form-control input-lg" id="cad_edge_' + x + '" style="font-size: 22px">\
@@ -294,13 +318,25 @@ $(document).ready(function () {
                 <div class="col-md-5" style="">\
                     <div onclick="maxPiecesPizza()" href="#modal_cad_flavors_pizza_' + x + '" data-toggle="modal" id="piechart_' + x + '" style="height: 500px; width: 500px; cursor: pointer"></div>\
                 </div>\
-                <div class="col-md-2" style="">\
+                <div class="col-md-3" style="">\
                     <input type="hidden" id="maxPiecesPizza">\
-                    <div>\
+                    <div class="col-md-12">\
+                        <div class="input-group col-xs-6">\
+                            <input onkeyup="showFlavorCod('+x+')" id="inp_flavor_cod_'+ x +'" type="text" class="form-control" style="width: 100px" placeholder="código">\
+                            <span class="input-group-btn">\
+                                <button style="margin-left: -3%; margin-top: -1%" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-plus"></i></button>\
+                            </span>\
+                        </div>\
+                    </div>\
+                    <div style="height: 40px" class="col-md-12">\
+                        <div id="showFlavorCod_'+x+'"></div>\
+                    </div>\
+                    <div class="col-md-12" style="margin-bottom: 15%">\
                         <label>Sabores:</label>\
-                        <div id="cad_flavors_' + x + '"></div>\
-                        <label>TOTAL:</label>\
-                        <div id="total_pizza_' + x + '"></div>\
+                        <div id="cad_flavors_'+x+'"></div>\
+                    </div>\
+                    <div class="col-md-12">\
+                        <div id="total_pizza_'+x+'" style="background-color: #dce7f7; border-radius: 3px"></div>\
                     </div>\
                 </div>\
             </div>\
@@ -352,7 +388,7 @@ $(document).ready(function () {
 </div>\
 \
 </div>\
-\
+    <button onclick="valTotalPizza(' + x + ',0)" type="button" class="btn btn-danger remover_pizza"><i class="marg_right_5 glyphicon glyphicon-minus"></i>Remover Pizza</button>\
 </pizza>\
  ');
             generateGraficPizzaDefault(x);
@@ -391,25 +427,23 @@ $(document).ready(function () {
                 optionOption += "<option value='" + selectOptionVal[i] + "' price='" + selectOptionPrice[i] + "'>" + selectOptionText[i] + "</option>";
             }
 
-            $('#generate_options').append('<pizza_option><button onclick="valTotalPizza(' + x + ',01)" type="button" class="btn btn-default remover_option"><i class="marg_right_5 glyphicon glyphicon-minus"></i>Remover Option</button>\
-    <div class="panel panel-default">\
+            $('#generate_options').append('<pizza_option style="float:left; margin-top:1%; margin-left:5px">\
+    <div class="panel panel-default" style="width: 300px">\
         <div class="panel-heading">\
             <h3 class="panel-title">Opção ' + y + '</h3>\
         </div>\
         <div class="panel-body">\
-            <div class="col-md-12 column ui-sortable">\
-                <div class="col-md-6">\
+                <div class="">\
                     <div class="form-group">\
-                        <label>Opção</label>\
                         <select onchange="valTotalPizza(' + y + ')" name="option[' + y + ']" id="option_id_' + y + '" class="form-control">\
                             ' + optionOption + '\
                         </select>\
                     </div>\
                 </div>\
-            </div>\
         </div>\
     </div>\
-            </pizza_option>')
+    <button onclick="valTotalPizza(' + x + ',01)" type="button" class="btn btn-danger remover_option"><i class="marg_right_5 glyphicon glyphicon-minus"></i>Remover Option</button>\
+    </pizza_option>')
 
             y++;
 
