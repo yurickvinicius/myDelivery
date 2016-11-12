@@ -141,6 +141,16 @@ function valTotalPizza(id, option) {
     $("input[type=checkbox][id='flavorCheckPizza_" + id + "']:checked").each(function () {
         valFlavorsPrice += parseFloat(($(this).attr('price')));
     });
+
+    /////
+    if (Number.isNaN(valEdgePizza))
+      valEdgePizza = 0;
+    if (Number.isNaN(valPricePizza))
+      valPricePizza = 0;
+    if (Number.isNaN(valFlavorsPrice))
+      valFlavorsPrice = 0;
+    /////
+
     var total = valEdgePizza + valPricePizza + valFlavorsPrice;
 
     $('#total_pizza_' + id + '').html('<b>TOTAL:</b> R$ <span id="span_total_pizza_' + id + '">' + total + '</span>');
@@ -209,6 +219,7 @@ function selectedMaxParts(id) {
 }
 
 $(document).ready(function () {
+
     var campos_max = 20;
     var optionEdge;
     var optionSize;

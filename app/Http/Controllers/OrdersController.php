@@ -20,6 +20,7 @@ use myDelivery\Models\OrderDrink;
 use myDelivery\Models\Client;
 use myDelivery\Http\Requests\DeliverieRequest;
 use Illuminate\Support\Facades\Auth;
+use myDelivery\Http\Requests\OrderRequest;
 
 class OrdersController extends Controller {
 
@@ -67,14 +68,14 @@ class OrdersController extends Controller {
     }
 
     public function sendOrder(DeliverieRequest $request) {
-        //dd($request);  
+        //dd($request);
 
         $delivery = $request->input('deliverymean_id');
         $delivered = $request->input('pizza_delivered');
 
         if ($delivered == 'nao') {
             $status = $this->generateStatus($delivery, $delivered);
-            /// atualizando entregador 
+            /// atualizando entregador
             if ($request->input('deliverymean_id') != 0) {
                 $upDeliviry = $this->deliverieModel->where('order_id', $request->input('order_id'))->update(
                         [
@@ -114,7 +115,7 @@ class OrdersController extends Controller {
         return view('orders.create', compact('flavors', 'edges', 'sizePizzas', 'drinks', 'deliveryMeans'));
     }
 
-    public function store(Request $request) {
+    public function store(OrderRequest $request) {
         ///dd($request);
         /// save payment form ////////////////
         $tablePaymentForm = [
@@ -142,7 +143,7 @@ class OrdersController extends Controller {
 
         $client = $this->clientModel->create($tableClient);
 
-        /// save order ///////////////////////////        
+        /// save order ///////////////////////////
         $tableOrder = [
             'total' => $request->input('total'),
             'status' => 'Aberto',
@@ -194,7 +195,9 @@ class OrdersController extends Controller {
 
             $this->orderDrinkModel->create($tableOrderDrink);
         }
-        dd();
+
+        $message = 'Pedido realizado com suecesso!';
+        return redirect()->route('orders.index')->withMessageSuccess($message);
     }
 
     private function generateStatus($delivery) {

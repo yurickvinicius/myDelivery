@@ -32,11 +32,12 @@
                     <a href="{{ route('admin.flavors.images',['id'=>$flavor->id]) }}" class="btn btn-default btn-sm">
                         Imagens
                     </a>
-                    <a href="{{ route('admin.flavors.destroy',['id'=>$flavor->id]) }}" class="btn btn-default btn-sm">
+                    <a href="#modal_delete_<?= $flavor->id ?>" data-toggle="modal" class="btn btn-default btn-sm">
                         Remover
                     </a>
                 </td>
             </tr>
+            @include('admin.flavors.partials.modal_delete')
             @endforeach
         </tbody>
     </table>

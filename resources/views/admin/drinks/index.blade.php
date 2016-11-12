@@ -27,11 +27,12 @@
                     <a href="{{ route('admin.drinks.edit',['id'=>$drink->id]) }}" class="btn btn-default btn-sm">
                         Editar
                     </a>
-                    <a href="{{ route('admin.drinks.destroy',['id'=>$drink->id]) }}" class="btn btn-default btn-sm">
-                        Deletar
+                    <a href="#modal_delete_<?= $drink->id ?>" data-toggle="modal" class="btn btn-default btn-sm">
+                        Remover
                     </a>
                 </td>
             </tr>
+            @include('admin.drinks.partials.modal_delete')
             @endforeach
         </tbody>
 

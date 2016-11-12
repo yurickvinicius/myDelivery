@@ -12,6 +12,7 @@
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
+                <th>Price</th>
                 <th>Ação</th>
             </tr>
         </thead>
@@ -21,15 +22,17 @@
             <tr>
                 <td>{{ $edge->id }}</td>
                 <td>{{ $edge->name }}</td>
+                <td>{{ $edge->price }}</td>
                 <td>
                     <a href="#" class="btn btn-default btn-sm">
                         Editar
                     </a>
-                    <a href="#" class="btn btn-default btn-sm">
-                        Deletar
+                    <a href="#modal_delete_<?= $edge->id ?>" data-toggle="modal" class="btn btn-default btn-sm">
+                        Remover
                     </a>
                 </td>
             </tr>
+            @include('admin.edges.partials.modal_delete')
             @endforeach
         </tbody>
 

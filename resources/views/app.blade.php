@@ -4,10 +4,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        
+
         <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
         <meta http-equiv="Pragma" content="no-cache">
-        
+
         <title>My Pizzas</title>
 
         <link href='../pizzeria.css' rel='stylesheet' type='text/css'>
@@ -50,7 +50,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="{{ route('admin.edges.index') }}">Bordas</a></li>
                                 <li><a href="{{ route('admin.flavors.index') }}">Sabores</a></li>
-                                <li><a href="{{ route('admin.sizes.index') }}">Tamanhos</a></li>                                
+                                <li><a href="{{ route('admin.sizes.index') }}">Tamanhos</a></li>
                             </ul>
                         </li>
 
@@ -75,19 +75,21 @@
                     </ul>
                 </div>
             </div>
-        </nav> 
+        </nav>
 
         @include('template.partials._message_success')
+        @include('errors._check')
         @yield('content')
 
         <!-- Scripts -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-
         <script src="../js/orders.js"></script>
         <script src="../js/loader.js"></script>
         <script src="../js/graficoPizza.js"></script>
+        <script src="../js/jquery.mask.min.js"></script>
+        <script src="../js/my_masks.js"></script>
 
     </body>
 </html>

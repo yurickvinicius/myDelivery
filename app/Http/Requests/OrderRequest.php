@@ -4,7 +4,7 @@ namespace myDelivery\Http\Requests;
 
 use myDelivery\Http\Requests\Request;
 
-class DeliverieRequest extends Request
+class OrderRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +23,17 @@ class DeliverieRequest extends Request
      */
     public function rules()
     {
-        return [];
-
-        /*
         return [
-            'order_id' => 'required|unique:deliveries,order_id',
+            'cadName' => 'required|min:3',
+            'cadNeighborhood' => 'required|min:3'
         ];
-         *
-         */
+    }
+
+    public function messages()
+    {
+        return [
+            'cadName.required' => 'Campo Nome é obrigatório.',
+            'cadNeighborhood.required' => 'Campo Bairro é obrigatório.'
+        ];
     }
 }

@@ -29,11 +29,12 @@
                     <a href="#" class="btn btn-default btn-sm">
                         Editar
                     </a>
-                    <a href="#" class="btn btn-default btn-sm">
+                    <a href="#modal_delete_<?= $sizePizza->id ?>" data-toggle="modal" class="btn btn-default btn-sm">
                         Remover
                     </a>
                 </td>
             </tr>
+        @include('admin.sizes.partials.modal_delete')
         @endforeach
         </tbody>
     </table>
