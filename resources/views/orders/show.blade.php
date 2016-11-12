@@ -13,45 +13,45 @@
             <div class="col-md-4">
                 <div>
                     <label>Nome do Cliente:</label>
-                    {{ $order->user->name }}
+                    {{ $order->client->name }}
                 </div>
                 <div>
                     <label>Cep:</label>
-                    {{ $order->user->client->cep }}
+                    {{ $order->client->cep }}
                 </div> 
                 <div>
                     <label>Estado:</label>
-                    {{ $order->user->client->state }}
+                    {{ $order->client->state }}
                 </div>
                 <div>
                     <label>Cidade:</label>
-                    {{ $order->user->client->city }}
+                    {{ $order->client->city }}
                 </div> 
                 <div>
                     <label>Bairro:</label>
-                    {{ $order->user->client->neighborhood }}
+                    {{ $order->client->neighborhood }}
                 </div>
             </div>
             <div class="col-md-4">
                 <div>
                     <label>Endereço do Cliente:</label>
-                    {{ $order->user->client->address }}
+                    {{ $order->client->address }}
                 </div>
                 <div>
                     <label>Numero:</label>
-                    {{ $order->user->client->number }}
+                    {{ $order->client->number }}
                 </div>
                 <div>
                     <label>Complemento:</label>
-                    {{ $order->user->client->complement }}
+                    {{ $order->client->complement }}
                 </div>
                 <div>
                     <label>Telefone Celular:</label>
-                    {{ $order->user->client->cell_phone }}
+                    {{ $order->client->cell_phone }}
                 </div> 
                 <div>
                     <label>Telefone Fixo:</label>
-                    {{ $order->user->client->phone }}
+                    {{ $order->client->phone }}
                 </div> 
             </div>
             <div class="col-md-4">
@@ -177,7 +177,7 @@
                 Sim
             </label>
             <label>
-                <input type="radio" name="pizza_delivered" value="nao">
+                <input type="radio" name="pizza_delivered" value="nao" checked>
                 Não
             </label>
         </div> 

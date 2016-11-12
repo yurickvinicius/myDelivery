@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <div class="form-group col-xs-3">
                     <label for="cadName">Nome</label>
-                    <input type="text" class="form-control" id="cadName" placeholder="Nome">
+                    <input name="cadName" type="text" class="form-control" id="cadName" placeholder="Nome">
                 </div>
 
                 <div class="form-group col-xs-4">
@@ -32,7 +32,7 @@
                 <div class="form-group col-xs-3">
                     <div class="input-group"> 
                         <label for="cadCEP">CEP</label>
-                        <input id="cadCEP" class="form-control" placeholder="CEP"> 
+                        <input name="cadCEP" id="cadCEP" class="form-control" placeholder="CEP"> 
                         <div class="input-group-btn"> 
                             <button onclick="searchCEP()" style="margin-top: 24%; padding-top: 7%" type="button" class="btn btn-primary"><i class="glyphicon glyphicon-search marg_right_5"></i>Procurar</button>
                         </div> 
@@ -41,7 +41,7 @@
 
                 <div class="form-group col-xs-2">
                     <label for="cadState">UF</label>
-                    <select id="cadState" class="form-control">
+                    <select name="cadState" id="cadState" class="form-control">
                         <option>Selecione</option>
                         <option selected="true">PR</option>
                         <option>SC</option>
@@ -49,37 +49,37 @@
                 </div>
                 <div class="form-group col-xs-2">
                     <label for="cadCity">Cidade</label>
-                    <input id="cadCity" value="Guarapuava" type="text" class="form-control" placeholder="Cidade">
+                    <input name="cadCity" id="cadCity" value="Guarapuava" type="text" class="form-control" placeholder="Cidade">
                 </div>
                 <div class="form-group col-xs-2">
                     <label for="cadNeighborhood">Bairro</label>
-                    <input type="text" class="form-control" id="cadNeighborhood" placeholder="Bairro">
+                    <input name="cadNeighborhood" type="text" class="form-control" id="cadNeighborhood" placeholder="Bairro">
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group col-xs-5">
                     <label for="cadAddress">Endereço</label>
-                    <input type="text" class="form-control" id="cadAddress" placeholder="Endereço">
+                    <input name="cadAddress" type="text" class="form-control" id="cadAddress" placeholder="Endereço">
                 </div>
                 <div class="form-group col-xs-1">
                     <label for="cadNumber">Numero</label>
-                    <input type="text" class="form-control" id="cadNumber" placeholder="Numero">
+                    <input name="cadNumber" type="text" class="form-control" id="cadNumber" placeholder="Numero">
                 </div>
                 <div class="form-group col-xs-5">
                     <label for="cadComplement">Complemento</label>
-                    <input type="text" class="form-control" id="cadComplement" placeholder="Complemento">
+                    <input name="cadComplement" type="text" class="form-control" id="cadComplement" placeholder="Complemento">
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group col-xs-2">
                     <label for="cadTelCellPhone">Tel. Celular</label>
-                    <input type="text" class="form-control" id="cadTelCellPhone" placeholder="Celular">
+                    <input name="cadTelCellPhone" type="text" class="form-control" id="cadTelCellPhone" placeholder="Celular">
                 </div>
                 <div class="form-group col-xs-2">
                     <label for="cadTelPhone">Tel. Residencial</label>
-                    <input type="text" class="form-control" id="cadTelPhone" placeholder="Telefone">
+                    <input name="cadTelPhone" type="text" class="form-control" id="cadTelPhone" placeholder="Telefone">
                 </div>
             </div>
 
@@ -185,10 +185,11 @@
     </div>
 
     <div>
-        <select class="form-control">
-            <option>Selecione uma Forma de Entrega</option>
-            <option>Retirar no Balcão</option>
-            <option>Envio</option>
+        <select onchange="valTotalPizza()" name="delivery_means" id="delivery_means" class="form-control">
+            <option value="0" price="0">Selecione uma Forma de Entrega</option>
+            @foreach($deliveryMeans as $deliveryMean)
+                <option value="{{ $deliveryMean->id }}" price="{{ $deliveryMean->price }}">{{ $deliveryMean->name }}</option>
+            @endforeach
         </select>
     </div>
 

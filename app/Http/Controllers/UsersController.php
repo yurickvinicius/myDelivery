@@ -10,6 +10,7 @@ use myDelivery\Models\Client;
 
 class UsersController extends Controller
 {
+    /*
     public function searchClient($data){     
            
         if(is_numeric($data)){        
@@ -23,4 +24,6 @@ class UsersController extends Controller
         
         return json_encode($datas);
     }
+     * 
+     */
 }

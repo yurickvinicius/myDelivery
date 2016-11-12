@@ -12,10 +12,11 @@ class Order extends Model {
         'type_order',
         'user_id',
         'delivery_mean_id',
-        'payment_form_id'
+        'payment_form_id',
+        'client_id'
     ];
-    
-    public static function totalOrders(){
+
+    public static function totalOrders() {
         return Order::count();
     }
 
@@ -34,13 +35,17 @@ class Order extends Model {
     public function deliveryMean() {
         return $this->belongsTo(DeliveryMean::class);
     }
-    
-    public function user(){
+
+    public function user() {
         return $this->belongsTo(User::class);
     }
-    
-    public function deliverie(){
+
+    public function deliverie() {
         return $this->hasOne(Deliverie::class);
+    }
+
+    public function client() {
+        return $this->belongsTo(Client::class);
     }
 
 }

@@ -7,6 +7,7 @@ use myDelivery\Http\Requests;
 use myDelivery\Models\Order;
 use myDelivery\Models\User;
 use myDelivery\Models\Deliverie;
+use myDelivery\Models\DeliveryMean;
 use myDelivery\Models\Drink;
 use myDelivery\Models\Flavor;
 use myDelivery\Models\EdgePizza;
@@ -16,6 +17,7 @@ use myDelivery\Models\FlavorsPizza;
 use myDelivery\Models\PaymentForm;
 use myDelivery\Models\OrderPizza;
 use myDelivery\Models\OrderDrink;
+use myDelivery\Models\Client;
 use myDelivery\Http\Requests\DeliverieRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,8 +34,10 @@ class OrdersController extends Controller {
     private $paymentFormModel;
     private $orderPizzaModel;
     private $orderDrinkModel;
+    private $deliveryMeanModel;
+    private $clientModel;
 
-    public function __construct(Order $order, Deliverie $deliverie, Flavor $flavor, EdgePizza $edge, SizePizza $sizePizza, Drink $drink, PizzaBuilt $pizzaBuilt, FlavorsPizza $flavorsPizza, PaymentForm $paymentForm, OrderPizza $orderPizza, OrderDrink $orderDrink) {
+    public function __construct(Order $order, Deliverie $deliverie, Flavor $flavor, EdgePizza $edge, SizePizza $sizePizza, Drink $drink, PizzaBuilt $pizzaBuilt, FlavorsPizza $flavorsPizza, PaymentForm $paymentForm, OrderPizza $orderPizza, OrderDrink $orderDrink, DeliveryMean $deliveryMean, Client $client) {
         $this->orderModel = $order;
         view()->share('totalOrders', Order::totalOrders());
         $this->deliverieModel = $deliverie;
@@ -46,16 +50,12 @@ class OrdersController extends Controller {
         $this->paymentFormModel = $paymentForm;
         $this->orderPizzaModel = $orderPizza;
         $this->orderDrinkModel = $orderDrink;
+        $this->deliveryMeanModel = $deliveryMean;
+        $this->clientModel = $client;
     }
 
     public function index() {
         $orders = $this->orderModel->paginate(50);
-
-        ///dd($orders[0]->orderPizzas->find(1)->pizzaBuilts);
-        ///$orders = $this->orderModel->with(['orderPizzas'])->with(['pizzaBuilts'])->find('1');        
-        ///$orders = $this->orderModel->where('id', 1)->with('orderPizzas')->get();
-        ///dd($orders[1]->orderPizzas->find(2)->pizzaBuilts->find(2)->flavorsPizza->find(2)->flavor);
-
         return view('orders.index', compact('orders'));
     }
 
@@ -67,15 +67,38 @@ class OrdersController extends Controller {
     }
 
     public function sendOrder(DeliverieRequest $request) {
-        $Delivery = [
-            'user_id' => $request->input('deliverymean_id'),
-            'order_id' => $request->input('order_id')
-        ];
+        //dd($request);  
 
-        $this->deliverieModel->create($Delivery);
+        $delivery = $request->input('deliverymean_id');
+        $delivered = $request->input('pizza_delivered');
+
+        if ($delivered == 'nao') {
+            $status = $this->generateStatus($delivery, $delivered);
+            /// atualizando entregador 
+            if ($request->input('deliverymean_id') != 0) {
+                $upDeliviry = $this->deliverieModel->where('order_id', $request->input('order_id'))->update(
+                        [
+                            'user_id' => $request->input('deliverymean_id')
+                        ]
+                );
+
+                if ($upDeliviry == 0) {
+                    $Delivery = [
+                        'user_id' => $request->input('deliverymean_id'),
+                        'order_id' => $request->input('order_id')
+                    ];
+                    $this->deliverieModel->create($Delivery);
+                }
+            }
+        } else
+            $status = 'Entregue';
 
         //// atualizando status em order
-        $this->orderModel->find($request->input('order_id'))->update(['status' => 'Enviado']);
+        $this->orderModel->find($request->input('order_id'))->update(
+                [
+                    'status' => $status
+                ]
+        );
 
         $message = 'Pedido atualizado com suecesso!';
         return redirect()->route('orders.index')->withMessageSuccess($message);
@@ -86,13 +109,13 @@ class OrdersController extends Controller {
         $edges = $this->edgeModel->all();
         $sizePizzas = $this->sizePizzaModel->all();
         $drinks = $this->drinkModel->all();
+        $deliveryMeans = $this->deliveryMeanModel->all();
 
-        return view('orders.create', compact('flavors', 'edges', 'sizePizzas', 'drinks'));
+        return view('orders.create', compact('flavors', 'edges', 'sizePizzas', 'drinks', 'deliveryMeans'));
     }
 
     public function store(Request $request) {
         ///dd($request);
-
         /// save payment form ////////////////
         $tablePaymentForm = [
             'form' => 'Dinheiro',
@@ -102,14 +125,32 @@ class OrdersController extends Controller {
 
         $paymentForm = $this->paymentFormModel->create($tablePaymentForm);
 
-        /// save order ///////////////////////////
+        /// savle client
+        $tableClient = [
+            'name' => $request->input('cadName'),
+            'cep' => $request->input('cadCEP'),
+            'state' => $request->input('cadState'),
+            'city' => $request->input('cadCity'),
+            'neighborhood' => $request->input('cadNeighborhood'),
+            'address' => $request->input('cadAddress'),
+            'number' => $request->input('cadNumber'),
+            'complement' => $request->input('cadComplement'),
+            'phone' => $request->input('cadTelPhone'),
+            'cell_phone' => $request->input('cadTelCellPhone'),
+            'user_id' => Auth::user()->id,
+        ];
+
+        $client = $this->clientModel->create($tableClient);
+
+        /// save order ///////////////////////////        
         $tableOrder = [
             'total' => $request->input('total'),
             'status' => 'Aberto',
             'type_order' => 'Pizza',
             'user_id' => Auth::user()->id,
-            'delivery_mean_id' => 1,
-            'payment_form_id' => $paymentForm->id
+            'delivery_mean_id' => $request->input('delivery_means'),
+            'payment_form_id' => $paymentForm->id,
+            'client_id' => $client->id
         ];
 
         $order = $this->orderModel->create($tableOrder);
@@ -140,9 +181,9 @@ class OrdersController extends Controller {
                 'pizza_built_id' => $pizzaBuilt->id,
                 'order_id' => $order->id
             ];
-            
+
             $this->orderPizzaModel->create($tableOrderPizza);
-        }       
+        }
 
         /// save order drinks
         foreach ($request->option as $option) {
@@ -154,6 +195,18 @@ class OrdersController extends Controller {
             $this->orderDrinkModel->create($tableOrderDrink);
         }
         dd();
+    }
+
+    private function generateStatus($delivery) {
+        if ($delivery == 0) {
+            $status = 'Preparando';
+        } else if ($delivery != 0) {
+            $status = 'Enviado';
+        } else {
+            $status = 'Aberto';
+        }
+
+        return $status;
     }
 
 }

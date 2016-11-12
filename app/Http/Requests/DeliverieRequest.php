@@ -23,8 +23,12 @@ class DeliverieRequest extends Request
      */
     public function rules()
     {
+        return [];
+        /*
         return [
             'order_id' => 'required|unique:deliveries,order_id',
         ];
+         * 
+         */
     }
 }

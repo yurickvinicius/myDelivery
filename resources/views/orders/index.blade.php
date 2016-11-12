@@ -26,27 +26,33 @@
         </thead>
         <tbody>
             <?php
-                $cont = 1;
-                $color = 'warning';
+            $cont = 1;
             ?>
             @foreach($orders as $order)
-            
-            @if($order->deliverie()->where('order_id', $order->id)->first())
-                <?php $color = ''; ?>
-            @else
-                <?php $color = 'warning'; ?>
+            <?php $color = 'danger' ?>
+
+            @if($order->status == 'Preparando')
+            <?php $color = 'warning' ?>
             @endif
-            
+
+            @if($order->status == 'Enviado')
+            <?php $color = 'info' ?>
+            @endif
+
+            @if($order->status == 'Entregue')
+            <?php $color = '' ?>
+            @endif
+
             <tr class="{{ $color }}">
                 <td>{{ $cont++ }}</td>
-                <td>{{ $order->user->name }}</td>
+                <td>{{ $order->client->name }}</td>
                 <td>{{ $order->id }}</td>
                 <td>{{ $order->deliveryMean->name }}</td>
                 <td>{{ $order->status }}</td>
                 <td>{{ $order->created_at }}</td>
                 <td>
                     @if(isset($order->deliverie->id))
-                       {{ $order->deliverie->user->name }}
+                    {{ $order->deliverie->user->name }}
                     @endif
                 </td>
                 <td>{{ $order->total }}</td>

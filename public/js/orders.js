@@ -24,25 +24,16 @@ function searchClient() {
 
     if (data.length > 0) {
         $.ajax({
-            url: url + '/user/search/client/' + data + '',
+            url: url + '/client/search/' + data + '',
             dataType: "json",
             cache: false,
             success: function (data) {
-                if (typeof data[0].phone != "undefined") {
-                    var ul = '<ul style="list-style-type: none; margin-left: -8%">';
-                    for (var i = 0; i < data.length; i++) {
-                        ul += "<li onclick='fillFields(\"" + data[i]['user'].name + "\", \"" + data[i].cep + "\", \"" + data[i].neighborhood + "\", \"" + data[i].address + "\", \"" + data[i].number + "\", \"" + data[i].complement + "\", \"" + data[i].cell_phone + "\", \"" + data[i].phone + "\")' class='searchName'>" + data[i]['user'].name + " - " + data[i].cell_phone + " - " + data[i].phone + "</li>";
-                    }
-                    ul += '<ul>';
-
-                } else {
-
-                    var ul = '<ul style="list-style-type: none; margin-left: -8%">';
-                    for (var i = 0; i < data.length; i++) {
-                        ul += "<li onclick='fillFields(\"" + data[i].name + "\", \"" + data[i]['client'].cep + "\", \"" + data[i]['client'].neighborhood + "\", \"" + data[i]['client'].address + "\", \"" + data[i]['client'].number + "\", \"" + data[i]['client'].complement + "\", \"" + data[i]['client'].cell_phone + "\", \"" + data[i]['client'].phone + "\")' class='searchName'>" + data[i].name + " - " + data[i]["client"].cell_phone + " - " + data[i]["client"].phone + "</li>";
-                    }
-                    ul += '<ul>';
+                var ul = '<ul style="list-style-type: none; margin-left: -8%">';
+                for (var i = 0; i < data.length; i++) {
+                    ul += "<li onclick='fillFields(\"" + data[i].name + "\", \"" + data[i].cep + "\", \"" + data[i].neighborhood + "\", \"" + data[i].address + "\", \"" + data[i].number + "\", \"" + data[i].complement + "\", \"" + data[i].cell_phone + "\", \"" + data[i].phone + "\")' class='searchName'>" + data[i].name + " - " + data[i].cell_phone + " - " + data[i].phone + "</li>";
                 }
+                ul += '<ul>';
+
                 $('div[id=divSearchClient]').html(ul);
             },
         });
@@ -81,7 +72,7 @@ function returnMaxPiecesPizza() {
 
 function showFlavorCod(pizza) {
 
-    var cod = $('input[id=inp_flavor_cod_'+pizza+']').val();
+    var cod = $('input[id=inp_flavor_cod_' + pizza + ']').val();
 
     if (cod.length > 0) {
 
@@ -91,27 +82,27 @@ function showFlavorCod(pizza) {
             cache: false,
             success: function (data) {
                 if (data == 'error' || cod == '')
-                    $('div[id=showFlavorCod_'+pizza+']').html('');
+                    $('div[id=showFlavorCod_' + pizza + ']').html('');
 
-                var result = '<span onclick="selectFlavor('+data[0].id+','+pizza+')" class="cursorPointer">'+data[0].name+'</span>';
-                $('div[id=showFlavorCod_'+pizza+']').html(result);
+                var result = '<span onclick="selectFlavor(' + data[0].id + ',' + pizza + ')" class="cursorPointer">' + data[0].name + '</span>';
+                $('div[id=showFlavorCod_' + pizza + ']').html(result);
             },
         });
     }
-    
-    if(cod.length <= 0){
-        $('div[id=showFlavorCod_'+pizza+']').html('');
+
+    if (cod.length <= 0) {
+        $('div[id=showFlavorCod_' + pizza + ']').html('');
     }
 
 }
 
-function selectFlavor(cod, pizza){
-    $("input[type=checkbox][id='flavorCheckPizza_"+pizza+"'][value="+cod+"]").prop('checked', true);
+function selectFlavor(cod, pizza) {
+    $("input[type=checkbox][id='flavorCheckPizza_" + pizza + "'][value=" + cod + "]").prop('checked', true);
     generateGraficPizza(pizza);
     valTotalPizza(pizza);
     selectedFlavorsPizza(pizza);
-    $('input[id=inp_flavor_cod_'+pizza+']').val('');
-    $('div[id=showFlavorCod_'+pizza+']').html('');
+    $('input[id=inp_flavor_cod_' + pizza + ']').val('');
+    $('div[id=showFlavorCod_' + pizza + ']').html('');
 }
 
 function valTotalOption(id, option, totalAll) {
@@ -143,6 +134,9 @@ function valTotalPizza(id, option) {
     var valFlavorsPrice = 0;
     var valEdgePizza = parseFloat($('select[id=cad_edge_' + id + '] option:selected').attr('price'));
     var valPricePizza = parseFloat($('select[id=cad_size_pizza_' + id + '] option:selected').attr('price'));
+
+    //// additional the delivery form
+    var additional = parseFloat($('#delivery_means option:selected').attr('price'));
 
     $("input[type=checkbox][id='flavorCheckPizza_" + id + "']:checked").each(function () {
         valFlavorsPrice += parseFloat(($(this).attr('price')));
@@ -176,7 +170,8 @@ function valTotalPizza(id, option) {
 
     }
 
-    $('#total_all').html('<b>TOTAL:</b> R$ <span id="span_total_all">' + (total + total_option) + '</span>');
+    total = total + total_option + additional;
+    $('#total_all').html('<b>TOTAL:</b> R$ <span id="span_total_all">' + total + '</span>');
     $('#order_total').attr('value', total);
 
 }
@@ -194,16 +189,16 @@ function selectedFlavorsPizza(id) {
 
     for (var i = 0; i < camposMarcados.length; i++) {
         $('#cad_flavors_' + id + '').append(
-                '<div id="show_flavor_checked_'+id+camposMarcadosId[i]+'" class="col-md-12" style="border-bottom: 1px solid #bcd4ef">' + camposMarcados[i] + '<span onclick="uncheckedFlavor('+id+','+camposMarcadosId[i]+')" class="f_right cursorPointer glyphicon glyphicon-remove-sign" style="margin-top:2%"></span></div><br>'
+                '<div id="show_flavor_checked_' + id + camposMarcadosId[i] + '" class="col-md-12" style="border-bottom: 1px solid #bcd4ef">' + camposMarcados[i] + '<span onclick="uncheckedFlavor(' + id + ',' + camposMarcadosId[i] + ')" class="f_right cursorPointer glyphicon glyphicon-remove-sign" style="margin-top:2%"></span></div><br>'
                 );
     }
 }
 
-function uncheckedFlavor(pizza, flavor){
+function uncheckedFlavor(pizza, flavor) {
     ///alert(pizza+' - '+flavor)
-    $("input[type=checkbox][id='flavorCheckPizza_"+pizza+"'][value="+flavor+"]").prop('checked', false);
-    $("#show_flavor_checked_"+pizza+flavor+"").remove();
-    
+    $("input[type=checkbox][id='flavorCheckPizza_" + pizza + "'][value=" + flavor + "]").prop('checked', false);
+    $("#show_flavor_checked_" + pizza + flavor + "").remove();
+
     generateGraficPizza(pizza);
     valTotalPizza(pizza, 0);
 }
@@ -322,21 +317,21 @@ $(document).ready(function () {
                     <input type="hidden" id="maxPiecesPizza">\
                     <div class="col-md-12">\
                         <div class="input-group col-xs-6">\
-                            <input onkeyup="showFlavorCod('+x+')" id="inp_flavor_cod_'+ x +'" type="text" class="form-control" style="width: 100px" placeholder="código">\
+                            <input onkeyup="showFlavorCod(' + x + ')" id="inp_flavor_cod_' + x + '" type="text" class="form-control" style="width: 100px" placeholder="código">\
                             <span class="input-group-btn">\
                                 <button style="margin-left: -3%; margin-top: -1%" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-plus"></i></button>\
                             </span>\
                         </div>\
                     </div>\
                     <div style="height: 40px" class="col-md-12">\
-                        <div id="showFlavorCod_'+x+'"></div>\
+                        <div id="showFlavorCod_' + x + '"></div>\
                     </div>\
                     <div class="col-md-12" style="margin-bottom: 15%">\
                         <label>Sabores:</label>\
-                        <div id="cad_flavors_'+x+'"></div>\
+                        <div id="cad_flavors_' + x + '"></div>\
                     </div>\
                     <div class="col-md-12">\
-                        <div id="total_pizza_'+x+'" style="background-color: #dce7f7; border-radius: 3px"></div>\
+                        <div id="total_pizza_' + x + '" style="background-color: #dce7f7; border-radius: 3px"></div>\
                     </div>\
                 </div>\
             </div>\
