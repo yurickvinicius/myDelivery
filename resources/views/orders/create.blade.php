@@ -7,8 +7,8 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="col-md-12">
-                <div class="form-group col-xs-3">
-                    <label for="cadName">Nome</label>
+                <div id="divCadName" class="form-group col-xs-3">
+                    <label class="control-label" for="cadName">Nome</label>
                     <input name="cadName" type="text" class="form-control" id="cadName" placeholder="Nome">
                 </div>
 
@@ -18,7 +18,6 @@
                         <input onkeyup="searchClient()" id="inpSearchClient" class="form-control" placeholder="Nome ou Telefone">
 
                         <div id="divSearchClient" style='position:absolute; z-index: 9999; top:105%; background-color: #dce7f7'></div>
-
 
                         <div class="input-group-btn">
                             <div style="margin-top: 53%; padding-top: 15%" type="button" class="btn btn-primary"><i class="glyphicon glyphicon-search marg_right_5"></i></div>
@@ -31,7 +30,7 @@
 
                 <div class="form-group col-xs-3">
                     <div class="input-group">
-                        <label for="cadCEP">CEP</label>
+                        <label class="control-label" for="cadCEP">CEP</label>
                         <input name="cadCEP" id="cadCEP" class="form-control cepMask" placeholder="CEP">
                         <div class="input-group-btn">
                             <button onclick="searchCEP()" style="margin-top: 24%; padding-top: 7%" type="button" class="btn btn-primary"><i class="glyphicon glyphicon-search marg_right_5"></i>Procurar</button>
@@ -40,7 +39,7 @@
                 </div>
 
                 <div class="form-group col-xs-2">
-                    <label for="cadState">UF</label>
+                    <label class="control-label" for="cadState">UF</label>
                     <select name="cadState" id="cadState" class="form-control">
                         <option>Selecione</option>
                         <option selected="true">PR</option>
@@ -48,22 +47,22 @@
                     </select>
                 </div>
                 <div class="form-group col-xs-2">
-                    <label for="cadCity">Cidade</label>
+                    <label class="control-label" for="cadCity">Cidade</label>
                     <input name="cadCity" id="cadCity" value="Guarapuava" type="text" class="form-control" placeholder="Cidade">
                 </div>
                 <div class="form-group col-xs-2">
-                    <label for="cadNeighborhood">Bairro</label>
+                    <label class="control-label" for="cadNeighborhood">Bairro</label>
                     <input name="cadNeighborhood" type="text" class="form-control" id="cadNeighborhood" placeholder="Bairro">
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="form-group col-xs-5">
-                    <label for="cadAddress">Endereço</label>
+                    <label class="control-label" for="cadAddress">Endereço</label>
                     <input name="cadAddress" type="text" class="form-control" id="cadAddress" placeholder="Endereço">
                 </div>
                 <div class="form-group col-xs-1">
-                    <label for="cadNumber">Numero</label>
+                    <label class="control-label" for="cadNumber">Numero</label>
                     <input name="cadNumber" type="text" class="form-control" id="cadNumber" placeholder="Numero">
                 </div>
                 <div class="form-group col-xs-5">
@@ -74,7 +73,7 @@
 
             <div class="col-md-12">
                 <div class="form-group col-xs-2">
-                    <label for="cadTelCellPhone">Tel. Celular</label>
+                    <label class="control-label" for="cadTelCellPhone">Tel. Celular</label>
                     <input name="cadTelCellPhone" type="text" class="form-control phoneMask" id="cadTelCellPhone" placeholder="Celular">
                 </div>
                 <div class="form-group col-xs-2">
@@ -196,7 +195,7 @@
     <div style="margin-top: 2%">
         <button type="button" class="btn btn-primary btn-lg add_new_pizza"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Pizza</button>
         <button type="button" id="btt_add_new_option" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Opção</button>
-        <button class="btn btn-success btn-lg" type="submit">Finalizar Cadastrar</button>
+        <button onclick="validateOrder(); return false;" class="btn btn-success btn-lg" type="submit">Finalizar Cadastrar</button>
     </div>
 
 </div>

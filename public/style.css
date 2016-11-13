@@ -2286,8 +2286,8 @@ RESERVATION SECTION
   #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-restaurant-menu li {
     margin-bottom: 10px;
   }
-  .mu-blog-related-post .mu-blog-related-post-area {   
-    margin-top: 30px;   
+  .mu-blog-related-post .mu-blog-related-post-area {
+    margin-top: 30px;
   }
 }
 @media (max-width: 360px) {
@@ -2421,7 +2421,7 @@ RESERVATION SECTION
   #mu-blog-banner .mu-blog-banner-area {
     padding: 25% 0;
   }
-  .mu-news-single .mu-news-single-content .mu-meta-nav li {   
+  .mu-news-single .mu-news-single-content .mu-meta-nav li {
     border-right: none;
   }
 }

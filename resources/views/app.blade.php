@@ -10,8 +10,6 @@
 
         <title>My Pizzas</title>
 
-        <link href='../pizzeria.css' rel='stylesheet' type='text/css'>
-
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Fonts -->
@@ -23,6 +21,8 @@
                 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
                 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <link href='../pizzeria.css' rel='stylesheet' type='text/css'>
+
     </head>
     <body>
 
@@ -90,6 +90,7 @@
         <script src="../js/graficoPizza.js"></script>
         <script src="../js/jquery.mask.min.js"></script>
         <script src="../js/my_masks.js"></script>
+        <script src="../js/validate_order.js"></script>
 
     </body>
 </html>

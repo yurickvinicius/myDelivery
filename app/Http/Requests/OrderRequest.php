@@ -23,12 +23,26 @@ class OrderRequest extends Request
      */
     public function rules()
     {
-        return [
-            'cadName' => 'required|min:3',
-            'cadNeighborhood' => 'required|min:3'
+        $rules = [
+            'cadName' => 'required|min:3|max:70',
+            'cadNeighborhood' => 'required|min:3|max:70',
+            'cadAddress' => 'required|min:3|max:80',
+            'cadNumber' => 'required|numeric',
+            'cadTelCellPhone' => 'required|min:8',
         ];
+
+        foreach($this->request->get('pizza') as $key => $val)
+        {
+          $rules['pizza.'.$key.'.edge'] = 'required|not_in:0';
+          $rules['pizza.'.$key.'.size'] = 'required|not_in:0';
+          $rules['pizza.'.$key.'.flavor'] = 'required';
+        }
+
+        return $rules;
+
     }
 
+    /*
     public function messages()
     {
         return [
@@ -36,4 +50,5 @@ class OrderRequest extends Request
             'cadNeighborhood.required' => 'Campo Bairro é obrigatório.'
         ];
     }
+    */
 }
