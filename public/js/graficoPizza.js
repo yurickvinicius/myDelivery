@@ -49,7 +49,7 @@ function generateGraficPizzaDefault(id) {
 
     var data = google.visualization.arrayToDataTable([
         ['Task', 'Hours per Day'],
-        ['Clique Aqui!', 100]
+        ['Clique aqui ou adicione o código!', 100]
     ]);
 
     var options = {

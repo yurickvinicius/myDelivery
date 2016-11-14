@@ -4,7 +4,7 @@ namespace myDelivery\Http\Requests;
 
 use myDelivery\Http\Requests\Request;
 
-class AdminDrinkRequest extends Request
+class SizePizzaRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class AdminDrinkRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|min:3',
+            'size' => 'required|min:1|max:60',
+            'parts' => 'required|not_in:0',
             'price' => 'required'
         ];
     }
@@ -32,8 +33,9 @@ class AdminDrinkRequest extends Request
     public function messages()
     {
         return [
-            'name.required' => 'Campo Nome é obrigatorio!',
-            'price.required' => 'Campo Preço é obrigatorio!'
+            'size.required' => 'O campo Tamanho é obrigatório',
+            'parts.required' => 'O campo Dividido é obrigatório',
+            'price.required' => 'O campo Preço é obrigatório'
         ];
     }
 }

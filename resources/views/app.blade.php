@@ -42,7 +42,7 @@
                     <ul class="nav navbar-nav">
 
                         <li><a href="{{ route('admin.drinks.index') }}">Bebidas</a></li>
-                        <li><a href="#">Forma de Entrega</a></li>
+                        <li><a href="{{ route('admin.deliverymeans.index') }}">Forma de Entrega</a></li>
                         <li><a href="{{ route('orders.index') }}"><span style="margin-left: 5px" class="badge pull-right">{{ @$totalOrders }}</span>Pedidos</a></li>
 
                         <li class="dropdown">

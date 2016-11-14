@@ -4,7 +4,7 @@ namespace myDelivery\Http\Requests;
 
 use myDelivery\Http\Requests\Request;
 
-class FlavorImageRequest extends Request
+class DeliveryMeanRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,17 @@ class FlavorImageRequest extends Request
      */
     public function rules()
     {
-        return [
-            'image' => 'image'
-        ];
+      return [
+          'name' => 'required|min:1|max:60',
+          'price' => 'required|min:1|max:10'
+      ];
     }
 
+    public function messages()
+    {
+        return [
+            'name.required' => 'Campo Nome é obrigatorio!',
+            'price.required' => 'Campo Preço é obrigatorio!'
+        ];
+    }
 }

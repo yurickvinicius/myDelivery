@@ -4,8 +4,6 @@
 <div class="container">
     <h3>Novo Sabor</h3>
 
-    @include('errors._check')
-
     {!! Form::model($flavor, ['route'=>['admin.flavors.update', $flavor->id]]) !!}
 
     @include('admin.flavors._form')

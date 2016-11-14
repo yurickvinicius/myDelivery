@@ -29,7 +29,7 @@
             <div class="col-md-12">
 
                 <div class="form-group col-xs-3">
-                    <div class="input-group">
+                    <div id="divCadCEP" class="input-group">
                         <label class="control-label" for="cadCEP">CEP</label>
                         <input name="cadCEP" id="cadCEP" class="form-control cepMask" placeholder="CEP">
                         <div class="input-group-btn">
@@ -50,18 +50,18 @@
                     <label class="control-label" for="cadCity">Cidade</label>
                     <input name="cadCity" id="cadCity" value="Guarapuava" type="text" class="form-control" placeholder="Cidade">
                 </div>
-                <div class="form-group col-xs-2">
+                <div id="divCadNeighborhood" class="form-group col-xs-2">
                     <label class="control-label" for="cadNeighborhood">Bairro</label>
                     <input name="cadNeighborhood" type="text" class="form-control" id="cadNeighborhood" placeholder="Bairro">
                 </div>
             </div>
 
             <div class="col-md-12">
-                <div class="form-group col-xs-5">
+                <div id="divCadAddress" class="form-group col-xs-5">
                     <label class="control-label" for="cadAddress">Endereço</label>
                     <input name="cadAddress" type="text" class="form-control" id="cadAddress" placeholder="Endereço">
                 </div>
-                <div class="form-group col-xs-1">
+                <div id="divCadNumber" class="form-group col-xs-1">
                     <label class="control-label" for="cadNumber">Numero</label>
                     <input name="cadNumber" type="text" class="form-control" id="cadNumber" placeholder="Numero">
                 </div>
@@ -72,7 +72,7 @@
             </div>
 
             <div class="col-md-12">
-                <div class="form-group col-xs-2">
+                <div id="divCadCellPhone" class="form-group col-xs-2">
                     <label class="control-label" for="cadTelCellPhone">Tel. Celular</label>
                     <input name="cadTelCellPhone" type="text" class="form-control phoneMask" id="cadTelCellPhone" placeholder="Celular">
                 </div>
@@ -100,8 +100,8 @@
 
             <div class="col-md-12 column ui-sortable font-25">
                 <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="cad_edge_1">Borda</label>
+                    <div id="divCadEdge_1" class="form-group">
+                        <label class="control-label" for="cad_edge_1">Borda</label>
                         <select name="pizza[1][edge]" onchange="valTotalPizza(1)" class="form-control input-lg" id="cad_edge_1" style="font-size: 22px">
                             <option value="0">Selecione</option>
                             @foreach($edges as $edge)
@@ -109,8 +109,8 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Tamanho</label>
+                    <div id="divCadSize_1" class="form-group">
+                        <label class="control-label">Tamanho</label>
                         <select name="pizza[1][size]" onchange="selectedMaxParts(), valTotalPizza(1)" class="form-control input-lg" id="cad_size_pizza_1" style="font-size: 22px">
                             <option value="0">Selecione</option>
                             @foreach($sizePizzas as $sizePizza)
@@ -133,7 +133,7 @@
                 <div class="col-md-3" style="">
                     <input type="hidden" id="maxPiecesPizza">
                     <div class="col-md-12">
-                        <div class="input-group col-xs-6">
+                        <div id="divCadFlavor_1" class="input-group col-xs-6">
                             <input onkeyup="showFlavorCod(1)" id="inp_flavor_cod_1" type="text" class="form-control" style="width: 100px" placeholder="código">
                             <span class="input-group-btn">
                                 <button style="margin-left: -3%; margin-top: -1%" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-plus"></i></button>
@@ -183,7 +183,7 @@
         <div id="generate_options"></div>
     </div>
 
-    <div>
+    <div id="divDeliverymeans">
         <select onchange="valTotalPizza()" name="delivery_means" id="delivery_means" class="form-control">
             <option value="0" price="0">Selecione uma Forma de Entrega</option>
             @foreach($deliveryMeans as $deliveryMean)

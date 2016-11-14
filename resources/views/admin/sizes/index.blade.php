@@ -4,7 +4,7 @@
 <div class="container">
     <h3>Tamanho das Pizzas</h3>
 
-    <a href="#"  class="btn btn-default">Novo Tamanho</a>
+    <a href="{{ route('admin.sizes.create') }}"  class="btn btn-default">Novo Tamanho</a>
     <br><br>
 
     <table class="table table-bordered">
@@ -24,9 +24,9 @@
                 <td>{{ $sizePizza->id }}</td>
                 <td>{{ $sizePizza->size }}</td>
                 <td>no máximo: {{ $sizePizza->parts }} parte</td>
-                <td>{{ $sizePizza->price }}</td>
+                <td>R$ {{ $sizePizza->price }}</td>
                 <td>
-                    <a href="#" class="btn btn-default btn-sm">
+                    <a href="{{ route('admin.sizes.edit',['id'=>$sizePizza->id]) }}" class="btn btn-default btn-sm">
                         Editar
                     </a>
                     <a href="#modal_delete_<?= $sizePizza->id ?>" data-toggle="modal" class="btn btn-default btn-sm">

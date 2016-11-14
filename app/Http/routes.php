@@ -30,7 +30,7 @@ Route::post('store', ['as' => 'pizza.store', 'uses' => 'PizzeriaController@store
 ////
 
 Route::group(['prefix' => 'admin', 'middleware' => 'authPizzeria', 'as' => 'admin.', 'where' => ['id' => '[0-9]+']], function() {
-    
+
     Route::get('', ['as' => 'orders.index', 'uses' => 'OrdersController@index']);
     Route::get('flavors', ['as' => 'flavors.index', 'uses' => 'FlavorsController@index']);
     Route::get('flavors/create', ['as' => 'flavors.create', 'uses' => 'FlavorsController@create']);
@@ -51,8 +51,25 @@ Route::group(['prefix' => 'admin', 'middleware' => 'authPizzeria', 'as' => 'admi
     Route::get('drinks/destroy/{id}', ['as' => 'drinks.destroy', 'uses' => 'DrinksController@destroy']);
 
     Route::get('edges', ['as' => 'edges.index', 'uses' => 'EdgesController@index']);
+    Route::get('edges/create', ['as' => 'edges.create', 'uses' => 'EdgesController@create']);
+    Route::post('edges/store', ['as' => 'edges.store', 'uses' => 'EdgesController@store']);
+    Route::get('edges/edit/{id}', ['as' => 'edges.edit', 'uses' => 'EdgesController@edit']);
+    Route::post('edges/update/{id}', ['as' => 'edges.update', 'uses' => 'EdgesController@update']);
+    Route::get('edges/destroy/{id}', ['as' => 'edges.destroy', 'uses' => 'EdgesController@destroy']);
 
     Route::get('sizes', ['as' => 'sizes.index', 'uses' => 'SizesController@index']);
+    Route::get('sizes/create', ['as' => 'sizes.create', 'uses' => 'SizesController@create']);
+    Route::post('sizes/store', ['as' => 'sizes.store', 'uses' => 'SizesController@store']);
+    Route::get('sizes/edit/{id}', ['as' => 'sizes.edit', 'uses' => 'SizesController@edit']);
+    Route::post('sizes/update/{id}', ['as' => 'sizes.update', 'uses' => 'SizesController@update']);
+    Route::get('sizes/destroy/{id}', ['as' => 'sizes.destroy', 'uses' => 'SizesController@destroy']);
+
+    Route::get('deliverymeans', ['as' => 'deliverymeans.index', 'uses' => 'DeliveryMeansController@index']);
+    Route::get('deliverymeans/create', ['as' => 'deliverymeans.create', 'uses' => 'DeliveryMeansController@create']);
+    Route::post('deliverymeans/store', ['as' => 'deliverymeans.store', 'uses' => 'DeliveryMeansController@store']);
+    Route::get('deliverymeans/edit/{id}', ['as' => 'deliverymeans.edit', 'uses' => 'DeliveryMeansController@edit']);
+    Route::post('deliverymeans/update/{id}', ['as' => 'deliverymeans.update', 'uses' => 'DeliveryMeansController@update']);
+    Route::get('deliverymeans/destroy/{id}', ['as' => 'deliverymeans.destroy', 'uses' => 'DeliveryMeansController@destroy']);
 });
 
 Route::group(['middleware' => 'authPizzeria', 'where' => ['id' => '[0-9]+']], function() {
@@ -62,11 +79,11 @@ Route::group(['middleware' => 'authPizzeria', 'where' => ['id' => '[0-9]+']], fu
     Route::post('order/send', ['as' => 'order.send', 'uses' => 'OrdersController@sendOrder']);
     Route::get('order/create', ['as' => 'order.create', 'uses' => 'OrdersController@create']);
     Route::post('order/store', ['as' => 'order.store', 'uses' => 'OrdersController@store']);
-    
+
     Route::get('flavor/{id}/show', ['uses' => 'FlavorsController@showJson']);
-    
+
     ///Route::get('user/search/client/{data}', ['uses' => 'UsersController@searchClient']);
-    
+
     Route::get('client/search/{data}', ['uses' => 'ClientsController@searchClient']);
-        
+
 });

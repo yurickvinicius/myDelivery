@@ -57,7 +57,7 @@ return [
       | to any of the locales which will be supported by the application.
       |
      */
-    'locale' => 'en',
+    'locale' => 'pt-br',
     /*
       |--------------------------------------------------------------------------
       | Application Fallback Locale
@@ -134,7 +134,7 @@ return [
         Bestmomo\Scafold\ScafoldServiceProvider::class,
 
         laravel\pagseguro\Platform\Laravel5\ServiceProvider::class,
-        
+
         /*
          * Application Service Providers...
          */

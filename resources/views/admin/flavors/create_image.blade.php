@@ -4,8 +4,6 @@
 <div class="container">
     <h3>Nova Imagen</h3>
 
-    @include('errors._check')
-
     {!! Form::open(['route'=>['admin.flavors.images.store',$flavor->id], 'method'=>'post', 'enctype'=>"multipart/form-data"]) !!}
 
     <div class="form-group">

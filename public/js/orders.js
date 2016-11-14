@@ -299,19 +299,19 @@ $(document).ready(function () {
             $('#generate_pizzas').append('<pizza>\
     <div class="panel panel-default">\
         <div class="panel-heading">\
-            <h3 class="panel-title" contenteditable="true">Pizza ' + x + '</h3>\
+            <h3 class="panel-title">Pizza ' + x + '</h3>\
         </div>\
-        <div class="panel-body" contenteditable="true">\
+        <div class="panel-body">\
             <div class="col-md-12 column ui-sortable font-25">\
                 <div class="col-md-4">\
-                    <div class="form-group">\
-                        <label>Borda</label>\
+                    <div id="divCadEdge_'+x+'" class="form-group">\
+                        <label class="control-label">Borda</label>\
                         <select name="pizza[' + x + '][edge]" onchange="valTotalPizza(' + x + ')" class="form-control input-lg" id="cad_edge_' + x + '" style="font-size: 22px">\
                             ' + optionEdge + '\
                         </select>\
                     </div>\
-                    <div class="form-group">\
-                        <label>Tamanho</label>\
+                    <div id="divCadSize_'+x+'" class="form-group">\
+                        <label class="control-label">Tamanho</label>\
                         <select name="pizza[' + x + '][size]" onchange="selectedMaxParts(' + x + '), valTotalPizza(' + x + ')" class="form-control input-lg" id="cad_size_pizza_' + x + '" style="font-size: 22px">\
                             ' + optionSize + '\
                         </select>\
@@ -327,7 +327,7 @@ $(document).ready(function () {
                 <div class="col-md-3" style="">\
                     <input type="hidden" id="maxPiecesPizza">\
                     <div class="col-md-12">\
-                        <div class="input-group col-xs-6">\
+                        <div id="divCadFlavor_'+x+'" class="input-group col-xs-6">\
                             <input onkeyup="showFlavorCod(' + x + ')" id="inp_flavor_cod_' + x + '" type="text" class="form-control" style="width: 100px" placeholder="código">\
                             <span class="input-group-btn">\
                                 <button style="margin-left: -3%; margin-top: -1%" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-plus"></i></button>\
@@ -357,9 +357,9 @@ $(document).ready(function () {
             <div class="modal-content">\
                 <div class="modal-header">\
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
-                    <h4 class="modal-title" id="myModalLabel" contenteditable="true">Escolher no maxímo <span id="spanMaxPiecesPizza" style="margin-left: 5px" class="badge">2</span> Sabores</h4>\
+                    <h4 class="modal-title" id="myModalLabel">Escolher no maxímo <span id="spanMaxPiecesPizza" style="margin-left: 5px" class="badge">2</span> Sabores</h4>\
                 </div>\
-                <div class="modal-body" contenteditable="true">\
+                <div class="modal-body">\
                     <div class="form-group" style="margin-top: 1%">\
                         <div class="title" style="float: left; margin-top: -3%; margin-right: 5%; margin-left: 36%">\
                             <h3 style="margin-left: 0%;">Selecione os Sabores Desejados.</h3>\
@@ -385,8 +385,8 @@ $(document).ready(function () {
                     </div>\
                 </div>\
                 <div class="modal-footer">\
-                    <button type="button" class="btn btn-default" data-dismiss="modal" contenteditable="true">Voltar</button>\
-                    <button onclick="selectedFlavorsPizza(' + x + '), generateGraficPizza(' + x + '), valTotalPizza(' + x + ')" type="button" data-dismiss="modal" class="btn btn-primary" contenteditable="true">Salvar Escolhas</button>\
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>\
+                    <button onclick="selectedFlavorsPizza(' + x + '), generateGraficPizza(' + x + '), valTotalPizza(' + x + ')" type="button" data-dismiss="modal" class="btn btn-primary">Salvar Escolhas</button>\
                 </div>\
             </div>\
         </div>\

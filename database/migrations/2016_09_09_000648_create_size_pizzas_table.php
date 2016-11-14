@@ -16,7 +16,7 @@ class CreateSizePizzasTable extends Migration
             $table->increments('id');
             $table->string('size');
             $table->integer('parts');
-            $table->integer('price');
+            $table->decimal('price');
             $table->integer('pieces');
             $table->timestamps();
         });

@@ -1,5 +1,5 @@
 
-<div class="modal fade" id="modal_delete_<?= $sizePizza->id ?>">
+<div class="modal fade" id="modal_delete_<?= $deliverymean->id ?>">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -7,10 +7,10 @@
         <h4 class="modal-title">Confirma</h4>
       </div>
       <div class="modal-body">
-        <p>Gostaria de remover o tamanho <b>{{ $sizePizza->size }}</b>?</p>
+        <p>Gostaria de remover o tipo de borda <b>{{ $deliverymean->name }}</b>?</p>
       </div>
       <div class="modal-footer">
-        <a href="{{ route('admin.sizes.destroy',['id'=>$sizePizza->id]) }}" class="btn btn-default">Sim</a>
+        <a href="{{ route('admin.deliverymeans.destroy',['id'=>$deliverymean->id]) }}" class="btn btn-default">Sim</a>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
       </div>
     </div><!-- /.modal-content -->
