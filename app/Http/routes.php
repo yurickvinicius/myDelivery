@@ -70,6 +70,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'authPizzeria', 'as' => 'admi
     Route::get('deliverymeans/edit/{id}', ['as' => 'deliverymeans.edit', 'uses' => 'DeliveryMeansController@edit']);
     Route::post('deliverymeans/update/{id}', ['as' => 'deliverymeans.update', 'uses' => 'DeliveryMeansController@update']);
     Route::get('deliverymeans/destroy/{id}', ['as' => 'deliverymeans.destroy', 'uses' => 'DeliveryMeansController@destroy']);
+
+    Route::get('reports/orders', ['as' => 'reports.index', 'uses' => 'ReportsController@index']);
+    Route::post('reports/orders', ['as' => 'reports.orders', 'uses' => 'ReportsController@reportOrders']);
 });
 
 Route::group(['middleware' => 'authPizzeria', 'where' => ['id' => '[0-9]+']], function() {

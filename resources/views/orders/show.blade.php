@@ -18,7 +18,7 @@
                 <div>
                     <label>Cep:</label>
                     {{ $order->client->cep }}
-                </div> 
+                </div>
                 <div>
                     <label>Estado:</label>
                     {{ $order->client->state }}
@@ -26,7 +26,7 @@
                 <div>
                     <label>Cidade:</label>
                     {{ $order->client->city }}
-                </div> 
+                </div>
                 <div>
                     <label>Bairro:</label>
                     {{ $order->client->neighborhood }}
@@ -48,17 +48,17 @@
                 <div>
                     <label>Telefone Celular:</label>
                     {{ $order->client->cell_phone }}
-                </div> 
+                </div>
                 <div>
                     <label>Telefone Fixo:</label>
                     {{ $order->client->phone }}
-                </div> 
+                </div>
             </div>
             <div class="col-md-4">
                 <div>
                     <label>Data do Pedido:</label>
                     {{ $order->created_at }}
-                </div>  
+                </div>
                 <div>
                     <label>Meio de Entrega:</label>
                     {{ $order->deliveryMean->name }}
@@ -73,12 +73,12 @@
                 <div>
                     <label>Troco para pagamento:</label>
                     R$ {{ $order->paymentForm->exchange_money }}
-                </div> 
+                </div>
 
                 <div>
                     <label>Total:</label>
                     {{ $order->total }}
-                </div> 
+                </div>
             </div>
         </div>
     </div>
@@ -95,9 +95,7 @@
         <div class="panel-body">
 
             <div>
-
                 <div>  
-
                     <div>
                         <label>Tamanho:</label>
                         {{ $orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->sizePizza->size }}
@@ -125,7 +123,7 @@
                         </thead>
                         <tbody>
                             <?php $cont=1 ?>
-                            @foreach($orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->flavorsPizza as $flavoPizza)                            
+                            @foreach($orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->flavorsPizza as $flavoPizza)
                             <tr>
                                 <td>{{ $cont++ }}</td>
                                 <td>{{ $flavoPizza->flavor->name }}</td>
@@ -134,32 +132,32 @@
                             </tr>
                             @endforeach
                         </tbody>
-                    </table>                   
+                    </table>
 
                     <div>
                         <label>Observação:</label>
                         {{ $orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->observation }}
-                    </div> 
+                    </div>
 
                 </div>
             </div>
-        </div>                
-    </div>   
+        </div>
+    </div>
     @endforeach
 
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title" contenteditable="true">
-                Opcionais 
+                Opcionais
                 <a style="float: right" href="#" class="btn-link">Clique para Alterar Opicionais</a>
             </h3>
         </div>
-        <div class="panel-body" contenteditable="true"> 
-            @foreach($order->orderDrinks as $orderDrinks)            
+        <div class="panel-body" contenteditable="true">
+            @foreach($order->orderDrinks as $orderDrinks)
             <div>
                 <label>Bebida:</label>
-                <?php $drink = $orderDrinks->find($orderDrinks->id)->drinks ?>                
-                <?= $drink[0]['name'] ?>                
+                <?php $drink = $orderDrinks->find($orderDrinks->id)->drinks ?>
+                <?= $drink[0]['name'] ?>
                 <b>Valor:</b> R$ <?= $drink[0]['price'] ?>
             </div>
             @endforeach
@@ -171,7 +169,7 @@
 
     <div id="div_exchange_money">
         <label>Pizza já foi Entrega?</label>
-        <div class="radio"> 
+        <div class="radio">
             <label>
                 <input type="radio" name="pizza_delivered" value="sim">
                 Sim
@@ -180,7 +178,7 @@
                 <input type="radio" name="pizza_delivered" value="nao" checked>
                 Não
             </label>
-        </div> 
+        </div>
     </div>
 
     {!! Form::label('deliverymean_id','Entregadores:') !!}
@@ -189,8 +187,8 @@
         <option value="0">Selecione Meio de Entrega</option>
         @foreach($deliverymens as $deliverymen)
         <option value="{{ $deliverymen->id }}">Entregador: {{ $deliverymen->name }}</option>
-        @endforeach        
-    </select>    
+        @endforeach
+    </select>
 
     <div class="form-group" style="margin-top: 2%; float: left">
         <input type="submit" class="btn btn-success btn-lg" value="Encaminhar">

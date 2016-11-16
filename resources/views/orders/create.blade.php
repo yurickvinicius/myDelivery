@@ -16,12 +16,7 @@
                     <div class="input-group">
                         <label>Buscar</label>
                         <input onkeyup="searchClient()" id="inpSearchClient" class="form-control" placeholder="Nome ou Telefone">
-
                         <div id="divSearchClient" style='position:absolute; z-index: 9999; top:105%; background-color: #dce7f7'></div>
-
-                        <div class="input-group-btn">
-                            <div style="margin-top: 53%; padding-top: 15%" type="button" class="btn btn-primary"><i class="glyphicon glyphicon-search marg_right_5"></i></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -134,10 +129,7 @@
                     <input type="hidden" id="maxPiecesPizza">
                     <div class="col-md-12">
                         <div id="divCadFlavor_1" class="input-group col-xs-6">
-                            <input onkeyup="showFlavorCod(1)" id="inp_flavor_cod_1" type="text" class="form-control" style="width: 100px" placeholder="código">
-                            <span class="input-group-btn">
-                                <button style="margin-left: -3%; margin-top: -1%" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-plus"></i></button>
-                            </span>
+                            <input title="Insira o código e após click no nome" onkeyup="showFlavorCod(1)" id="inp_flavor_cod_1" type="text" class="form-control" style="width: 100px" placeholder="código">
                         </div>
                     </div>
 

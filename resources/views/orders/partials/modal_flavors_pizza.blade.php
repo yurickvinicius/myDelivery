@@ -1,6 +1,6 @@
 <div class="view">
     <div class="modal fade" id="modal_cad_flavors_pizza_1">
-        <div class="" style="width: 90%; margin-left: auto; margin-right: auto; margin-top: 3%">
+        <div style="width: 90%; margin-left: auto; margin-right: auto; margin-top: 3%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -9,9 +9,9 @@
                 <div class="modal-body">
                     <div class="form-group" style="margin-top: 1%">
                         <div class="title" style="float: left; margin-top: -3%; margin-right: 5%; margin-left: 36%">
-                            <h3 style="margin-left: 0%;">Selecione os Sabores Desejados.</h3>                        
+                            <h3 style="margin-left: 0%;">Selecione os Sabores Desejados.</h3>
                         </div>
-                        <div>                            
+                        <div>
                             <button onclick="selectedFlavorsPizza(1), generateGraficPizza(1), valTotalPizza(1)" type="button" data-dismiss="modal" class="btn btn-success" style="margin-top: -1.5%; float: right; margin-right: 5%">Confirma Sabores</button>
                         </div>
                         <table class="table table-hover table-condensed">
@@ -28,7 +28,7 @@
                             <tbody>
                                 <?php $cont = 0 ?>
                                 @foreach($flavors as $flavor)
-                                <tr style="cursor: pointer">                                
+                                <tr style="cursor: pointer">
                                     <td>{{ $flavor->id }}</td>
                                     <td>
                                         <input name="pizza[1][flavor][{{ $cont }}]" type="checkbox" id="flavorCheckPizza_1" flavor="{{ $flavor->name }}" price="{{ $flavor->price }}" description="{{ $flavor->description }}" value="{{ $flavor->id }}" class="checkbox" style="cursor: pointer">

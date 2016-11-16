@@ -84,7 +84,7 @@ function showFlavorCod(pizza) {
                 if (data == 'error' || cod == '')
                     $('div[id=showFlavorCod_' + pizza + ']').html('');
 
-                var result = '<span onclick="selectFlavor(' + data[0].id + ',' + pizza + ')" class="cursorPointer">' + data[0].name + '</span>';
+                var result = '<span onclick="selectFlavor(' + data[0].id + ',' + pizza + ')" class="clickHere">' + data[0].name + '</span>';
                 $('div[id=showFlavorCod_' + pizza + ']').html(result);
             },
         });

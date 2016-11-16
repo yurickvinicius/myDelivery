@@ -32,4 +32,5 @@
 }
 
 .searchName:hover{background-color: #bcd4ef; cursor: pointer;}
-.cursorPointer{cursor: pointer};
+.cursorPointer{cursor: pointer}
+.clickHere{background-color: #bcd4ef; cursor: pointer; padding-left: 5%; padding-right: 5%; border-radius: 3px}

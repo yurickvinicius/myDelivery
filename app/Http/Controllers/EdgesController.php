@@ -14,7 +14,7 @@ class EdgesController extends Controller
 
     public function __construct(EdgePizza $edgePizza) {
         $this->edgePizzaModel = $edgePizza;
-        ///view()->share('totalOrders', Order::totalOrders());
+        view()->share('totalOrders', Order::totalOrders());
     }
 
     public function index(){

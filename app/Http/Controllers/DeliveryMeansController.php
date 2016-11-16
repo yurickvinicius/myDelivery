@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use myDelivery\Http\Requests\DeliveryMeanRequest;
 use myDelivery\Models\DeliveryMean;
+use myDelivery\Models\Order;
 
 class DeliveryMeansController extends Controller
 {
@@ -13,6 +14,7 @@ class DeliveryMeansController extends Controller
 
     public function __construct(DeliveryMean $deliveryMean) {
         $this->deliveryMeanModel = $deliveryMean;
+        view()->share('totalOrders', Order::totalOrders());
     }
 
     public function index(){

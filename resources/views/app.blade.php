@@ -11,7 +11,7 @@
         <title>My Pizzas</title>
 
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-
+        <!--<link href='../bootstrap.min.css' rel='stylesheet'>-->
         <!-- Fonts -->
         <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
@@ -54,6 +54,13 @@
                             </ul>
                         </li>
 
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Relatórios <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ route('admin.reports.index') }}">Pedidos</a></li>
+                            </ul>
+                        </li>
+
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -91,6 +98,14 @@
         <script src="../js/jquery.mask.min.js"></script>
         <script src="../js/my_masks.js"></script>
         <script src="../js/validate_order.js"></script>
+        <!--- Calendario no mozzila--->
+        <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
+        <script>
+          webshims.setOptions('waitReady', false);
+          webshims.setOptions('forms-ext', {types: 'date'});
+          webshims.polyfill('forms forms-ext');
+        </script>
+        <!------>
 
     </body>
 </html>
