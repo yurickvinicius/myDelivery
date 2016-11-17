@@ -12,38 +12,12 @@
         <div class="panel-body" contenteditable="true">
             <div class="col-md-4">
                 <div>
+                    <label>Data do Pedido:</label>
+                    {{ $order->created_at }}
+                </div>
+                <div>
                     <label>Nome do Cliente:</label>
                     {{ $order->client->name }}
-                </div>
-                <div>
-                    <label>Cep:</label>
-                    {{ $order->client->cep }}
-                </div>
-                <div>
-                    <label>Estado:</label>
-                    {{ $order->client->state }}
-                </div>
-                <div>
-                    <label>Cidade:</label>
-                    {{ $order->client->city }}
-                </div>
-                <div>
-                    <label>Bairro:</label>
-                    {{ $order->client->neighborhood }}
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div>
-                    <label>Endereço do Cliente:</label>
-                    {{ $order->client->address }}
-                </div>
-                <div>
-                    <label>Numero:</label>
-                    {{ $order->client->number }}
-                </div>
-                <div>
-                    <label>Complemento:</label>
-                    {{ $order->client->complement }}
                 </div>
                 <div>
                     <label>Telefone Celular:</label>
@@ -56,9 +30,24 @@
             </div>
             <div class="col-md-4">
                 <div>
-                    <label>Data do Pedido:</label>
-                    {{ $order->created_at }}
+                    <label>Bairro:</label>
+                    {{ $order->client->neighborhood }}
                 </div>
+                <div>
+                    <label>Endereço do Cliente:</label>
+                    {{ $order->client->address }}
+                </div>
+                <div>
+                    <label>Numero:</label>
+                    {{ $order->client->number }}
+                </div>
+                <div>
+                    <label>Complemento:</label>
+                    {{ $order->client->complement }}
+                </div>
+
+            </div>
+            <div class="col-md-4">
                 <div>
                     <label>Meio de Entrega:</label>
                     {{ $order->deliveryMean->name }}
@@ -95,7 +84,7 @@
         <div class="panel-body">
 
             <div>
-                <div>  
+                <div>
                     <div>
                         <label>Tamanho:</label>
                         {{ $orderPizza->pizzaBuilts->find($orderPizza->pizza_built_id)->sizePizza->size }}
@@ -153,6 +142,11 @@
             </h3>
         </div>
         <div class="panel-body" contenteditable="true">
+
+            @if(count($order->orderDrinks) == 0)
+                <div>Nenhum</div>
+            @endif
+
             @foreach($order->orderDrinks as $orderDrinks)
             <div>
                 <label>Bebida:</label>
@@ -175,8 +169,12 @@
                 Sim
             </label>
             <label>
-                <input type="radio" name="pizza_delivered" value="nao" checked>
+                <input type="radio" name="pizza_delivered" value="nao">
                 Não
+            </label>
+            <label>
+                <input type="radio" name="pizza_delivered" value="preparando" checked>
+                Preparando
             </label>
         </div>
     </div>

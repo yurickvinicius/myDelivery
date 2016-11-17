@@ -85,6 +85,7 @@
         </nav>
 
         @include('template.partials._message_success')
+        @include('template.partials._message_info')
         @include('errors._check')
         @yield('content')
 

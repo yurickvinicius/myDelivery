@@ -40,7 +40,7 @@ class OrdersController extends Controller {
 
     public function __construct(Order $order, Deliverie $deliverie, Flavor $flavor, EdgePizza $edge, SizePizza $sizePizza, Drink $drink, PizzaBuilt $pizzaBuilt, FlavorsPizza $flavorsPizza, PaymentForm $paymentForm, OrderPizza $orderPizza, OrderDrink $orderDrink, DeliveryMean $deliveryMean, Client $client) {
         $this->orderModel = $order;
-        view()->share('totalOrders', Order::totalOrders());
+        view()->share('totalOrders', Order::totalOrdersWaiting());
         $this->deliverieModel = $deliverie;
         $this->flavorModel = $flavor;
         $this->edgeModel = $edge;
@@ -56,7 +56,10 @@ class OrdersController extends Controller {
     }
 
     public function index() {
-        $orders = $this->orderModel->paginate(50);
+        $orders = $this->orderModel
+          ->where('status', '<>', 'Entregue')
+          ->paginate(20);
+
         return view('orders.index', compact('orders'));
     }
 
@@ -127,17 +130,20 @@ class OrdersController extends Controller {
         $paymentForm = $this->paymentFormModel->create($tablePaymentForm);
 
         /// savle client
+        $notChar = array("(", ")", "-");
+        $cellPhone = str_replace($notChar, "", $request->input('cadTelCellPhone'));
+        $Phone = str_replace($notChar, "", $request->input('cadTelPhone'));
         $tableClient = [
             'name' => $request->input('cadName'),
             'cep' => $request->input('cadCEP'),
-            'state' => $request->input('cadState'),
-            'city' => $request->input('cadCity'),
+            'state' => null,
+            'city' => null,
             'neighborhood' => $request->input('cadNeighborhood'),
             'address' => $request->input('cadAddress'),
             'number' => $request->input('cadNumber'),
             'complement' => $request->input('cadComplement'),
-            'phone' => $request->input('cadTelPhone'),
-            'cell_phone' => $request->input('cadTelCellPhone'),
+            'phone' => $Phone,
+            'cell_phone' => $cellPhone,
             'user_id' => Auth::user()->id,
         ];
 
@@ -188,12 +194,13 @@ class OrdersController extends Controller {
 
         /// save order drinks
         foreach ($request->option as $option) {
-            $tableOrderDrink = [
-                'drink_id' => $option,
-                'order_id' => $order->id
-            ];
-
-            $this->orderDrinkModel->create($tableOrderDrink);
+            if($option !=0){
+                $tableOrderDrink = [
+                    'drink_id' => $option,
+                    'order_id' => $order->id
+                ];
+                $this->orderDrinkModel->create($tableOrderDrink);
+            }
         }
 
         $message = 'Pedido realizado com suecesso!';

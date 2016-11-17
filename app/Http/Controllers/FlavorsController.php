@@ -20,7 +20,7 @@ class FlavorsController extends Controller {
     public function __construct(Flavor $flavor, FlavorImage $flavorImage) {
         $this->flavorModel = $flavor;
         $this->flavorImageModel = $flavorImage;
-        view()->share('totalOrders', Order::totalOrders());
+        view()->share('totalOrders', Order::totalOrdersWaiting());
     }
 
     public function index() {
@@ -101,9 +101,9 @@ class FlavorsController extends Controller {
     }
 
     public function showJson($cod) {
-        
+
         $flavor = $this->flavorModel->where('id', $cod)->get();
-        
+
         if(count($flavor) > 0)
             echo json_encode($flavor);
         else

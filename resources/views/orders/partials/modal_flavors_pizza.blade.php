@@ -8,7 +8,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group" style="margin-top: 1%">
-                        <div class="title" style="float: left; margin-top: -3%; margin-right: 5%; margin-left: 36%">
+                        <div class="title" style="float: left; margin-top: -3%; margin-right: 5%; margin-left: 33%">
                             <h3 style="margin-left: 0%;">Selecione os Sabores Desejados.</h3>
                         </div>
                         <div>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>
-                    <button onclick="selectedFlavorsPizza(1), generateGraficPizza(1), valTotalPizza(1)" type="button" data-dismiss="modal" class="btn btn-primary">Salvar Escolhas</button>
+                    <button onclick="selectedFlavorsPizza(1), generateGraficPizza(1), valTotalPizza(1)" type="button" data-dismiss="modal" class="btn btn-success">Confirma Sabores</button>
                 </div>
             </div>
         </div>

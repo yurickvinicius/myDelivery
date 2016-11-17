@@ -14,27 +14,27 @@
           <div class="panel-body" contenteditable="true">
               <div class="col-md-3">
                   <div>
+                      <label>Data do Pedido:</label>
+                      {{ $report->created_at }}
+                  </div>
+                  <div>
                       <label>Nome do Cliente:</label>
                       {{ $report->client->name }}
                   </div>
                   <div>
-                      <label>Cep:</label>
-                      {{ $report->client->cep }}
+                      <label>Telefone Celular:</label>
+                      {{ $report->client->cell_phone }}
                   </div>
                   <div>
-                      <label>Estado:</label>
-                      {{ $report->client->state }}
+                      <label>Telefone Fixo:</label>
+                      {{ $report->client->phone }}
                   </div>
-                  <div>
-                      <label>Cidade:</label>
-                      {{ $report->client->city }}
-                  </div>
+              </div>
+              <div class="col-md-5">
                   <div>
                       <label>Bairro:</label>
                       {{ $report->client->neighborhood }}
                   </div>
-              </div>
-              <div class="col-md-5">
                   <div>
                       <label>Endereço do Cliente:</label>
                       {{ $report->client->address }}
@@ -47,20 +47,8 @@
                       <label>Complemento:</label>
                       {{ $report->client->complement }}
                   </div>
-                  <div>
-                      <label>Telefone Celular:</label>
-                      {{ $report->client->cell_phone }}
-                  </div>
-                  <div>
-                      <label>Telefone Fixo:</label>
-                      {{ $report->client->phone }}
-                  </div>
               </div>
               <div class="col-md-4">
-                  <div>
-                      <label>Data do Pedido:</label>
-                      {{ $report->created_at }}
-                  </div>
                   <div>
                       <label>Meio de Entrega:</label>
                       {{ $report->deliveryMean->name }}
@@ -141,10 +129,15 @@
               </h3>
           </div>
           <div class="panel-body" contenteditable="true">
-              @foreach($report->orderDrinks as $orderDrinks)
-              <div>
+
+              @if(count($report->orderDrinks) == 0)
+                  <div class="col-md-6">Nenhum</div>
+              @endif
+
+              @foreach($report->orderDrinks as $reportDrinks)
+              <div class="col-md-6">
                   <label>Bebida:</label>
-                  <?php $drink = $orderDrinks->find($orderDrinks->id)->drinks ?>
+                  <?php $drink = $reportDrinks->find($reportDrinks->id)->drinks ?>
                   <?= $drink[0]['name'] ?>
                   <b>Valor:</b> R$ <?= $drink[0]['price'] ?>
               </div>

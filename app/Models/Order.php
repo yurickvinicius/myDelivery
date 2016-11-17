@@ -16,8 +16,8 @@ class Order extends Model {
         'client_id'
     ];
 
-    public static function totalOrders() {
-        return Order::count();
+    public static function totalOrdersWaiting() {
+        return Order::where('status','<>','Entregue')->count();
     }
 
     public function orderPizzas() {

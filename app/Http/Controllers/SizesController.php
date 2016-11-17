@@ -13,7 +13,7 @@ class SizesController extends Controller
 
     public function __construct(SizePizza $sizePizza) {
         $this->sizePizzaModel = $sizePizza;
-        view()->share('totalOrders', Order::totalOrders());
+        view()->share('totalOrders', Order::totalOrdersWaiting());
     }
 
     public function index(){

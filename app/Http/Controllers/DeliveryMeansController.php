@@ -14,7 +14,7 @@ class DeliveryMeansController extends Controller
 
     public function __construct(DeliveryMean $deliveryMean) {
         $this->deliveryMeanModel = $deliveryMean;
-        view()->share('totalOrders', Order::totalOrders());
+        view()->share('totalOrders', Order::totalOrdersWaiting());
     }
 
     public function index(){

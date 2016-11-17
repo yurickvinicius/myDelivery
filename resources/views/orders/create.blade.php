@@ -12,17 +12,6 @@
                     <input name="cadName" type="text" class="form-control" id="cadName" placeholder="Nome">
                 </div>
 
-                <div class="form-group col-xs-4">
-                    <div class="input-group">
-                        <label>Buscar</label>
-                        <input onkeyup="searchClient()" id="inpSearchClient" class="form-control" placeholder="Nome ou Telefone">
-                        <div id="divSearchClient" style='position:absolute; z-index: 9999; top:105%; background-color: #dce7f7'></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-
                 <div class="form-group col-xs-3">
                     <div id="divCadCEP" class="input-group">
                         <label class="control-label" for="cadCEP">CEP</label>
@@ -33,40 +22,40 @@
                     </div>
                 </div>
 
-                <div class="form-group col-xs-2">
-                    <label class="control-label" for="cadState">UF</label>
-                    <select name="cadState" id="cadState" class="form-control">
-                        <option>Selecione</option>
-                        <option selected="true">PR</option>
-                        <option>SC</option>
-                    </select>
+                <div class="form-group col-xs-6">
+                    <div class="input-group" style="float:right">
+                        <label>Buscar</label>
+                        <input title='Digite o numero do telefone desejado sem o ddd' onkeyup="searchClient()" id="inpSearchClient" class="form-control" placeholder="Telefone Fixo ou Celular">
+                        <div id="divSearchClient" style='position:absolute; z-index: 9999; top:105%; background-color: #dce7f7'></div>
+                    </div>
                 </div>
-                <div class="form-group col-xs-2">
-                    <label class="control-label" for="cadCity">Cidade</label>
-                    <input name="cadCity" id="cadCity" value="Guarapuava" type="text" class="form-control" placeholder="Cidade">
-                </div>
+
+            </div>
+
+            <div class="col-md-12">
+
                 <div id="divCadNeighborhood" class="form-group col-xs-2">
                     <label class="control-label" for="cadNeighborhood">Bairro</label>
                     <input name="cadNeighborhood" type="text" class="form-control" id="cadNeighborhood" placeholder="Bairro">
                 </div>
-            </div>
 
-            <div class="col-md-12">
                 <div id="divCadAddress" class="form-group col-xs-5">
                     <label class="control-label" for="cadAddress">Endereço</label>
                     <input name="cadAddress" type="text" class="form-control" id="cadAddress" placeholder="Endereço">
                 </div>
+
                 <div id="divCadNumber" class="form-group col-xs-1">
                     <label class="control-label" for="cadNumber">Numero</label>
-                    <input name="cadNumber" type="text" class="form-control" id="cadNumber" placeholder="Numero">
-                </div>
-                <div class="form-group col-xs-5">
-                    <label for="cadComplement">Complemento</label>
-                    <input name="cadComplement" type="text" class="form-control" id="cadComplement" placeholder="Complemento">
+                    <input name="cadNumber" type="text" class="form-control" id="cadNumber">
                 </div>
             </div>
 
             <div class="col-md-12">
+                <div class="form-group col-xs-5">
+                    <label for="cadComplement">Complemento</label>
+                    <input name="cadComplement" type="text" class="form-control" id="cadComplement" placeholder="Complemento">
+                </div>
+
                 <div id="divCadCellPhone" class="form-group col-xs-2">
                     <label class="control-label" for="cadTelCellPhone">Tel. Celular</label>
                     <input name="cadTelCellPhone" type="text" class="form-control phoneMask" id="cadTelCellPhone" placeholder="Celular">
@@ -125,11 +114,12 @@
                     <div onclick="maxPiecesPizza()" href="#modal_cad_flavors_pizza_1" data-toggle="modal" id="piechart_1" style="height: 500px; width: 500px; cursor: pointer"></div>
                 </div>
 
-                <div class="col-md-3" style="">
+                <div class="col-md-3">
                     <input type="hidden" id="maxPiecesPizza">
                     <div class="col-md-12">
-                        <div id="divCadFlavor_1" class="input-group col-xs-6">
-                            <input title="Insira o código e após click no nome" onkeyup="showFlavorCod(1)" id="inp_flavor_cod_1" type="text" class="form-control" style="width: 100px" placeholder="código">
+                        <div id="divCadFlavor_1" class="input-group">
+                            <label style="font-size:14px; float:left; margin-right:5px; margin-top:5px">Insira o Código: </label>
+                            <input title="Insira o código e após click no nome" onkeyup="showFlavorCod(1)" id="inp_flavor_cod_1" type="text" class="form-control" style="width: 90px" placeholder="código">
                         </div>
                     </div>
 

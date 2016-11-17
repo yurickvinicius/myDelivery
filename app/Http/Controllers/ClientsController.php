@@ -8,7 +8,7 @@ use myDelivery\Models\Client;
 
 class ClientsController extends Controller {
 
-    public function searchClient($data) {                
+    public function searchClient($data) {
 
         if (is_numeric($data)) {
             $datas = Client::where('cell_phone', 'like', "__$data%")
@@ -16,7 +16,7 @@ class ClientsController extends Controller {
                     ->get();
         } else {
             $datas = Client::where('name', 'iLIKE', "$data%")->get();
-        }        
+        }
 
         return json_encode($datas);
     }

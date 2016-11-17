@@ -28,9 +28,17 @@ function searchClient() {
             dataType: "json",
             cache: false,
             success: function (data) {
-                var ul = '<ul style="list-style-type: none; margin-left: -8%">';
+                var ul = '<ul style="list-style-type: none; margin-left: -8%;">';
                 for (var i = 0; i < data.length; i++) {
-                    ul += "<li onclick='fillFields(\"" + data[i].name + "\", \"" + data[i].cep + "\", \"" + data[i].neighborhood + "\", \"" + data[i].address + "\", \"" + data[i].number + "\", \"" + data[i].complement + "\", \"" + data[i].cell_phone + "\", \"" + data[i].phone + "\")' class='searchName'>" + data[i].name + " - " + data[i].cell_phone + " - " + data[i].phone + "</li>";
+                    ul += "<li onclick='fillFields(\""
+                    + data[i].name + "\", \""
+                    + data[i].cep + "\", \""
+                    + data[i].neighborhood + "\", \""
+                    + data[i].address + "\", \""
+                    + data[i].number + "\", \""
+                    + data[i].complement + "\", \""
+                    + data[i].cell_phone + "\", \""
+                    + data[i].phone + "\")' class='searchName'>" + data[i].name + " - " + data[i].cell_phone + " - " + data[i].phone + "</li>";
                 }
                 ul += '<ul>';
 
@@ -46,15 +54,18 @@ function searchClient() {
 }
 
 function fillFields(name, cep, neighborhood, address, number, complement, cell_phone, phone) {
-    ///alert('test: '+state);
     $('#cadName').attr('value', name);
-    $('#cadCEP').attr('value', cep);
+    $('#cadCEP').val(cep);
     $('#cadNeighborhood').attr('value', neighborhood);
     $('#cadAddress').attr('value', address);
     $('#cadNumber').attr('value', number);
     $('#cadComplement').attr('value', complement);
-    $('#cadTelCellPhone').attr('value', cell_phone);
-    $('#cadTelPhone').attr('value', phone);
+
+    $('#cadTelCellPhone').val(cell_phone);
+    $('#cadTelCellPhone').mask("(99)9999-9999");
+
+    $('#cadTelPhone').val(phone);
+    $('#cadTelPhone').mask("(99)9999-9999");
 
     $('input[id=inpSearchClient]').val('');
     $('div[id=divSearchClient]').html('');
@@ -325,13 +336,11 @@ $(document).ready(function () {
                     <div onclick="maxPiecesPizza()" href="#modal_cad_flavors_pizza_' + x + '" data-toggle="modal" id="piechart_' + x + '" style="height: 500px; width: 500px; cursor: pointer"></div>\
                 </div>\
                 <div class="col-md-3" style="">\
-                    <input type="hidden" id="maxPiecesPizza">\
+                <input type="hidden" id="maxPiecesPizza">\
                     <div class="col-md-12">\
-                        <div id="divCadFlavor_'+x+'" class="input-group col-xs-6">\
-                            <input onkeyup="showFlavorCod(' + x + ')" id="inp_flavor_cod_' + x + '" type="text" class="form-control" style="width: 100px" placeholder="código">\
-                            <span class="input-group-btn">\
-                                <button style="margin-left: -3%; margin-top: -1%" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-plus"></i></button>\
-                            </span>\
+                        <div id="divCadFlavor_'+ x +'" class="input-group">\
+                            <label style="font-size:14px; float:left; margin-right:5px; margin-top:5px">Insira o Código: </label>\
+                            <input title="Insira o código e após click no nome" onkeyup="showFlavorCod('+ x +')" id="inp_flavor_cod_'+ x +'" type="text" class="form-control" style="width: 90px" placeholder="código">\
                         </div>\
                     </div>\
                     <div style="height: 40px" class="col-md-12">\

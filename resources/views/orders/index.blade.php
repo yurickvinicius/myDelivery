@@ -4,9 +4,9 @@
 <div class="col-md-12">
 
     <h3 style="float: left">Pedidos</h3>
-    <div style="float: right; margin-top: 1%">                
-        <a href="{{ route('order.create') }}" class="btn btn-default">Novo Pedido</a>        
-    </div>            
+    <div style="float: right; margin-top: 1%">
+        <a href="{{ route('order.create') }}" class="btn btn-primary">Novo Pedido</a>
+    </div>
 
     <br><br>
 
@@ -60,14 +60,15 @@
                     <a href="{{ route('order.show', ['id'=>$order->id]) }}" class="btn btn-default btn-sm">
                         Vizualizar Detalhes
                     </a>
-                    <a href="#" class="btn btn-default btn-sm">
+                    <a href="#modal_delete_<?= $order->id ?>" data-toggle="modal" class="btn btn-default btn-sm">
                         Cancelar
                     </a>
                 </td>
             </tr>
+            @include('orders.partials.modal_delete')
             @endforeach
         </tbody>
-    </table>    
+    </table>
 
     {!! $orders->render() !!}
 
