@@ -58,6 +58,7 @@ class OrdersController extends Controller {
     public function index() {
         $orders = $this->orderModel
           ->where('status', '<>', 'Entregue')
+          ->where('status', '<>', 'Cancelado')
           ->paginate(20);
 
         return view('orders.index', compact('orders'));
@@ -67,7 +68,7 @@ class OrdersController extends Controller {
         $deliverymens = User::where('role', 'Entregador')->get();
         $order = $this->orderModel->find($id);
 
-        return view('orders.show', compact('order', 'deliverymens'));
+        return view('orders.show', compact('order', 'deliverymens', 'deliverie'));
     }
 
     public function sendOrder(DeliverieRequest $request) {
@@ -76,15 +77,17 @@ class OrdersController extends Controller {
         $delivery = $request->input('deliverymean_id');
         $delivered = $request->input('pizza_delivered');
 
-        if ($delivered == 'nao') {
+        if ($delivered == 'nao' || $delivered == 'Preparando' || $delivered == 'Enviado') {
             $status = $this->generateStatus($delivery, $delivered);
             /// atualizando entregador
             if ($request->input('deliverymean_id') != 0) {
-                $upDeliviry = $this->deliverieModel->where('order_id', $request->input('order_id'))->update(
-                        [
-                            'user_id' => $request->input('deliverymean_id')
-                        ]
-                );
+                $upDeliviry = $this->deliverieModel
+                    ->where('order_id', $request->input('order_id'))
+                    ->update(
+                            [
+                                'user_id' => $request->input('deliverymean_id')
+                            ]
+                    );
 
                 if ($upDeliviry == 0) {
                     $Delivery = [
@@ -217,6 +220,20 @@ class OrdersController extends Controller {
         }
 
         return $status;
+    }
+
+    public function cancelOrder($id){
+        $this->orderModel
+            ->find($id)
+            ->update(
+                [
+                    'in_use' => 'n',
+                    'status' => 'Cancelado'
+                ]
+            );
+
+        $message = 'Pedido cancelado com suecesso!';
+        return redirect()->route('orders.index')->withMessageSuccess($message);
     }
 
 }

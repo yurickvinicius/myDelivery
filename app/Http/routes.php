@@ -82,6 +82,7 @@ Route::group(['middleware' => 'authPizzeria', 'where' => ['id' => '[0-9]+']], fu
     Route::post('order/send', ['as' => 'order.send', 'uses' => 'OrdersController@sendOrder']);
     Route::get('order/create', ['as' => 'order.create', 'uses' => 'OrdersController@create']);
     Route::post('order/store', ['as' => 'order.store', 'uses' => 'OrdersController@store']);
+    Route::get('order/cancel/{id}', ['as' => 'order.cancel', 'uses' => 'OrdersController@cancelOrder']);
 
     Route::get('flavor/{id}/show', ['uses' => 'FlavorsController@showJson']);
 

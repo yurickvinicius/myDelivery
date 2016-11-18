@@ -6,7 +6,7 @@
 <div class="container">
     <div class="col-md-6" style="possition:absolute; margin-left:20%">
         <div class="panel panel-primary">
-          <div class="panel-heading">Pedidos Entregues</div>
+          <div class="panel-heading">Relatório de Pedidos</div>
             <div class="panel-body">
                 <div class="col-md-12">
 
@@ -30,6 +30,7 @@
                             <option value="Aberto">Aberto</option>
                             <option value="Enviado">Enviado</option>
                             <option value="Entregue">Entregue</option>
+                            <option value="Preparando">Preparando</option>
                             <option value="Todos">Todos</option>
                         </select>
                     </div>

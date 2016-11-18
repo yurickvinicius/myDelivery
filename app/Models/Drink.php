@@ -8,7 +8,8 @@ class Drink extends Model {
 
     protected $fillable = [
         'name',
-        'price'
+        'price',
+        'in_use'
     ];
 
     public function orderDrink() {

@@ -11,6 +11,7 @@ class Order extends Model {
         'status',
         'type_order',
         'user_id',
+        'in_use',
         'delivery_mean_id',
         'payment_form_id',
         'client_id'

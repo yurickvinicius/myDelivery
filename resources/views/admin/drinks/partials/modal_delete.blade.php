@@ -10,7 +10,7 @@
         <p>Gostaria de remover o opcional <b>{{ $drink->name }}</b>?</p>
       </div>
       <div class="modal-footer">
-        <a disabled="disabled" href="#" class="btn btn-default">Sim</a>
+        <a href="{{ route('admin.drinks.destroy', ['id'=>$drink->id]) }}" class="btn btn-default">Sim</a>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
       </div>
     </div><!-- /.modal-content -->

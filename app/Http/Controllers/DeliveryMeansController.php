@@ -18,7 +18,7 @@ class DeliveryMeansController extends Controller
     }
 
     public function index(){
-        $deliverymeans = $this->deliveryMeanModel->paginate();
+        $deliverymeans = $this->deliveryMeanModel->where('in_use','<>','n')->paginate();
         return view('admin.deliverymeans.index', compact('deliverymeans'));
     }
 
@@ -43,8 +43,17 @@ class DeliveryMeansController extends Controller
     }
 
     public function destroy($id){
-        $this->deliveryMeanModel->find($id)->delete();
+        ///$this->deliveryMeanModel->find($id)->delete();
 
-        return redirect()->route('admin.deliverymeans.index');
+        $this->deliveryMeanModel
+            ->find($id)
+            ->update(
+                [
+                    'in_use' => 'n',
+                ]
+            );
+
+        $message = 'Forma de entrega removido com suecesso!';
+        return redirect()->route('admin.deliverymeans.index')->withMessageSuccess($message);
     }
 }

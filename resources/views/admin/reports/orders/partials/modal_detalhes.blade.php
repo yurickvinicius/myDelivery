@@ -55,6 +55,12 @@
                       <b>Valor: </b> R$ {{ $report->deliveryMean->price }}
                   </div>
 
+                  @if($report->deliverie != '')
+                      <div>
+                         <label>Entregador:</label> {{ $report->deliverie->user->name }}
+                      </div>
+                  @endif
+
                   <div>
                       <label>Forma de Pagamento:</label>
                       {{ $report->paymentForm->form }}
@@ -144,7 +150,6 @@
               @endforeach
           </div>
       </div>
-
 
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

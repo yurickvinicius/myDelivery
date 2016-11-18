@@ -16,7 +16,7 @@ class DrinksController extends Controller
     }
 
     public function index(){
-        $drinks = $this->drinkModel->orderBy('id', 'desc')->paginate();
+        $drinks = $this->drinkModel->where('in_use', '<>', 'n')->orderBy('id', 'desc')->paginate();
         return view('admin.drinks.index', compact('drinks'));
     }
 
@@ -44,8 +44,17 @@ class DrinksController extends Controller
     }
 
     public function destroy($id){
-        $this->drinkModel->find($id)->delete();
+        ///$this->drinkModel->find($id)->delete();
 
-        return redirect()->route('admin.drinks.index');
+        $this->drinkModel
+            ->find($id)
+            ->update(
+                [
+                    'in_use' => 'n',
+                ]
+            );
+
+        $message = 'Opção removida com suecesso!';
+        return redirect()->route('admin.drinks.index')->withMessageSuccess($message);
     }
 }

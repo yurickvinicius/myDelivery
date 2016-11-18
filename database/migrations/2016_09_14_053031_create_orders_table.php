@@ -16,6 +16,7 @@ class CreateOrdersTable extends Migration {
             $table->decimal('total');
             $table->string('status');
             $table->string('type_order');
+            $table->char('in_use')->default('y');
 
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');

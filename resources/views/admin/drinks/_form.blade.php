@@ -5,5 +5,5 @@
 
 <div class="form-group">
     {!! Form::label('price','Preço:') !!}
-    {!! Form::text('price', null, ['class'=>'form-control', 'placeholder'=>'R$']) !!}
+    {!! Form::text('price', null, ['id'=>'xxxx', 'class'=>'form-control maskMoney', 'placeholder'=>'R$']) !!}
 </div>

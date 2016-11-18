@@ -93,12 +93,20 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+        <script src="{{ URL::asset('js/jqueryMaskMoney.js') }}"></script>
+
+
         <script src="../js/orders.js"></script>
         <script src="../js/loader.js"></script>
         <script src="../js/graficoPizza.js"></script>
         <script src="../js/jquery.mask.min.js"></script>
-        <script src="../js/my_masks.js"></script>
+
+        <!---<script src="{{ URL::asset('js/my_masks.js') }}"></script>--->
+
+        <script src="{{ asset('/js/my_masks.js') }}"></script>
+
         <script src="../js/validate_order.js"></script>
+        <script src="{{ asset('/js/showOrder.js') }}"></script>
         <!--- Calendario no mozzila--->
         <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
         <script>

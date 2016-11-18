@@ -10,7 +10,7 @@
         <p>Gostaria de remover o <b>Pedido N° {{ $order->id }}</b>?</p>
       </div>
       <div class="modal-footer">
-        <a href="#" class="btn btn-default">Sim</a>
+        <a href="{{ route('order.cancel', ['id'=>$order->id]) }}" class="btn btn-default">Sim</a>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
       </div>
     </div><!-- /.modal-content -->
