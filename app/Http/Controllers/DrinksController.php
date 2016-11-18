@@ -54,7 +54,7 @@ class DrinksController extends Controller
                 ]
             );
 
-        $message = 'Opção removida com suecesso!';
+        $message = 'Opção removida com sucesso!';
         return redirect()->route('admin.drinks.index')->withMessageSuccess($message);
     }
 }

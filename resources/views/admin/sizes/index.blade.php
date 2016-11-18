@@ -12,7 +12,8 @@
         <tr>
             <th>ID</th>
             <th>Tamanho</th>
-            <th>Divididos</th>
+            <th>Partes</th>
+            <th>Pedaços</th>
             <th>Preço</th>
             <th>Ação</th>
         </tr>
@@ -23,7 +24,8 @@
             <tr>
                 <td>{{ $sizePizza->id }}</td>
                 <td>{{ $sizePizza->size }}</td>
-                <td>no máximo: {{ $sizePizza->parts }} parte</td>
+                <td>dividido no máximo: {{ $sizePizza->parts }} parte</td>
+                <td>contém: {{ $sizePizza->pieces }} pedaços</td>
                 <td>R$ {{ $sizePizza->price }}</td>
                 <td>
                     <a href="{{ route('admin.sizes.edit',['id'=>$sizePizza->id]) }}" class="btn btn-default btn-sm">

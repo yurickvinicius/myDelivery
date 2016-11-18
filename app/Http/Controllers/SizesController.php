@@ -17,7 +17,7 @@ class SizesController extends Controller
     }
 
     public function index(){
-        $sizePizzas = $this->sizePizzaModel->paginate();
+        $sizePizzas = $this->sizePizzaModel->where('in_use','<>','n')->paginate();
         return view('admin.sizes.index', compact('sizePizzas'));
     }
 
@@ -42,8 +42,17 @@ class SizesController extends Controller
     }
 
     public function destroy($id){
-        $this->sizePizzaModel->find($id)->delete();
+        ///$this->sizePizzaModel->find($id)->delete();
 
-        return redirect()->route('admin.sizes.index');
+        $this->sizePizzaModel
+            ->find($id)
+            ->update(
+                [
+                    'in_use' => 'n',
+                ]
+            );
+
+        $message = 'Tamanho removida com sucesso!';
+        return redirect()->route('admin.sizes.index')->withMessageSuccess($message);
     }
 }

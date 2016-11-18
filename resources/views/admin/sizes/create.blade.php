@@ -10,6 +10,7 @@
 
     <div class="form-group">
         {!! Form::submit('Criar Tamanho', ['class'=>'btn btn-primary']) !!}
+        <a href="{{ route('admin.sizes.index') }}" class="btn btn-default">Voltar</a>
     </div>
 
     {!! Form::close() !!}

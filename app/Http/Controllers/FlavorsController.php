@@ -24,7 +24,7 @@ class FlavorsController extends Controller {
     }
 
     public function index() {
-        $flavors = $this->flavorModel->orderBy('id', 'desc')->paginate();
+        $flavors = $this->flavorModel->where('in_use','<>','n')->orderBy('id', 'desc')->paginate();
         return view('admin.flavors.index', compact('flavors'));
     }
 
@@ -52,7 +52,27 @@ class FlavorsController extends Controller {
     }
 
     public function destroy($id) {
+        $this->flavorModel
+            ->find($id)
+            ->update(
+                [
+                    'in_use' => 'n',
+                ]
+            );
 
+        $flavor = $this->flavorModel->find($id);
+
+        $flavorImages = $flavor->images;
+
+        foreach ($flavorImages as $image) {
+            $flavorImage = new $this->flavorImageModel();
+            $this->destroyImage($flavorImage, $image->id);
+        }
+
+        $message = 'Sabor removida com sucesso!';
+        return redirect()->route('admin.flavors.index')->withMessageSuccess($message);
+
+        /*
         $flavor = $this->flavorModel->find($id);
 
         $flavorImages = $flavor->images;
@@ -64,6 +84,7 @@ class FlavorsController extends Controller {
 
         $this->flavorModel->find($id)->delete();
         return redirect()->route('admin.flavors.index');
+        */
     }
 
     public function images($id) {

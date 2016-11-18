@@ -10,7 +10,8 @@ class Flavor extends Model {
         'name',
         'description',
         'price',
-        'img'
+        'img',
+        'in_use'
     ];
 
     public function images() {

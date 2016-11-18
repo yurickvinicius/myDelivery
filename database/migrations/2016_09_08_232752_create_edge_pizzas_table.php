@@ -16,6 +16,7 @@ class CreateEdgePizzasTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->decimal('price');
+            $table->char('in_use')->default('y');
             $table->timestamps();
         });
     }

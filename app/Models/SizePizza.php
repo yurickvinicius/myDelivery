@@ -9,7 +9,9 @@ class SizePizza extends Model {
     protected $fillable = [
         'size',
         'price',
-        'parts'
+        'parts',
+        'pieces',
+        'in_use'
     ];
 
 }

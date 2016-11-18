@@ -10,6 +10,7 @@
 
     <div class="form-group">
         {!! Form::submit('Atualizar Borda', ['class'=>'btn btn-primary']) !!}
+        <a href="{{ route('admin.edges.index') }}" class="btn btn-default">Voltar</a>
     </div>
 
     {!! Form::close() !!}

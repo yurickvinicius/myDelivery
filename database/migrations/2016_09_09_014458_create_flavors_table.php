@@ -17,6 +17,7 @@ class CreateFlavorsTable extends Migration {
             $table->text('description');
             $table->decimal('price');
             $table->string('img')->nullable();
+            $table->char('in_use')->default('y');
             $table->timestamps();
         });
     }

@@ -53,7 +53,7 @@ class DeliveryMeansController extends Controller
                 ]
             );
 
-        $message = 'Forma de entrega removido com suecesso!';
+        $message = 'Forma de entrega removido com sucesso!';
         return redirect()->route('admin.deliverymeans.index')->withMessageSuccess($message);
     }
 }

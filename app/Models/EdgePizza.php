@@ -8,7 +8,8 @@ class EdgePizza extends Model {
 
     protected $fillable = [
         'name',
-        'price'
+        'price',
+        'in_use'
     ];
 
 }

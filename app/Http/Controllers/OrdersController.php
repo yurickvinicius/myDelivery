@@ -206,7 +206,7 @@ class OrdersController extends Controller {
             }
         }
 
-        $message = 'Pedido realizado com suecesso!';
+        $message = 'Pedido realizado com sucesso!';
         return redirect()->route('orders.index')->withMessageSuccess($message);
     }
 

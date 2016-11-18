@@ -26,6 +26,7 @@ class SizePizzaRequest extends Request
         return [
             'size' => 'required|min:1|max:60',
             'parts' => 'required|not_in:0',
+            'pieces' => 'required|not_in:0',
             'price' => 'required'
         ];
     }
@@ -34,7 +35,8 @@ class SizePizzaRequest extends Request
     {
         return [
             'size.required' => 'O campo Tamanho é obrigatório',
-            'parts.required' => 'O campo Dividido é obrigatório',
+            'parts.not_in' => 'O campo Dividido é obrigatório',
+            'pieces.not_in' => 'O campo Pedaços é obrigatório',
             'price.required' => 'O campo Preço é obrigatório'
         ];
     }

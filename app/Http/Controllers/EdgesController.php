@@ -18,7 +18,7 @@ class EdgesController extends Controller
     }
 
     public function index(){
-        $edges = $this->edgePizzaModel->paginate();
+        $edges = $this->edgePizzaModel->where('in_use','<>','n')->paginate();
         return view('admin.edges.index', compact('edges'));
     }
 
@@ -43,8 +43,17 @@ class EdgesController extends Controller
     }
 
     public function destroy($id){
-        $this->edgePizzaModel->find($id)->delete();
+        ///$this->edgePizzaModel->find($id)->delete();
 
-        return redirect()->route('admin.edges.index');
+        $this->edgePizzaModel
+            ->find($id)
+            ->update(
+                [
+                    'in_use' => 'n',
+                ]
+            );
+
+        $message = 'Borda removida com sucesso!';
+        return redirect()->route('admin.edges.index')->withMessageSuccess($message);
     }
 }
