@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder {
             'name' => 'Ana Carolina Rossoni',
             'email' => 'ana@gmail.com',
             'password' => Hash::make('12345'),
-            'role' => 'Cliente',
+            'role' => 'Atendente',
             'remember_token' => str_random(10),
         ]);
 

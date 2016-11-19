@@ -26,7 +26,7 @@ class SizePizzaRequest extends Request
         return [
             'size' => 'required|min:1|max:60',
             'parts' => 'required|not_in:0',
-            'pieces' => 'required|not_in:0',
+            'pieces' => 'required|numeric|between:1,50',
             'price' => 'required'
         ];
     }
@@ -36,7 +36,8 @@ class SizePizzaRequest extends Request
         return [
             'size.required' => 'O campo Tamanho é obrigatório',
             'parts.not_in' => 'O campo Dividido é obrigatório',
-            'pieces.not_in' => 'O campo Pedaços é obrigatório',
+            'pieces.required' => 'O campo Pedaços é obrigatório, deve conter um numero maior que zero',
+            'pieces.between' => 'Pedaços deve estar entre 1 e 50.',
             'price.required' => 'O campo Preço é obrigatório'
         ];
     }

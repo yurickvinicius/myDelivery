@@ -4,7 +4,7 @@
   {!! Form::open(['route'=>'admin.reports.orders']) !!}
 
   <div class="container">
-    <div class="col-md-6" style="possition:absolute; margin-left:20%">
+    <div class="col-md-6 col-md-offset-3" style="possition:absolute;">
       <div class="panel panel-primary">
         <div class="panel-heading">Relatório de Pedidos</div>
         <div class="panel-body">

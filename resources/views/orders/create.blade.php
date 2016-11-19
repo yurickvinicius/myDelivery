@@ -44,16 +44,17 @@
             <input name="cadAddress" type="text" class="form-control" id="cadAddress" placeholder="Endereço">
           </div>
 
-          <div id="divCadNumber" class="form-group col-xs-1">
-            <label class="control-label" for="cadNumber">Numero</label>
-            <input name="cadNumber" type="text" class="form-control" id="cadNumber">
-          </div>
-        </div>
-
-        <div class="col-md-12">
           <div class="form-group col-xs-5">
             <label for="cadComplement">Complemento</label>
             <input name="cadComplement" type="text" class="form-control" id="cadComplement" placeholder="Complemento">
+          </div>
+
+        </div>
+
+        <div class="col-md-12">
+          <div id="divCadNumber" class="form-group col-xs-1">
+            <label class="control-label" for="cadNumber">Numero</label>
+            <input name="cadNumber" type="text" class="form-control" id="cadNumber">
           </div>
 
           <div id="divCadCellPhone" class="form-group col-xs-2">
@@ -64,6 +65,7 @@
             <label for="cadTelPhone">Tel. Residencial</label>
             <input name="cadTelPhone" type="text" class="form-control phoneMask" id="cadTelPhone" placeholder="Telefone">
           </div>
+
         </div>
 
       </div>
@@ -76,7 +78,7 @@
   <div class="col-md-12" style="margin-bottom: 10%">
     <div id="total_all" class="font-25 canto"><b>TOTAL:</b> </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title">Pizza 1</h3>
       </div>
@@ -118,7 +120,7 @@
             <input type="hidden" id="maxPiecesPizza">
             <div class="col-md-12">
               <div id="divCadFlavor_1" class="input-group">
-                <label style="font-size:14px; float:left; margin-right:5px; margin-top:5px">Insira o Código: </label>
+                <label class="control-label" for="inp_flavor_cod_1" style="font-size:14px; float:left; margin-right:5px; margin-top:5px">Insira o Código: </label>
                 <input title="Insira o código e após click no nome" onkeyup="showFlavorCod(1)" id="inp_flavor_cod_1" type="text" class="form-control" style="width: 90px" placeholder="código">
               </div>
             </div>
@@ -145,7 +147,7 @@
 
     <!--------------    -------------->
 
-    <div class="panel panel-default f_left" style="margin-top: 1%; width: 300px">
+    <div class="panel panel-primary f_left" style="margin-top: 1%; width: 300px">
       <div class="panel-heading">
         <h3 class="panel-title">Opção 1</h3>
       </div>
@@ -161,20 +163,28 @@
       </div>
     </div>
 
-    <div style="margin-bottom: 12%">
+    <div>
       <div id="generate_options"></div>
     </div>
 
-    <div id="divDeliverymeans">
-      <select onchange="valTotalPizza()" name="delivery_means" id="delivery_means" class="form-control">
-        <option value="0" price="0">Selecione uma Forma de Entrega</option>
-        @foreach($deliveryMeans as $deliveryMean)
-          <option value="{{ $deliveryMean->id }}" price="{{ $deliveryMean->price }}">{{ $deliveryMean->name }}</option>
-        @endforeach
-      </select>
+    <div class="col-md-12" style='margin-top:3%; margin-left:-1%'>
+      <div id="divDeliverymeans" class="col-xs-3">
+        <label class="control-label" for="delivery_means">Forma de Entrega</label>
+        <select onchange="valTotalPizza()" name="delivery_means" id="delivery_means" class="form-control">
+          <option value="0" price="0">Forma de Entrega</option>
+          @foreach($deliveryMeans as $deliveryMean)
+            <option value="{{ $deliveryMean->id }}" price="{{ $deliveryMean->price }}">{{ $deliveryMean->name }}</option>
+          @endforeach
+        </select>
+      </div>
+
+      <div class="form-group col-xs-2">
+        <label for="cadTelPhone">Troco para?</label>
+        <input name="cadChange" type="text" class="form-control maskMoney" id="cadChange" placeholder="R$">
+      </div>
     </div>
 
-    <div style="margin-top: 2%">
+    <div class="col-md-12">
       <button type="button" class="btn btn-primary btn-lg add_new_pizza"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Pizza</button>
       <button type="button" id="btt_add_new_option" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Opção</button>
       <button onclick="validateOrder(); return false;" class="btn btn-success btn-lg" type="submit">Finalizar Cadastrar</button>

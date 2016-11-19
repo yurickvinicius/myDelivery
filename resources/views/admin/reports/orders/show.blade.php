@@ -8,7 +8,7 @@
         <div class="panel-body">
 
 
-          <table class="table table-hover table-condensed" contenteditable="true">
+          <table class="table table-hover table-condensed">
             <thead>
               <tr>
                 <th>#</th>

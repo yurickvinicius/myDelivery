@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role'
+        'name', 'email', 'password', 'role', 'in_use'
     ];
 
     /**
@@ -23,8 +23,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-   
-    public function client(){                
+
+    public function client(){
         return $this->hasOne(Client::class);
     }
 }

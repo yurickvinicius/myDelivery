@@ -1,45 +1,48 @@
 @extends('app')
 @section('content')
 
-<div class="container">
-    <h3>Bordas</h3>
+  <div class="container">
+    <div class="col-md-12">
+      <a href="{{ route('admin.edges.create') }}" class="btn btn-default">Nova Borda</a><br><br>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Bordas</div>
+        <div class="panel-body">
 
-    <a href="{{ route('admin.edges.create') }}" class="btn btn-default">Nova Borda</a>
-    <br><br>
-
-    <table class="table table-bordered">
-        <thead>
-            <tr>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Price</th>
                 <th>Ação</th>
-            </tr>
-        </thead>
+              </tr>
+            </thead>
 
-        <tbody>
-            @foreach($edges as $edge)
-            <tr>
-                <td>{{ $edge->id }}</td>
-                <td>{{ $edge->name }}</td>
-                <td>R$ {{ $edge->price }}</td>
-                <td>
-                    <a href="{{ route('admin.edges.edit',['id'=>$edge->id]) }}" class="btn btn-default btn-sm">
-                        Editar
+            <tbody>
+              @foreach($edges as $edge)
+                <tr>
+                  <td>{{ $edge->id }}</td>
+                  <td>{{ $edge->name }}</td>
+                  <td>R$ {{ $edge->price }}</td>
+                  <td>
+                    <a href="{{ route('admin.edges.edit',['id'=>$edge->id]) }}" class="btn btn-default btn-xs">
+                      Editar
                     </a>
-                    <a href="#modal_delete_<?= $edge->id ?>" data-toggle="modal" class="btn btn-default btn-sm">
-                        Remover
+                    <a href="#modal_delete_<?= $edge->id ?>" data-toggle="modal" class="btn btn-default btn-xs">
+                      Remover
                     </a>
-                </td>
-            </tr>
-            @include('admin.edges.partials.modal_delete')
-            @endforeach
-        </tbody>
+                  </td>
+                </tr>
+                @include('admin.edges.partials.modal_delete')
+              @endforeach
+            </tbody>
 
-    </table>
+          </table>
 
-    {!! $edges->render() !!}
-
-</div>
+        </div>
+      </div>
+      {!! $edges->render() !!}
+    </div>
+  </div>
 
 @endsection

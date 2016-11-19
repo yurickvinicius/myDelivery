@@ -1,9 +1,13 @@
 <div class="form-group">
-    {!! Form::label('Nome','Nome:') !!}
-    {!! Form::text('name', null, ['class'=>'form-control']) !!}
+    <label class="col-md-4 control-label">Nome</label>
+    <div class="col-md-6">
+        {!! Form::text('name', null, ['class'=>'form-control']) !!}
+    </div>
 </div>
 
 <div class="form-group">
-    {!! Form::label('price','Preço:') !!}
-    {!! Form::text('price', null, ['id'=>'xxxx', 'class'=>'form-control maskMoney', 'placeholder'=>'R$']) !!}
+    <label class="col-md-4 control-label">Preço</label>
+    <div class="col-md-6">
+        {!! Form::text('price', null, ['class'=>'form-control maskMoney', 'placeholder'=>'R$']) !!}
+    </div>
 </div>

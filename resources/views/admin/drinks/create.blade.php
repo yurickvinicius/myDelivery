@@ -1,20 +1,29 @@
 @extends('app')
 @section('content')
 
-<div class="container">
-    <h3>Nova Bebida</h3>
 
-    {!! Form::open(['route'=>'admin.drinks.store']) !!}
+  {!! Form::open(['route'=>'admin.drinks.store','class'=>'form-horizontal']) !!}
 
-    @include('admin.drinks._form')
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Nova Opção</div>
+          <div class="panel-body">
 
-    <div class="form-group">
-        {!! Form::submit('Criar Bebida', ['class'=>'btn btn-primary']) !!}
-        <a href="{{ route('admin.drinks.index') }}" class="btn btn-default">Voltar</a>
+            @include('admin.drinks._form')
+
+            <div class="form-group">
+              <div class="col-md-6 col-md-offset-4">
+                {!! Form::submit('Criar Opção', ['class'=>'btn btn-primary']) !!}
+                <a href="{{ route('admin.drinks.index') }}" class="btn btn-default">Voltar</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-
-    {!! Form::close() !!}
-
-</div>
-
+  </div>
+  {!! Form::close() !!}
 @endsection

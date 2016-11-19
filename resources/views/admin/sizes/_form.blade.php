@@ -1,23 +1,29 @@
 <div class="form-group">
-    {!! Form::label('size','Tamanho:') !!}
+  <label class="col-md-4 control-label">Tamanho</label>
+  <div class="col-md-6">
     {!! Form::text('size', null, ['class'=>'form-control']) !!}
+  </div>
 </div>
 
 <div class="form-group">
-    {!! Form::label('parts','Dividido no maximo em quantas partes?') !!}
+  {!! Form::label('parts','Dividido no maximo em quantas partes?', ['class'=>'col-md-4 control-label']) !!}
+  <div class="col-md-6">
     {!! Form::select('parts',
-    [0=>'Selecione', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    null, ['class' => 'form-control']) !!}
-</div>
+      [0=>'Selecione', 1=>'Unica Parte', 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      null, ['class' => 'form-control']) !!}
+    </div>
+  </div>
 
-<div class="form-group">
-    {!! Form::label('pieces','Possui quantos de pedaços?') !!}
-    {!! Form::select('pieces',
-    [0=>'Selecione', 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],
-    null, ['class' => 'form-control']) !!}
-</div>
+  <div class="form-group">
+    {!! Form::label('parts','Possui quantos de pedaços?', ['class'=>'col-md-4 control-label']) !!}
+    <div class="col-md-2">
+      {!! Form::number('pieces',null, ['class' => 'form-control']) !!}
+    </div>
+  </div>
 
-<div class="form-group">
-    {!! Form::label('price','Preço:') !!}
-    {!! Form::text('price', null, ['class'=>'form-control maskMoney', 'placeholder'=>'R$']) !!}
-</div>
+  <div class="form-group">
+    <label class="col-md-4 control-label">Preço</label>
+    <div class="col-md-6">
+      {!! Form::text('price', null, ['class'=>'form-control maskMoney', 'placeholder'=>'R$']) !!}
+    </div>
+  </div>

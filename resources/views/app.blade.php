@@ -41,7 +41,7 @@
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="nav navbar-nav">
 
-                        <li><a href="{{ route('admin.drinks.index') }}">Bebidas</a></li>
+                        <li><a href="{{ route('admin.drinks.index') }}">Opcionais</a></li>
                         <li><a href="{{ route('admin.deliverymeans.index') }}">Forma de Entrega</a></li>
                         <li><a href="{{ route('orders.index') }}"><span style="margin-left: 5px" class="badge pull-right">{{ @$totalOrders }}</span>Pedidos</a></li>
 
@@ -61,6 +61,8 @@
                             </ul>
                         </li>
 
+                        <li><a href="{{ route('admin.users.index') }}">Usuarios</a></li>
+
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -75,6 +77,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ auth()->user()->name }} <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Perfil</a></li>
                                 <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
                             </ul>
                         </li>

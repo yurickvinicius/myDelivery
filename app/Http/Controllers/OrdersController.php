@@ -65,7 +65,7 @@ class OrdersController extends Controller {
     }
 
     public function show($id) {
-        $deliverymens = User::where('role', 'Entregador')->get();
+        $deliverymens = User::where('role', 'Entregador')->where('in_use','<>','n')->get();
         $order = $this->orderModel->find($id);
 
         return view('orders.show', compact('order', 'deliverymens', 'deliverie'));

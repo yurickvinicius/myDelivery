@@ -242,6 +242,7 @@ $(document).ready(function () {
     var selectSizeText = new Array();
     var selectSizeVal = new Array();
     var selectSizePrice = new Array();
+    var selectOptions = new Array();
     var flavorsImg = new Array();
     var imgPiece;
     var tbody;
@@ -308,7 +309,7 @@ $(document).ready(function () {
             }
 
             $('#generate_pizzas').append('<pizza>\
-    <div class="panel panel-default">\
+    <div class="panel panel-primary">\
         <div class="panel-heading">\
             <h3 class="panel-title">Pizza ' + x + '</h3>\
         </div>\
@@ -339,7 +340,7 @@ $(document).ready(function () {
                 <input type="hidden" id="maxPiecesPizza">\
                     <div class="col-md-12">\
                         <div id="divCadFlavor_'+ x +'" class="input-group">\
-                            <label style="font-size:14px; float:left; margin-right:5px; margin-top:5px">Insira o Código: </label>\
+                            <label class="control-label" for="inp_flavor_cod_'+ x +'" style="font-size:14px; float:left; margin-right:5px; margin-top:5px">Insira o Código: </label>\
                             <input title="Insira o código e após click no nome" onkeyup="showFlavorCod('+ x +')" id="inp_flavor_cod_'+ x +'" type="text" class="form-control" style="width: 90px" placeholder="código">\
                         </div>\
                     </div>\
@@ -438,12 +439,12 @@ $(document).ready(function () {
         if (y < campos_max) {
 
             optionOption = '';
-            for (var i = 0; i <= selectEdgeVal.length; i++) {
+            for (var i = 0; i < selectOptionVal.length; i++) {
                 optionOption += "<option value='" + selectOptionVal[i] + "' price='" + selectOptionPrice[i] + "'>" + selectOptionText[i] + "</option>";
             }
 
             $('#generate_options').append('<pizza_option style="float:left; margin-top:1%; margin-left:5px">\
-    <div class="panel panel-default" style="width: 300px">\
+    <div class="panel panel-primary" style="width: 300px">\
         <div class="panel-heading">\
             <h3 class="panel-title">Opção ' + y + '</h3>\
         </div>\

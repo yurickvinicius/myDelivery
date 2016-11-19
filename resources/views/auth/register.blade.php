@@ -7,16 +7,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
-                    @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
 
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/register') }}">
                         {!! csrf_field() !!}
@@ -40,7 +30,6 @@
                             <div class="col-md-6">
                                 <select name="role" class="form-control">
                                     <option value="0">Selecione</option>
-                                    <option value="Cliente">Cliente</option>
                                     <option value="Entregador">Entregador</option>
                                     <option value="Atendente">Atendente</option>
                                     <option value="Administrador">Administrador</option>

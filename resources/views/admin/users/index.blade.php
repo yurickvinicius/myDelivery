@@ -3,47 +3,45 @@
 
   <div class="container">
     <div class="col-md-12">
-      <a href="{{ route('admin.drinks.create') }}" class="btn btn-default">Nova Opção</a><br><br>
+      <a href="{{ route('admin.users.create') }}" class="btn btn-default">Novo Usuário</a><br><br>
       <div class="panel panel-primary">
-        <div class="panel-heading">Opcionais</div>
+        <div class="panel-heading">Usuários</div>
         <div class="panel-body">
-
 
           <table class="table table-condensed">
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Nome</th>
-                <th>Preço</th>
+                <th>Status</th>
                 <th>Ação</th>
               </tr>
             </thead>
 
             <tbody>
-              @foreach($drinks as $drink)
+              @foreach($users as $user)
                 <tr>
-                  <td>{{ $drink->id }}</td>
-                  <td>{{ $drink->name }}</td>
-                  <td>{{ $drink->price }}</td>
+                  <td>{{ $user->id }}</td>
+                  <td>{{ $user->name }}</td>
+                  <td>{{ $user->role }}</td>
                   <td>
-                    <a href="{{ route('admin.drinks.edit',['id'=>$drink->id]) }}" class="btn btn-default btn-xs">
+                    <a href="{{ route('admin.users.edit', ['id'=>$user->id]) }}" class="btn btn-default btn-xs">
                       Editar
                     </a>
-                    <a href="#modal_delete_<?= $drink->id ?>" data-toggle="modal" class="btn btn-default btn-xs">
+                    <a href="#modal_delete_<?= $user->id ?>" data-toggle="modal" class="btn btn-default btn-xs">
                       Remover
                     </a>
                   </td>
                 </tr>
-                @include('admin.drinks.partials.modal_delete')
+                @include('admin.users.partials.modal_delete')
               @endforeach
             </tbody>
 
           </table>
+
         </div>
       </div>
-
-      {!! $drinks->render() !!}
-
+      {!! $users->render() !!}
     </div>
   </div>
 

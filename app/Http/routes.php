@@ -11,10 +11,18 @@
   |
  */
 
+ // Rotas para solicitar trocar de senha...
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Rotas para trocar a senha...
+Route::get('password/reset/{token}', 'PasswordController@getReset');
+Route::post('password/reset', 'PasswordController@postReset');
+
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
-///Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/logoutTest', 'Auth\AuthController@logout');
 
 // Registration routes...
@@ -73,6 +81,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'authPizzeria', 'as' => 'admi
 
     Route::get('reports/orders', ['as' => 'reports.index', 'uses' => 'ReportsController@index']);
     Route::post('reports/orders', ['as' => 'reports.orders', 'uses' => 'ReportsController@reportOrders']);
+
+    Route::get('users', ['as' => 'users.index', 'uses' => 'UsersController@index']);
+    Route::get('users/create', ['as' => 'users.create', 'uses' => 'UsersController@create']);
+    Route::post('users/store', ['as' => 'users.store', 'uses' => 'UsersController@store']);
+    Route::get('users/edit/{id}', ['as' => 'users.edit', 'uses' => 'UsersController@edit']);
+    Route::post('users/update/{id}', ['as' => 'users.update', 'uses' => 'UsersController@update']);
+    Route::get('users/destroy/{id}', ['as' => 'users.destroy', 'uses' => 'UsersController@destroy']);
 });
 
 Route::group(['middleware' => 'authPizzeria', 'where' => ['id' => '[0-9]+']], function() {
