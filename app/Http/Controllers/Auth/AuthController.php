@@ -28,7 +28,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new authentication controller instance.
@@ -63,18 +63,18 @@ class AuthController extends Controller
      * @return User
      */
     protected function create(array $data)
-    {        
+    {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'role' => $data['role']          
+            'role' => $data['role']
         ]);
     }
-    
+
     protected function logout(){
         \Illuminate\Support\Facades\Auth::logout();
         return redirect()->to('/');
     }
-    
+
 }

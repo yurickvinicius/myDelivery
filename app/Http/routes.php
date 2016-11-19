@@ -37,7 +37,7 @@ Route::post('store', ['as' => 'pizza.store', 'uses' => 'PizzeriaController@store
 
 ////
 
-Route::group(['prefix' => 'admin', 'middleware' => 'authPizzeria', 'as' => 'admin.', 'where' => ['id' => '[0-9]+']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => 'authSystem', 'as' => 'admin.', 'where' => ['id' => '[0-9]+']], function() {
 
     Route::get('', ['as' => 'orders.index', 'uses' => 'OrdersController@index']);
     Route::get('flavors', ['as' => 'flavors.index', 'uses' => 'FlavorsController@index']);
@@ -90,7 +90,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'authPizzeria', 'as' => 'admi
     Route::get('users/destroy/{id}', ['as' => 'users.destroy', 'uses' => 'UsersController@destroy']);
 });
 
-Route::group(['middleware' => 'authPizzeria', 'where' => ['id' => '[0-9]+']], function() {
+Route::group(['middleware' => 'authSystem', 'where' => ['id' => '[0-9]+']], function() {
 
     Route::get('orders', ['as' => 'orders.index', 'uses' => 'OrdersController@index']);
     Route::get('order/{id}/show', ['as' => 'order.show', 'uses' => 'OrdersController@show']);

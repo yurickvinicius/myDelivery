@@ -44,7 +44,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'authPizzeria' => \myDelivery\Http\Middleware\AuthenticateAdmin::class,
+        'authSystem' => \myDelivery\Http\Middleware\AuthenticateAdmin::class,
         'auth' => \myDelivery\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
