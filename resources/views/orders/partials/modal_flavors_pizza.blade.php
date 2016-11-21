@@ -30,8 +30,8 @@
                                 @foreach($flavors as $flavor)
                                 <tr style="cursor: pointer">
                                     <td>{{ $flavor->id }}</td>
-                                    <td>
-                                        <input name="pizza[1][flavor][{{ $cont }}]" type="checkbox" id="flavorCheckPizza_1" flavor="{{ $flavor->name }}" price="{{ $flavor->price }}" description="{{ $flavor->description }}" value="{{ $flavor->id }}" class="checkbox" style="cursor: pointer">
+                                    <td>                                        
+                                        <input name="pizza[1][flavorTeste][{{ $cont }}]" type="number" id="flavorNumberPizza_1" flavorId="{{ $flavor->id }}" flavor="{{ $flavor->name }}" price="{{ $flavor->price }}" description="{{ $flavor->description }}" class="form-control" style="width:60px">
                                     </td>
                                     <td>
                                         <img id="imgFlavor" class="img-rounded img-responsive" src="{{ url('uploads/'.$flavor->images->lists('id')->first().'.'.$flavor->images->lists('extension')->first()) }}" width="80">

@@ -1,9 +1,18 @@
 function generateGraficPizza(id) {
 
     var flavorsName = new Array();
-    $("input[type=checkbox][id='flavorCheckPizza_" + id + "']:checked").each(function () {
-        flavorsName.push($(this).attr('flavor'));
+
+    $("input[type=number][id='flavorNumberPizza_" + id + "']").each(function () {
+
+        if($(this).val() > 0){
+            for(var i=0; i < $(this).val(); i++){
+                flavorsName.push($(this).attr('flavor'));
+            }
+        }
+
+        ///flavorsName.push($(this).attr('flavor'));
     });
+
     ///var maxPieces = returnMaxPiecesPizza();
     var pizza = [["Pizza", "Sabores Selecionados"]];
     var colors = [];

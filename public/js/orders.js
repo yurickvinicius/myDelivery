@@ -108,7 +108,11 @@ function showFlavorCod(pizza) {
 }
 
 function selectFlavor(cod, pizza) {
-    $("input[type=checkbox][id='flavorCheckPizza_" + pizza + "'][value=" + cod + "]").prop('checked', true);
+
+    var flavorQtd = $("input[type=number][id='flavorNumberPizza_" + pizza + "'][flavorId=" + cod + "]").val();
+    flavorQtd++;
+    $("input[type=number][id='flavorNumberPizza_" + pizza + "'][flavorId=" + cod + "]").prop('value', flavorQtd);
+
     generateGraficPizza(pizza);
     valTotalPizza(pizza);
     selectedFlavorsPizza(pizza);
@@ -122,6 +126,9 @@ function valTotalOption(id, option, totalAll) {
 
     for (var i = 1; i <= qtdOption; i++) {
         total_option += parseFloat($('select[id=option_id_' + i + '] option:selected').attr('price'));
+
+        if (Number.isNaN(total_option))
+            total_option = 0;
     }
 
     /// deletando
@@ -130,8 +137,8 @@ function valTotalOption(id, option, totalAll) {
         total_option = totalAll - subtrair;
     }
 
-    if (Number.isNaN(total_option))
-        total_option = 0;
+    ///if (Number.isNaN(total_option))
+    ///    total_option = 0;
 
     return total_option;
 
@@ -149,8 +156,10 @@ function valTotalPizza(id, option) {
     //// additional the delivery form
     var additional = parseFloat($('#delivery_means option:selected').attr('price'));
 
-    $("input[type=checkbox][id='flavorCheckPizza_" + id + "']:checked").each(function () {
-        valFlavorsPrice += parseFloat(($(this).attr('price')));
+    $("input[type=number][id='flavorNumberPizza_" + id + "']").each(function () {
+        if($(this).val() > 0){
+            valFlavorsPrice += ($(this).val() * parseFloat($(this).attr('price')));
+        }
     });
 
     /////
@@ -168,15 +177,26 @@ function valTotalPizza(id, option) {
 
     ///////////// Total geral Pizza
     var qtdPizzas = $("pizza").length;
-    var subtrair = 0;
     var total = 0;
+    totalGeneral = 0;
     var totalAll = parseFloat($('#span_total_all').text());
 
-    ///delete pizza
-    if (option == 0) {
+    /////////////////// refatorar no futuro
+    if (option == 11) { ///delete pizza
 
-        subtrair = parseFloat($('#span_total_pizza_' + id + '').text());
-        total = totalAll - subtrair;
+      for(var i=1; i <= (qtdPizzas +1); i++){
+          totalGeneral += parseFloat($('#span_total_pizza_' + i + '').text());
+      }
+
+      totalGeneral = totalGeneral - (parseFloat($('#span_total_pizza_' + id + '').text()));
+
+    }else if (option == 0) { ///delete sabor pizza
+
+        total = parseFloat($('#span_total_pizza_' + id + '').text());
+
+        for(var i=1; i <= (qtdPizzas +1); i++){
+            totalGeneral += parseFloat($('#span_total_pizza_' + i + '').text());
+        }
 
     } else if (option == 01) { /// deletando option
 
@@ -184,14 +204,13 @@ function valTotalPizza(id, option) {
 
     } else {
         for (var i = 1; i <= (qtdPizzas + 1); i++) {
-            total += parseFloat($('#span_total_pizza_' + i + '').text());
+            totalGeneral += parseFloat($('#span_total_pizza_' + i + '').text());
             if (Number.isNaN(total))
-                total = 0;
+                totalGeneral = 0;
         }
-
     }
-
-    total = total + total_option + additional;
+    //////////////////
+    total = totalGeneral + total_option + additional;
     $('#total_all').html('<b>TOTAL:</b> R$ <span id="span_total_all">' + total + '</span>');
     $('#order_total').attr('value', total);
 
@@ -203,9 +222,17 @@ function selectedFlavorsPizza(id) {
     var camposMarcadosId = new Array();
     $('#cad_flavors_' + id + '').html('');
 
-    $("input[type=checkbox][id='flavorCheckPizza_" + id + "']:checked").each(function () {
-        camposMarcados.push($(this).attr('flavor'));
-        camposMarcadosId.push($(this).attr('value'));
+    $("input[type=number][id='flavorNumberPizza_" + id + "']").each(function () {
+
+        if($(this).val() > 0){
+
+            for(var i=0; i< $(this).val(); i++){
+              camposMarcados.push($(this).attr('flavor'));
+              camposMarcadosId.push($(this).attr('flavorId'));
+            }
+
+        }
+
     });
 
     for (var i = 0; i < camposMarcados.length; i++) {
@@ -216,8 +243,12 @@ function selectedFlavorsPizza(id) {
 }
 
 function uncheckedFlavor(pizza, flavor) {
-    ///alert(pizza+' - '+flavor)
-    $("input[type=checkbox][id='flavorCheckPizza_" + pizza + "'][value=" + flavor + "]").prop('checked', false);
+    //// new qtd
+    var flavorQtd = $("input[type=number][id='flavorNumberPizza_" + pizza + "'][flavorId=" + flavor + "]").val();
+    flavorQtd--
+    $("input[type=number][id='flavorNumberPizza_" + pizza + "'][flavorId=" + flavor + "]").prop('value', flavorQtd);
+    ////
+
     $("#show_flavor_checked_" + pizza + flavor + "").remove();
 
     generateGraficPizza(pizza);
@@ -253,11 +284,11 @@ $(document).ready(function () {
     var flavorsId = new Array();
 
     /// flavors
-    $("input[type=checkbox][id='flavorCheckPizza_1']").each(function () {
+    $("input[type=number][id='flavorNumberPizza_1']").each(function () {
         flavorsName.push($(this).attr('flavor'));
         flavorsPrice.push($(this).attr('price'));
         flavorsDescription.push($(this).attr('description'));
-        flavorsId.push($(this).attr('value'));
+        flavorsId.push($(this).attr('flavorId'));
     });
     $("img[id='imgFlavor']").each(function () {
         flavorsImg.push($(this).attr('src'));
@@ -296,7 +327,7 @@ $(document).ready(function () {
                             <tr style='cursor: pointer'>\
                                 <td>" + flavorsId[i] + "</td>\
                                 <td>\
-                                    <input name='pizza[" + x + "][flavor][" + i + "]' type='checkbox' name='flavors_id[" + i + "]' id='flavorCheckPizza_" + x + "' flavor='" + flavorsName[i] + "' price='" + flavorsPrice[i] + "' value='" + flavorsId[i] + "' class='checkbox' style='cursor: pointer'>\
+                                    <input name='pizza[" + x + "][flavor][" + x + "]' type='number' id='flavorNumberPizza_" + x + "' flavorId='" + flavorsId[i] + "' flavor='" + flavorsName[i] + "' price='" + flavorsPrice[i] + "' class='form-control' style='width:60px'>\
                                 </td>\
                                 <td>\
                                     <img class='img-rounded img-responsive' src='" + flavorsImg[i] + "' width='80'>\
@@ -404,7 +435,7 @@ $(document).ready(function () {
 </div>\
 \
 </div>\
-    <button onclick="valTotalPizza(' + x + ',0)" type="button" class="btn btn-danger remover_pizza"><i class="marg_right_5 glyphicon glyphicon-minus"></i>Remover Pizza</button>\
+    <button onclick="valTotalPizza(' + x + ',11)" type="button" class="btn btn-danger remover_pizza"><i class="marg_right_5 glyphicon glyphicon-minus"></i>Remover Pizza</button>\
 </pizza>\
  ');
             generateGraficPizzaDefault(x);
