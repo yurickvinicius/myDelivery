@@ -125,6 +125,7 @@ function valTotalOption(id, option, totalAll) {
     var total_option = 0;
 
     for (var i = 1; i <= qtdOption; i++) {
+
         total_option += parseFloat($('select[id=option_id_' + i + '] option:selected').attr('price'));
 
         if (Number.isNaN(total_option))
@@ -136,9 +137,6 @@ function valTotalOption(id, option, totalAll) {
         var subtrair = parseFloat($('select[id=option_id_' + id + '] option:selected').attr('price'));
         total_option = totalAll - subtrair;
     }
-
-    ///if (Number.isNaN(total_option))
-    ///    total_option = 0;
 
     return total_option;
 
@@ -178,7 +176,7 @@ function valTotalPizza(id, option) {
     ///////////// Total geral Pizza
     var qtdPizzas = $("pizza").length;
     var total = 0;
-    totalGeneral = 0;
+    var totalGeneral = 0;
     var totalAll = parseFloat($('#span_total_all').text());
 
     /////////////////// refatorar no futuro
@@ -210,6 +208,8 @@ function valTotalPizza(id, option) {
         }
     }
     //////////////////
+    ///alert(totalGeneral+' - '+total_option+' - '+additional)
+
     total = totalGeneral + total_option + additional;
     $('#total_all').html('<b>TOTAL:</b> R$ <span id="span_total_all">' + total + '</span>');
     $('#order_total').attr('value', total);

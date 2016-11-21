@@ -178,12 +178,17 @@ class OrdersController extends Controller {
 
             /// save flavors_pizzas ////////////////////
             foreach ($pizza['flavor'] as $flavor) {
-                $tableFlavorsPizza = [
-                    'pizza_built_id' => $pizzaBuilt->id,
-                    'flavor_id' => $flavor
-                ];
 
-                $this->flavorsPizzaModel->create($tableFlavorsPizza);
+                if($flavor > 0){
+                    for ($i=0; $i < $flavor; $i++) {
+                        $tableFlavorsPizza = [
+                            'pizza_built_id' => $pizzaBuilt->id,
+                            'flavor_id' => $flavor
+                        ];
+                        $this->flavorsPizzaModel->create($tableFlavorsPizza);
+                    }
+                }
+
             }
 
             /// save order pizzas ////////////////////
