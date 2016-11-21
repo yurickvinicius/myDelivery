@@ -18,7 +18,7 @@ class Order extends Model {
     ];
 
     public static function totalOrdersWaiting() {
-        return Order::where('status','<>','Entregue')->count();
+        return Order::where('status','<>','Entregue')->where('in_use','<>','n')->count();
     }
 
     public function orderPizzas() {

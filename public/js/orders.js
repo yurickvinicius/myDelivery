@@ -327,7 +327,7 @@ $(document).ready(function () {
                             <tr style='cursor: pointer'>\
                                 <td>" + flavorsId[i] + "</td>\
                                 <td>\
-                                    <input name='pizza[" + x + "][flavor][" + x + "]' type='number' id='flavorNumberPizza_" + x + "' flavorId='" + flavorsId[i] + "' flavor='" + flavorsName[i] + "' price='" + flavorsPrice[i] + "' class='form-control' style='width:60px'>\
+                                    <input value='0' name='pizza[" + x + "][flavor]["+ flavorsId[i] +"]' type='number' id='flavorNumberPizza_" + x + "' flavorId='" + flavorsId[i] + "' flavor='" + flavorsName[i] + "' price='" + flavorsPrice[i] + "' class='form-control' style='width:60px'>\
                                 </td>\
                                 <td>\
                                     <img class='img-rounded img-responsive' src='" + flavorsImg[i] + "' width='80'>\

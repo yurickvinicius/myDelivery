@@ -122,7 +122,7 @@ class OrdersController extends Controller {
     }
 
     public function store(OrderRequest $request) {
-        ///dd($request);
+        ///dd($request['pizza']);
         /// save payment form ////////////////
         $tablePaymentForm = [
             'form' => 'Dinheiro',
@@ -176,20 +176,25 @@ class OrdersController extends Controller {
 
             $pizzaBuilt = $this->pizzaBuiltModel->create($tablePizzaBuilt);
 
-            /// save flavors_pizzas ////////////////////
-            foreach ($pizza['flavor'] as $flavor) {
+            /// save flavors_pizzas ////////////////////           
 
-                if($flavor > 0){
-                    for ($i=0; $i < $flavor; $i++) {
-                        $tableFlavorsPizza = [
-                            'pizza_built_id' => $pizzaBuilt->id,
-                            'flavor_id' => $flavor
-                        ];
-                        $this->flavorsPizzaModel->create($tableFlavorsPizza);
+                foreach ($pizza['flavor'] as $key => $value) {                                        
+                    
+                    if($value > 0){
+                        
+                        for ($i=0; $i < $value; $i++) {
+                            $tableFlavorsPizza = [
+                                'pizza_built_id' => $pizzaBuilt->id,
+                                'flavor_id' => $key
+                            ];
+                            $this->flavorsPizzaModel->create($tableFlavorsPizza);
+                        }
+                        
                     }
-                }
-
-            }
+                    
+                }               
+            
+                ///dd();
 
             /// save order pizzas ////////////////////
             $tableOrderPizza = [

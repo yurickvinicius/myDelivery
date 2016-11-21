@@ -31,7 +31,7 @@
                                 <tr style="cursor: pointer">
                                     <td>{{ $flavor->id }}</td>
                                     <td>
-                                        <input value="0" name="pizza[1][flavor][{{ $cont }}]" type="number" id="flavorNumberPizza_1" flavorId="{{ $flavor->id }}" flavor="{{ $flavor->name }}" price="{{ $flavor->price }}" description="{{ $flavor->description }}" class="form-control" style="width:60px">
+                                        <input value="0" name="pizza[1][flavor][{{ $flavor->id }}]" type="number" id="flavorNumberPizza_1" flavorId="{{ $flavor->id }}" flavor="{{ $flavor->name }}" price="{{ $flavor->price }}" description="{{ $flavor->description }}" class="form-control" style="width:60px">
                                     </td>
                                     <td>
                                         <img id="imgFlavor" class="img-rounded img-responsive" src="{{ url('uploads/'.$flavor->images->lists('id')->first().'.'.$flavor->images->lists('extension')->first()) }}" width="80">
