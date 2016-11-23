@@ -2,18 +2,19 @@
     <div class="modal fade" id="modal_cad_flavors_pizza_1">
         <div style="width: 90%; margin-left: auto; margin-right: auto; margin-top: 3%">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Escolher no maxímo <span id="spanMaxPiecesPizza" style="margin-left: 5px" class="badge">2</span> Sabores</h4>
-                </div>
                 <div class="modal-body">
                     <div class="form-group" style="margin-top: 1%">
-                        <div class="title" style="float: left; margin-top: -3%; margin-right: 5%; margin-left: 33%">
-                            <h3 style="margin-left: 0%;">Selecione os Sabores Desejados.</h3>
+                        
+                        <div class="title f_left">
+                            <h4><span id="spanMaxPiecesPizza_1"><b>Atenção:</b> Necessário escolher o tamanho da pizza!</span></h4>
                         </div>
-                        <div>
-                            <button onclick="selectedFlavorsPizza(1), generateGraficPizza(1), valTotalPizza(1)" type="button" data-dismiss="modal" class="btn btn-success" style="margin-top: -1.5%; float: right; margin-right: 5%">Confirma Sabores</button>
+                        <div class="f_right">
+                            <button onclick="selectedFlavorsPizza(1), generateGraficPizza(1), valTotalPizza(1)" type="button" data-dismiss="modal" class="btn btn-success">Confirma Sabores</button>
+                            <button data-dismiss="modal"  class="btn btn-default">Voltar</button>
                         </div>
+                        
+                        <br><br><br>
+                        
                         <table class="table table-hover table-condensed">
                             <thead>
                                 <tr>
@@ -31,7 +32,7 @@
                                 <tr style="cursor: pointer">
                                     <td>{{ $flavor->id }}</td>
                                     <td>
-                                        <input value="0" name="pizza[1][flavor][{{ $flavor->id }}]" type="number" id="flavorNumberPizza_1" flavorId="{{ $flavor->id }}" flavor="{{ $flavor->name }}" price="{{ $flavor->price }}" description="{{ $flavor->description }}" class="form-control" style="width:60px">
+                                        <input onchange="checkPizza({{ $flavor->id }}, 1)" name="pizza[1][flavor][{{ $flavor->id }}]" type="number" min="0" max="20" id="flavorNumberPizza_1" flavorId="{{ $flavor->id }}" flavor="{{ $flavor->name }}" price="{{ $flavor->price }}" description="{{ $flavor->description }}" class="form-control" style="width:60px">
                                     </td>
                                     <td>
                                         <img id="imgFlavor" class="img-rounded img-responsive" src="{{ url('uploads/'.$flavor->images->lists('id')->first().'.'.$flavor->images->lists('extension')->first()) }}" width="80">

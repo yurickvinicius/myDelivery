@@ -18,6 +18,57 @@ function searchCEP() {
 
 }
 
+function checkPizza(idFlavor, idPizza){   
+    
+    if(idPizza > 1)
+        idFlavor++;
+
+    
+    var sizePizza = $('#cad_size_pizza_'+idPizza+'').val();
+    if(sizePizza == 0){
+        alert('Necessário selecionar o tamanho da pizza!');
+        $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').val(''); 
+    }
+        
+    var qtd = $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').val();   
+    if(qtd > 0){
+        $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').addClass('flavorSelected');
+    }else if(qtd <= 0){
+        $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').removeClass('flavorSelected');
+        $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').val('');
+    }
+    
+    var maxSize = parseInt($('select[id=cad_size_pizza_'+idPizza+'] option:selected').attr('parts'));    
+    if(qtd > maxSize){
+        alert('Escolher no máximo: '+ maxSize + ' pedaços!')
+        qtd--;
+        $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').val(qtd);
+    }
+    
+    var qtdTotal = 0, aux=0, total=0;
+    $('input[type=number][id=flavorNumberPizza_'+idPizza+']').each(function(){
+        qtdTotal += $(this).val();        
+    })
+    
+    for(var i=0; i < qtdTotal.length; i++){
+        total = parseInt(qtdTotal[i]) + aux;
+        aux = total;
+    }
+    
+    if(total > maxSize){
+        qtd--;
+        if(qtd < 1)
+            qtd = '';
+        
+        $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').val(qtd);
+        alert('Escolher no máximo: '+ maxSize + ' pedaços!');
+        if(qtd < 1)
+            $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').removeClass('flavorSelected');
+        else
+            $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').addClass('flavorSelected');
+    }
+}
+
 function searchClient() {
 
     var data = $('#inpSearchClient').val();
@@ -69,16 +120,6 @@ function fillFields(name, cep, neighborhood, address, number, complement, cell_p
 
     $('input[id=inpSearchClient]').val('');
     $('div[id=divSearchClient]').html('');
-}
-
-function maxPiecesPizza() {
-    var maxPieces = $('#maxPiecesPizza').val();
-    $('#spanMaxPiecesPizza').html(maxPieces);
-}
-
-function returnMaxPiecesPizza() {
-    var maxPieces = parseInt($('#maxPiecesPizza').val());
-    return maxPieces;
 }
 
 function showFlavorCod(pizza) {
@@ -256,8 +297,9 @@ function uncheckedFlavor(pizza, flavor) {
 }
 
 function selectedMaxParts(id) {
-    var maxSize = parseInt($('select[id=cad_size_pizza_1] option:selected').attr('parts'));
-    $('#maxPiecesPizza').attr('value', maxSize);
+    var maxSize = parseInt($('select[id=cad_size_pizza_'+id+'] option:selected').attr('parts'));     
+    var result = "Escolha no máximo <span class='font-14 badgePersonAlert'>"+maxSize+"</span> Sabores!"    
+    $('#spanMaxPiecesPizza_'+id+'').html(result);
 }
 
 $(document).ready(function () {
@@ -273,7 +315,8 @@ $(document).ready(function () {
     var selectSizeText = new Array();
     var selectSizeVal = new Array();
     var selectSizePrice = new Array();
-    var selectOptions = new Array();
+    var selectSizeParts = new Array();
+    ///var selectOptions = new Array();
     var flavorsImg = new Array();
     var imgPiece;
     var tbody;
@@ -304,6 +347,7 @@ $(document).ready(function () {
     $('select[id=cad_size_pizza_1] option').each(function () {
         selectSizeText.push($(this).text());
         selectSizeVal.push($(this).val());
+        selectSizeParts.push($(this).attr('parts'));
         selectSizePrice.push($(this).attr('price'));
     });
 
@@ -318,7 +362,7 @@ $(document).ready(function () {
             /// size
             optionSize = '';
             for (var i = 0; i < selectSizeVal.length; i++) {
-                optionSize += "<option value='" + selectSizeVal[i] + "' price='" + selectSizePrice[i] + "'>" + selectSizeText[i] + "</option>";
+                optionSize += "<option value='" + selectSizeVal[i] + "' price='" + selectSizePrice[i] + "' parts='"+ selectSizeParts[i] +"'>" + selectSizeText[i] + "</option>";
             }
             /// flavors
             tbody = '';
@@ -327,7 +371,7 @@ $(document).ready(function () {
                             <tr style='cursor: pointer'>\
                                 <td>" + flavorsId[i] + "</td>\
                                 <td>\
-                                    <input value='0' name='pizza[" + x + "][flavor]["+ flavorsId[i] +"]' type='number' id='flavorNumberPizza_" + x + "' flavorId='" + flavorsId[i] + "' flavor='" + flavorsName[i] + "' price='" + flavorsPrice[i] + "' class='form-control' style='width:60px'>\
+                                    <input onchange='checkPizza("+i+","+x+")'  name='pizza[" + x + "][flavor]["+ flavorsId[i] +"]' type='number' min='0' max='20' id='flavorNumberPizza_" + x + "' flavorId='" + flavorsId[i] + "' flavor='" + flavorsName[i] + "' price='" + flavorsPrice[i] + "' class='form-control' style='width:60px'>\
                                 </td>\
                                 <td>\
                                     <img class='img-rounded img-responsive' src='" + flavorsImg[i] + "' width='80'>\
@@ -368,7 +412,6 @@ $(document).ready(function () {
                     <div onclick="maxPiecesPizza()" href="#modal_cad_flavors_pizza_' + x + '" data-toggle="modal" id="piechart_' + x + '" style="height: 500px; width: 500px; cursor: pointer"></div>\
                 </div>\
                 <div class="col-md-3" style="">\
-                <input type="hidden" id="maxPiecesPizza">\
                     <div class="col-md-12">\
                         <div id="divCadFlavor_'+ x +'" class="input-group">\
                             <label class="control-label" for="inp_flavor_cod_'+ x +'" style="font-size:14px; float:left; margin-right:5px; margin-top:5px">Insira o Código: </label>\
@@ -396,18 +439,16 @@ $(document).ready(function () {
     <div class="modal fade" id="modal_cad_flavors_pizza_' + x + '">\
         <div class="" style="width: 90%; margin-left: auto; margin-right: auto; margin-top: 3%">\
             <div class="modal-content">\
-                <div class="modal-header">\
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
-                    <h4 class="modal-title" id="myModalLabel">Escolher no maxímo <span id="spanMaxPiecesPizza" style="margin-left: 5px" class="badge">2</span> Sabores</h4>\
-                </div>\
                 <div class="modal-body">\
                     <div class="form-group" style="margin-top: 1%">\
-                        <div class="title" style="float: left; margin-top: -3%; margin-right: 5%; margin-left: 36%">\
-                            <h3 style="margin-left: 0%;">Selecione os Sabores Desejados.</h3>\
+                        <div class="title f_left">\
+                            <h4><span id="spanMaxPiecesPizza_'+x+'"><b>Atenção:</b> Necessário escolher o tamanho da pizza!</span></h4>\
                         </div>\
-                        <div>\
-                            <button onclick="selectedFlavorsPizza(' + x + '), generateGraficPizza(' + x + '), valTotalPizza(' + x + ')" type="button" data-dismiss="modal" class="btn btn-success" style="margin-top: -1.5%; float: right; margin-right: 5%">Confirma Sabores</button>\
+                        <div class="f_right">\
+                            <button onclick="selectedFlavorsPizza('+x+'), generateGraficPizza('+x+'), valTotalPizza('+x+')" type="button" data-dismiss="modal" class="btn btn-success">Confirma Sabores</button>\
+                            <button data-dismiss="modal"  class="btn btn-default">Voltar</button>\
                         </div>\
+                        <br><br><br>\
                         <table class="table table-hover table-condensed">\
                             <thead>\
                                 <tr>\

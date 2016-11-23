@@ -97,7 +97,7 @@
             </div>
             <div id="divCadSize_1" class="form-group">
               <label class="control-label">Tamanho</label>
-              <select name="pizza[1][size]" onchange="selectedMaxParts(), valTotalPizza(1)" class="form-control input-lg" id="cad_size_pizza_1" style="font-size: 22px">
+              <select name="pizza[1][size]" onchange="selectedMaxParts(1), valTotalPizza(1)" class="form-control input-lg" id="cad_size_pizza_1" style="font-size: 22px">
                 <option value="0">Selecione</option>
                 @foreach($sizePizzas as $sizePizza)
                   <option value="{{ $sizePizza->id }}" price="{{ $sizePizza->price }}" parts="{{ $sizePizza->parts }}">{{ $sizePizza->size }}</option>
@@ -117,7 +117,6 @@
           </div>
 
           <div class="col-md-3">
-            <input type="hidden" id="maxPiecesPizza">
             <div class="col-md-12">
               <div id="divCadFlavor_1" class="input-group">
                 <label class="control-label" for="inp_flavor_cod_1" style="font-size:14px; float:left; margin-right:5px; margin-top:5px">Insira o Código: </label>

@@ -33,7 +33,11 @@ class FlavorsController extends Controller {
     }
 
     public function store(AdminFlavorRequest $request) {
-        $data = $request->all();
+        $data = $request->all();                
+        
+        if($data['price'] == '')
+            $data['price'] = 0.0;
+        
         $this->flavorModel->create($data);
 
         return redirect()->route('admin.flavors.index');

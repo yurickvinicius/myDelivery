@@ -25,7 +25,7 @@ class AdminDrinkRequest extends Request
     {
         return [
             'name' => 'required|min:3',
-            'price' => 'required'
+            'price' => 'required|min:1',
         ];
     }
 
@@ -33,7 +33,7 @@ class AdminDrinkRequest extends Request
     {
         return [
             'name.required' => 'Campo Nome é obrigatorio!',
-            'price.required' => 'Campo Preço é obrigatorio!'
+            'price.required' => 'Campo Preço é obrigatorio!',
         ];
     }
 }

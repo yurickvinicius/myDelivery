@@ -17,7 +17,7 @@
   <div class="form-group">
     {!! Form::label('parts','Possui quantos de pedaços?', ['class'=>'col-md-4 control-label']) !!}
     <div class="col-md-2">
-      {!! Form::number('pieces',null, ['class' => 'form-control']) !!}
+      {!! Form::number('pieces',null, ['class' => 'form-control', 'min'=>'1', 'max'=>'50']) !!}
     </div>
   </div>
 

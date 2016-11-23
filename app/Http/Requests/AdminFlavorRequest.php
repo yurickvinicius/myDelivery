@@ -26,7 +26,6 @@ class AdminFlavorRequest extends Request
         return [
             'name' => 'required|min:1|max:60',
             'description' => 'required|min:1|max:200',
-            'price' => 'required|min:1'
         ];
     }
 
@@ -35,7 +34,6 @@ class AdminFlavorRequest extends Request
         return [
             'name.required' => 'Campo Nome é obrigatorio!',
             'description.required' => 'Campo Descrição é obrigatorio!',
-            'price.required' => 'Campo Preço é obrigatorio!'
         ];
     }
 }

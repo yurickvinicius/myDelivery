@@ -15,6 +15,6 @@
 <div class="form-group">
     <label class="col-md-4 control-label">Preço</label>
     <div class="col-md-6">
-        {!! Form::text('price', null, ['class'=>'form-control maskMoney', 'placeholder'=>'R$']) !!}
+        {!! Form::text('price', null, ['class'=>'form-control maskMoney', 'placeholder'=>'R$ 0.00']) !!}
     </div>
 </div>
