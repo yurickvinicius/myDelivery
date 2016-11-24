@@ -144,27 +144,8 @@
 
     <div id="generate_pizzas"></div>
 
+    <div id="generate_options"></div>
     <!--------------    -------------->
-
-    <div class="panel panel-primary f_left" style="margin-top: 1%; width: 300px">
-      <div class="panel-heading">
-        <h3 class="panel-title">Opção 1</h3>
-      </div>
-      <div class="panel-body">
-        <div class="form-group">
-          <select onchange="valTotalPizza(1)" name="option[1]" id="option_id_1" class="form-control">
-            <option value="0" price="0">Selecione</option>
-            @foreach($drinks as $drink)
-              <option value="{{ $drink->id }}" price='{{ $drink->price }}'>{{ $drink->name }} - R$ {{$drink->price}}</option>
-            @endforeach
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div id="generate_options"></div>
-    </div>
 
     <div class="col-md-12" style='margin-top:3%; margin-left:-1%'>
       <div id="divDeliverymeans" class="col-xs-3">
@@ -185,13 +166,14 @@
 
     <div class="col-md-12">
       <button type="button" class="btn btn-primary btn-lg add_new_pizza"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Pizza</button>
-      <button type="button" id="btt_add_new_option" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Opção</button>
+      <button href="#modal_options" data-toggle="modal" type="button" class="btn btn-primary btn-lg">Adicionar Opções</button>
       <button onclick="validateOrder(); return false;" class="btn btn-success btn-lg" type="submit">Finalizar Cadastrar</button>
     </div>
 
   </div>
 
   @include('orders.partials.modal_flavors_pizza')
+  @include('orders.partials.modal_options')
 
   {!! Form::close() !!}
 

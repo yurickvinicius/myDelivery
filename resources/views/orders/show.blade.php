@@ -145,91 +145,111 @@
           <div>Nenhum</div>
         @endif
 
-        @foreach($order->orderDrinks as $orderDrinks)
-          <div>
-            <label>Bebida:</label>
-            <?php $drink = $orderDrinks->find($orderDrinks->id)->drinks ?>
-            <?= $drink[0]['name'] ?>
-            <b>Valor:</b> R$ <?= $drink[0]['price'] ?>
-          </div>
-        @endforeach
+        <table class="table table-hover table-condensed">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Preço</th>
+              <th>Quantidade</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <?php $cont=1; ?>
+            @foreach($order->orderDrinks as $orderDrink)
+              <?php $drink = $orderDrink->find($orderDrink->id)->drinks ?>
+
+              <tr>
+                <td><?= $cont++ ?></td>
+                <td><?= $drink[0]['name'] ?></td>
+                <td>R$ <?= $drink[0]['price'] ?></td>
+                <td>{{ $orderDrink->amount }}</td>
+                <td>R$ {{ $orderDrink->amount * $drink[0]['price'] }}</td>
+                <tr/>
+
+              @endforeach
+
+            </tbody>
+          </table>
+
+        </div>
       </div>
-    </div>
 
+      {!! Form::open(['route'=>'order.send']) !!}
 
-    {!! Form::open(['route'=>'order.send']) !!}
+      <div id="div_exchange_money" class="col-md-12">
+        <label>Qual o estado do pedido?</label>
+        <div class="radio">
 
-    <div id="div_exchange_money" class="col-md-12">
-      <label>Qual o estado do pedido?</label>
-      <div class="radio">
+          <?php
+          $preparandoStatus = '';
+          $sendStatus = '';
+          $openStatus = '';
 
-        <?php
-        $preparandoStatus = '';
-        $sendStatus = '';
-        $openStatus = '';
+          if($order->status == 'Preparando')
+          $preparandoStatus = 'checked';
+          else if($order->status == 'Enviado')
+          $sendStatus = 'checked';
+          else
+          $openStatus = 'checked';
+          ?>
 
-        if($order->status == 'Preparando')
-        $preparandoStatus = 'checked';
-        else if($order->status == 'Enviado')
-        $sendStatus = 'checked';
-        else
-        $openStatus = 'checked';
-        ?>
+          <label>
+            <input type="radio" name="pizza_delivered" value="sim">
+            Entregue
+          </label>
+          <label>
+            <input onchange="statusOrder()" type="radio" name="pizza_delivered" value="nao" <?= $openStatus ?>>
+            Aberto
+          </label>
+          <label>
+            <input onchange="statusOrder()" type="radio" name="pizza_delivered" value="Preparando" <?= $preparandoStatus ?>>
+            Preparando
+          </label>
+          <label>
+            <input onchange="statusOrder()" type="radio" name="pizza_delivered" id="rdSendPizza" value="Enviado" <?= $sendStatus ?>>
+            Enviado
+          </label>
 
-        <label>
-          <input type="radio" name="pizza_delivered" value="sim">
-          Entregue
-        </label>
-        <label>
-          <input onchange="statusOrder()" type="radio" name="pizza_delivered" value="nao" <?= $openStatus ?>>
-          Aberto
-        </label>
-        <label>
-          <input onchange="statusOrder()" type="radio" name="pizza_delivered" value="Preparando" <?= $preparandoStatus ?>>
-          Preparando
-        </label>
-        <label>
-          <input onchange="statusOrder()" type="radio" name="pizza_delivered" id="rdSendPizza" value="Enviado" <?= $sendStatus ?>>
-          Enviado
-        </label>
-
+        </div>
       </div>
-    </div>
 
-    <input type="hidden" name="order_id" value="{{ $order->id }}">
+      <input type="hidden" name="order_id" value="{{ $order->id }}">
 
-    <div id="divDeliverymens" class="form-group">
-      {!! Form::label('deliverymean_id','Entregadores:',['class'=>'col-md-1 control-label','style'=>'margin-top: 5px']) !!}
-      <div class="col-md-3">
-        <select name="deliverymean_id" class="form-control">
-          @if($order->deliverie != '')
-            <option value="{{ $order->deliverie->user->name }}">{{ $order->deliverie->user->name }}</option>
-          @else
-            <option value="0">Selecione Meio de Entrega</option>
-          @endif
+      <div id="divDeliverymens" class="form-group">
+        {!! Form::label('deliverymean_id','Entregadores:',['class'=>'col-md-1 control-label','style'=>'margin-top: 5px']) !!}
+        <div class="col-md-3">
+          <select name="deliverymean_id" class="form-control">
+            @if($order->deliverie != '')
+              <option value="{{ $order->deliverie->user->name }}">{{ $order->deliverie->user->name }}</option>
+            @else
+              <option value="0">Selecione Meio de Entrega</option>
+            @endif
 
-          @foreach($deliverymens as $deliverymen)
-            <option value="{{ $deliverymen->id }}">Entregador: {{ $deliverymen->name }}</option>
-          @endforeach
-        </select>
+            @foreach($deliverymens as $deliverymen)
+              <option value="{{ $deliverymen->id }}">Entregador: {{ $deliverymen->name }}</option>
+            @endforeach
+          </select>
+        </div>
       </div>
+
+      <div class="form-group" style="margin-top: 2%; float: left">
+        <a href="{{ route('orders.index') }}" class="btn btn-default btn-lg">Voltar</a>
+        <input type="submit" class="btn btn-success btn-lg" value="Encaminhar">
+        <input disabled="disabled" type="button" class="btn btn-primary btn-lg" value="Adicionar Desconto">
+        <input disabled="disabled" type="button" class="btn btn-primary btn-lg" value="Versão para Impresão">
+        <input disabled="disabled" type="button" class="btn btn-primary btn-lg" value="Gerar Nota Fiscal">
+      </div>
+
+      {!! Form::close() !!}
+
+      <div style="font-size: 30px; float: right; margin-top: 2%">
+        <label>Total</label>
+        R$ {{ $order->total }}
+      </div>
+
     </div>
 
-    <div class="form-group" style="margin-top: 2%; float: left">
-      <a href="{{ route('orders.index') }}" class="btn btn-default btn-lg">Voltar</a>
-      <input type="submit" class="btn btn-success btn-lg" value="Encaminhar">
-      <input disabled="disabled" type="button" class="btn btn-primary btn-lg" value="Adicionar Desconto">
-      <input disabled="disabled" type="button" class="btn btn-primary btn-lg" value="Versão para Impresão">
-      <input disabled="disabled" type="button" class="btn btn-primary btn-lg" value="Gerar Nota Fiscal">
-    </div>
-
-    {!! Form::close() !!}
-
-    <div style="font-size: 30px; float: right; margin-top: 2%">
-      <label>Total</label>
-      R$ {{ $order->total }}
-    </div>
-
-  </div>
-
-@endsection
+  @endsection

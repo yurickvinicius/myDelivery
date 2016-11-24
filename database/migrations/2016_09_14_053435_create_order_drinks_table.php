@@ -20,6 +20,8 @@ class CreateOrderDrinksTable extends Migration {
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders');
 
+            $table->char('amount',2);
+
             $table->timestamps();
         });
     }

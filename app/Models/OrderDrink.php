@@ -8,7 +8,8 @@ class OrderDrink extends Model {
 
     protected $fillable = [
         'drink_id',
-        'order_id'
+        'order_id',
+        'amount'
     ];
 
     public function order() {
@@ -23,6 +24,6 @@ class OrderDrink extends Model {
       public function drinks() {
       return $this->hasOne(Drink::class, 'id');
       }
-     * 
+     *
      */
 }
