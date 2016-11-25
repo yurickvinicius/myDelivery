@@ -45,9 +45,21 @@
 
           <tr class="{{ $color }}">
             <td>{{ $cont++ }}</td>
-            <td>{{ $order->client->name }}</td>
+
+            @if(isset($order->board->number))
+              <td>Mesa N° {{ $order->board->number }}</td>
+            @else
+              <td>{{ $order->client->name }}</td>
+            @endif
+
             <td>{{ $order->id }}</td>
-            <td>{{ $order->deliveryMean->name }}</td>
+
+            @if(isset($order->deliveryMean->name))
+              <td>{{ $order->deliveryMean->name }}</td>
+            @else
+              <td>No Estabelicimento</td>
+            @endif
+            
             <td>{{ $order->status }}</td>
             <td>{{ $order->created_at }}</td>
             <td>

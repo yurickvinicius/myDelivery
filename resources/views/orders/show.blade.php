@@ -9,67 +9,100 @@
       <div class="panel-heading">
         <h3 class="panel-title" contenteditable="true">Dados do Cliente</h3>
       </div>
-      <div class="panel-body" contenteditable="true">
-        <div class="col-md-4">
-          <div>
-            <label>Data do Pedido:</label>
-            {{ $order->created_at }}
+
+      @if(isset($order->client->name))
+        <div class="panel-body" contenteditable="true">
+          <div class="col-md-4">
+            <div>
+              <label>Data do Pedido:</label>
+              {{ $order->created_at }}
+            </div>
+            <div>
+              <label>Nome do Cliente:</label>
+              {{ $order->client->name }}
+            </div>
+            <div>
+              <label>Telefone Celular:</label>
+              {{ $order->client->cell_phone }}
+            </div>
+            <div>
+              <label>Telefone Fixo:</label>
+              {{ $order->client->phone }}
+            </div>
           </div>
-          <div>
-            <label>Nome do Cliente:</label>
-            {{ $order->client->name }}
+          <div class="col-md-4">
+            <div>
+              <label>Bairro:</label>
+              {{ $order->client->neighborhood }}
+            </div>
+            <div>
+              <label>Endereço do Cliente:</label>
+              {{ $order->client->address }}
+            </div>
+            <div>
+              <label>Numero:</label>
+              {{ $order->client->number }}
+            </div>
+            <div>
+              <label>Complemento:</label>
+              {{ $order->client->complement }}
+            </div>
+
           </div>
-          <div>
-            <label>Telefone Celular:</label>
-            {{ $order->client->cell_phone }}
-          </div>
-          <div>
-            <label>Telefone Fixo:</label>
-            {{ $order->client->phone }}
+          <div class="col-md-4">
+            <div>
+              <label>Meio de Entrega:</label>
+              {{ $order->deliveryMean->name }}
+              <b>Valor: </b> R$ {{ $order->deliveryMean->price }}
+            </div>
+
+            <div>
+              <label>Forma de Pagamento:</label>
+              {{ $order->paymentForm->form }}
+            </div>
+
+            <div>
+              <label>Troco para pagamento:</label>
+              R$ {{ $order->paymentForm->exchange_money }}
+            </div>
+
+            <div>
+              <label>Total:</label>
+              R$ {{ $order->total }}
+            </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div>
-            <label>Bairro:</label>
-            {{ $order->client->neighborhood }}
-          </div>
-          <div>
-            <label>Endereço do Cliente:</label>
-            {{ $order->client->address }}
-          </div>
-          <div>
-            <label>Numero:</label>
-            {{ $order->client->number }}
-          </div>
-          <div>
-            <label>Complemento:</label>
-            {{ $order->client->complement }}
-          </div>
+      @endif
 
-        </div>
-        <div class="col-md-4">
-          <div>
-            <label>Meio de Entrega:</label>
-            {{ $order->deliveryMean->name }}
-            <b>Valor: </b> R$ {{ $order->deliveryMean->price }}
+      @if(isset($order->board->number))
+        <div class="panel-body" contenteditable="true">
+          <div class="col-md-4">
+            <div>
+              <label>Data do Pedido:</label>
+              {{ $order->created_at }}
+            </div>
+            <div>
+              <label>Mesa:</label>
+              {{ $order->board->number }}
+            </div>
+            <div>
+              <label>Responsavel:</label>
+              {{ $order->board->name }}
+            </div>
           </div>
-
-          <div>
-            <label>Forma de Pagamento:</label>
-            {{ $order->paymentForm->form }}
-          </div>
-
-          <div>
-            <label>Troco para pagamento:</label>
-            R$ {{ $order->paymentForm->exchange_money }}
-          </div>
-
-          <div>
-            <label>Total:</label>
-            {{ $order->total }}
+          <div class="col-md-4">
+            <div>
+              <label>Meio de Entrega:</label>
+              No Estabelicimento
+            </div>
+            <div>
+              <label>Total:</label>
+              R$ {{ $order->total }}
+            </div>
           </div>
         </div>
-      </div>
+      @endif
+
     </div>
 
     <?php $contP=1 ?>

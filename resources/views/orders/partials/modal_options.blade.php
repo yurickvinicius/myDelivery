@@ -30,7 +30,7 @@
                                 <tr style="cursor: pointer">
                                     <td>{{ $option->id }}</td>
                                     <td>
-                                        <input onchange="valTotalPizza(1)" name="pizza[1][option][{{ $option->id }}]" type="number" min="0" max="20" id="optionNumberPizza"  price="{{ $option->price }}" optionName="{{ $option->name }}" class="form-control" style="width:60px">
+                                        <input onchange="valTotalPizza(1)" name="option[{{ $option->id }}]" type="number" min="0" max="20" id="optionNumberPizza"  price="{{ $option->price }}" optionName="{{ $option->name }}" class="form-control" style="width:60px">
                                     </td>
                                     <td>
                                         <img id="imgOption" class="img-rounded img-responsive" src="#" width="80">

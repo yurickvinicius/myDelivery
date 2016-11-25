@@ -2,9 +2,15 @@
 @section('content')
 
   {!! Form::open(['route'=>'order.store']) !!}
-
+  <input type="hidden" id="typeOrder" value="orderIn">
   <div class="col-md-12">
-    <div class="panel panel-default">
+
+    <div>
+      <button onclick="orderIn()" type="button" class="btn btn-primary ">Pedido no estabelicimento</button>
+      <button onclick="orderOut()" type="button" class="btn btn-primary ">Pedido fora do estabelicimento</button>
+    </div><br>
+
+    <div id="divOrderOut" class="panel panel-default">
       <div class="panel-body">
         <div class="col-md-12">
           <div id="divCadName" class="form-group col-xs-3">
@@ -67,7 +73,29 @@
           </div>
 
         </div>
+      </div>
+    </div>
 
+    <!--------------------------------->
+    <div id="divOrderIn" class="panel panel-default">
+      <div class="panel-body">
+        <div class="col-md-12">
+
+          <div class="col-md-3">
+            <div id="divCadBoard" class="form-group">
+              <label class="control-label f_left" style="margin-right:5px; margin-top: 5px" for="cadBoard">N° da Mesa: </label>
+              <input name="cadBoard" type="number" min="1" class="form-control" id="cadBoard" style="width:100px;">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div id="divCadResponsible" class="form-group">
+              <label class="control-label f_left" style="margin-right:5px; margin-top: 5px" for="cadResponsible">Nome do Responsavel: </label>
+              <input name="cadResponsible" type="text" class="form-control" id="cadResponsible" style="width:280px;">
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
@@ -147,7 +175,7 @@
     <div id="generate_options"></div>
     <!--------------    -------------->
 
-    <div class="col-md-12" style='margin-top:3%; margin-left:-1%'>
+    <div id="divFineshed" class="col-md-12" style='margin-top:3%; margin-left:-1%'>
       <div id="divDeliverymeans" class="col-xs-3">
         <label class="control-label" for="delivery_means">Forma de Entrega</label>
         <select onchange="valTotalPizza()" name="delivery_means" id="delivery_means" class="form-control">
@@ -165,9 +193,9 @@
     </div>
 
     <div class="col-md-12">
-      <button type="button" class="btn btn-primary btn-lg add_new_pizza"><i class="glyphicon glyphicon-plus marg_right_5"></i>Adicionar Nova Pizza</button>
-      <button href="#modal_options" data-toggle="modal" type="button" class="btn btn-primary btn-lg">Adicionar Opções</button>
-      <button onclick="validateOrder(); return false;" class="btn btn-success btn-lg" type="submit">Finalizar Cadastrar</button>
+      <button type="button" class="btn btn-primary add_new_pizza">Adicionar Nova Pizza</button>
+      <button href="#modal_options" data-toggle="modal" type="button" class="btn btn-primary">Adicionar Opções</button>
+      <button onclick="validateOrder(); return false;" class="btn btn-success" type="submit">Finalizar Cadastrar</button>
     </div>
 
   </div>

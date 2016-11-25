@@ -218,44 +218,46 @@ function valTotalOption() {
     }
   })
 
-  divOptions += '<div class="panel panel-primary">'
-  divOptions += '<div class="panel-heading">Opcionais</div>'
-  divOptions += '<div class="panel-body">'
+  if(optionName.length > 0){
+    divOptions += '<div class="panel panel-primary">'
+    divOptions += '<div class="panel-heading">Opcionais</div>'
+    divOptions += '<div class="panel-body">'
 
-  divOptions += '<table class="table table-condensed">'
-  divOptions += '<thead>'
-  divOptions += '<tr>'
-  divOptions += '<th>#</th>'
-  divOptions += '<th>Nome</th>'
-  divOptions += '<th>Preço</th>'
-  divOptions += '<th>Quantidade</th>'
-  divOptions += '<th>Total</th>'
-  divOptions += '</tr>'
-  divOptions += '</thead>'
-  divOptions += '<tbody>'
+    divOptions += '<table class="table table-condensed">'
+    divOptions += '<thead>'
+    divOptions += '<tr>'
+    divOptions += '<th>#</th>'
+    divOptions += '<th>Nome</th>'
+    divOptions += '<th>Preço</th>'
+    divOptions += '<th>Quantidade</th>'
+    divOptions += '<th>Total</th>'
+    divOptions += '</tr>'
+    divOptions += '</thead>'
+    divOptions += '<tbody>'
 
-  for(var i=0; i < optionName.length; i++){
+    for(var i=0; i < optionName.length; i++){
+      divOptions += '<tr>';
+      divOptions += '<td>'+(i+1)+'</td>';
+      divOptions += '<td>'+optionName[i]+'</td>';
+      divOptions += '<td>R$ '+optionPrice[i]+'</td>';
+      divOptions += '<td>'+optionQtd[i]+'</td>';
+      divOptions += '<td>R$ '+(optionQtd[i] * optionPrice[i])+'</td>';
+      divOptions += '</tr>';
+    }
     divOptions += '<tr>';
-    divOptions += '<td>'+(i+1)+'</td>';
-    divOptions += '<td>'+optionName[i]+'</td>';
-    divOptions += '<td>R$ '+optionPrice[i]+'</td>';
-    divOptions += '<td>'+optionQtd[i]+'</td>';
-    divOptions += '<td>R$ '+(optionQtd[i] * optionPrice[i])+'</td>';
+    divOptions += '<td></td>';
+    divOptions += '<td></td>';
+    divOptions += '<td></td>';
+    divOptions += '<td></td>';
+    divOptions += '<td>R$ '+totalOption+'</td>';
     divOptions += '</tr>';
-  }
-  divOptions += '<tr>';
-  divOptions += '<td></td>';
-  divOptions += '<td></td>';
-  divOptions += '<td></td>';
-  divOptions += '<td></td>';
-  divOptions += '<td>R$ '+totalOption+'</td>';
-  divOptions += '</tr>';
 
-  divOptions += '</tbody>'
-  divOptions += '</table>'
-  divOptions += '</div>'
-  divOptions += '</div>'
-  divOptions += '</div>'
+    divOptions += '</tbody>'
+    divOptions += '</table>'
+    divOptions += '</div>'
+    divOptions += '</div>'
+    divOptions += '</div>'
+  }
 
   $('#generate_options').html(divOptions);
 
@@ -375,7 +377,25 @@ function selectedMaxParts(id) {
   $('#spanMaxPiecesPizza_'+id+'').html(result);
 }
 
+function orderIn(){
+  $('#divOrderIn').show();
+  $('#divOrderOut').hide();
+  $('#divFineshed').hide();
+  $('#typeOrder').attr('value','orderIn');
+}
+
+function orderOut(){
+  $('#divOrderOut').show();
+  $('#divOrderIn').hide();
+  $('#divFineshed').show();
+  $('#typeOrder').attr('value','orderOut');
+}
+
 $(document).ready(function () {
+
+  ///$('#divOrderIn').hide();
+  $('#divOrderOut').hide();
+  $('#divFineshed').hide();
 
   var campos_max = 20;
   var optionEdge;

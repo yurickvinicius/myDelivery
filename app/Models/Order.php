@@ -14,7 +14,8 @@ class Order extends Model {
         'in_use',
         'delivery_mean_id',
         'payment_form_id',
-        'client_id'
+        'client_id',
+        'board_id'
     ];
 
     public static function totalOrdersWaiting() {
@@ -47,6 +48,10 @@ class Order extends Model {
 
     public function client() {
         return $this->belongsTo(Client::class);
+    }
+
+    public function board() {
+        return $this->belongsTo(Board::class);
     }
 
 }

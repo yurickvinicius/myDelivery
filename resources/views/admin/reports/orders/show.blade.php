@@ -24,24 +24,51 @@
               </tr>
             </thead>
             <tbody>
-              <?php $cont=1 ?>
+              <?php $cont=1; $totalAll=0 ?>
               @foreach($reports as $report)
                 <tr>
                   <td>{{ $cont++ }}</td>
-                  <td>{{ $report->user->name }}</td>
+                  <td>{{ @$report->user->name }}</td>
                   <td>{{ $report->id }}</td>
-                  <td>{{ $report->client->name }}</td>
+
+                  @if(isset($report->board->number))
+                    <td>Mesa N° {{ $report->board->number }}</td>
+                  @else
+                    <td>{{ $report->client->name }}</td>
+                  @endif
+
                   <td>{{ $report->type_order }}</td>
-                  <td>{{ $report->deliveryMean->name }}</td>
+
+                  @if(isset($report->deliveryMean->name))
+                    <td>{{ $report->deliveryMean->name }}</td>
+                  @else
+                    <td>No Estabelicimento</td>
+                  @endif
+
                   <td>{{ $report->status }}</td>
                   <td>{{ $report->created_at }}</td>
                   <td>R$ {{ $report->total }}</td>
                   <td>
-                    <a href="#modal_detalhes_<?= $report->id ?>" data-toggle="modal" class="btn btn-primary btn-xs">Vizualizar</a>
+                    <a href="#modal_detalhes_<?= $report->id ?>" data-toggle="modal" class="btn btn-default btn-xs">Vizualizar</a>
                   </td>
                 </tr>
                 @include('admin.reports.orders.partials.modal_detalhes')
+                <?php $totalAll += $report->total ?>
               @endforeach
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color:#dce7f7">R$ {{ $totalAll }}</td>
+                <td></td>
+              </tr>
+
             </tbody>
           </table>
 

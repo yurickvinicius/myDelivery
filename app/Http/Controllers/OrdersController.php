@@ -18,6 +18,7 @@ use myDelivery\Models\PaymentForm;
 use myDelivery\Models\OrderPizza;
 use myDelivery\Models\OrderDrink;
 use myDelivery\Models\Client;
+use myDelivery\Models\Board;
 use myDelivery\Http\Requests\DeliverieRequest;
 use Illuminate\Support\Facades\Auth;
 use myDelivery\Http\Requests\OrderRequest;
@@ -37,8 +38,9 @@ class OrdersController extends Controller {
   private $orderDrinkModel;
   private $deliveryMeanModel;
   private $clientModel;
+  private $boardModel;
 
-  public function __construct(Order $order, Deliverie $deliverie, Flavor $flavor, EdgePizza $edge, SizePizza $sizePizza, Drink $drink, PizzaBuilt $pizzaBuilt, FlavorsPizza $flavorsPizza, PaymentForm $paymentForm, OrderPizza $orderPizza, OrderDrink $orderDrink, DeliveryMean $deliveryMean, Client $client) {
+  public function __construct(Order $order, Deliverie $deliverie, Flavor $flavor, EdgePizza $edge, SizePizza $sizePizza, Drink $drink, PizzaBuilt $pizzaBuilt, FlavorsPizza $flavorsPizza, PaymentForm $paymentForm, OrderPizza $orderPizza, OrderDrink $orderDrink, DeliveryMean $deliveryMean, Client $client, Board $board) {
     $this->orderModel = $order;
     view()->share('totalOrders', Order::totalOrdersWaiting());
     $this->deliverieModel = $deliverie;
@@ -53,6 +55,7 @@ class OrdersController extends Controller {
     $this->orderDrinkModel = $orderDrink;
     $this->deliveryMeanModel = $deliveryMean;
     $this->clientModel = $client;
+    $this->boardModel = $board;
   }
 
   public function index() {
@@ -73,7 +76,6 @@ class OrdersController extends Controller {
 
   public function sendOrder(DeliverieRequest $request) {
     //dd($request);
-
     $delivery = $request->input('deliverymean_id');
     $delivered = $request->input('pizza_delivered');
 
@@ -122,7 +124,7 @@ class OrdersController extends Controller {
   }
 
   public function store(OrderRequest $request) {
-    ///dd($request['pizza']);
+    ///dd($request);
     /// save payment form ////////////////
     $tablePaymentForm = [
       'form' => 'Dinheiro',
@@ -132,35 +134,59 @@ class OrdersController extends Controller {
 
     $paymentForm = $this->paymentFormModel->create($tablePaymentForm);
 
+    /// save board
+    if($request->input('cadBoard')){
+      $tableBoard = [
+        'name' => $request->input('cadResponsible'),
+        'number' => $request->input('cadBoard')
+      ];
+
+      $board = $this->boardModel->create($tableBoard);
+      $boardId = $board->id;
+    }else{
+      $boardId = null;
+    }
+
     /// savle client
     $notChar = array("(", ")", "-");
     $cellPhone = str_replace($notChar, "", $request->input('cadTelCellPhone'));
     $Phone = str_replace($notChar, "", $request->input('cadTelPhone'));
-    $tableClient = [
-      'name' => $request->input('cadName'),
-      'cep' => $request->input('cadCEP'),
-      'state' => null,
-      'city' => null,
-      'neighborhood' => $request->input('cadNeighborhood'),
-      'address' => $request->input('cadAddress'),
-      'number' => $request->input('cadNumber'),
-      'complement' => $request->input('cadComplement'),
-      'phone' => $Phone,
-      'cell_phone' => $cellPhone,
-      'user_id' => Auth::user()->id,
-    ];
+    if($request->input('cadName')){
+      $tableClient = [
+        'name' => $request->input('cadName'),
+        'cep' => $request->input('cadCEP'),
+        'state' => null,
+        'city' => null,
+        'neighborhood' => $request->input('cadNeighborhood'),
+        'address' => $request->input('cadAddress'),
+        'number' => $request->input('cadNumber'),
+        'complement' => $request->input('cadComplement'),
+        'phone' => $Phone,
+        'cell_phone' => $cellPhone,
+        'user_id' => Auth::user()->id,
+      ];
 
-    $client = $this->clientModel->create($tableClient);
+      $client = $this->clientModel->create($tableClient);
+      $clientId = $client->id;
+    }else{
+      $clientId = null;
+    }
 
     /// save order ///////////////////////////
+    if($request->input('delivery_means')){
+      $deliveryMean = $request->input('delivery_means');
+    }else {
+      $deliveryMean = null;
+    }
     $tableOrder = [
       'total' => $request->input('total'),
       'status' => 'Aberto',
       'type_order' => 'Pizza',
       'user_id' => Auth::user()->id,
-      'delivery_mean_id' => $request->input('delivery_means'),
+      'delivery_mean_id' => $deliveryMean,
       'payment_form_id' => $paymentForm->id,
-      'client_id' => $client->id
+      'client_id' => $clientId,
+      'board_id' => $boardId,
     ];
 
     $order = $this->orderModel->create($tableOrder);
@@ -201,14 +227,14 @@ class OrdersController extends Controller {
     }
 
     /// save order drinks
-    foreach ($pizza['option'] as $key => $value) {
+    foreach ($request->input('option') as $key => $value) {
       if($value > 0){
-          $tableOrderDrink = [
-            'drink_id' => $key,
-            'order_id' => $order->id,
-            'amount' => $value
-          ];
-          $this->orderDrinkModel->create($tableOrderDrink);
+        $tableOrderDrink = [
+          'drink_id' => $key,
+          'order_id' => $order->id,
+          'amount' => $value
+        ];
+        $this->orderDrinkModel->create($tableOrderDrink);
       }
     }
 
