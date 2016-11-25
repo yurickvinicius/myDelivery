@@ -10,10 +10,11 @@
 
         <title>My Pizzas</title>
 
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-        <!--<link href='../bootstrap.min.css' rel='stylesheet'>-->
+        <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">-->
+        <link href="{{{ asset('assets/css/bootstrap.min.css') }}}" rel="stylesheet">
+
         <!-- Fonts -->
-        <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+        <!--<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>--->
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,7 +22,8 @@
                 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
                 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <link href='../pizzeria.css' rel='stylesheet' type='text/css'>
+
+        <link href="{{{ asset('css/pizzeria.css') }}}" rel="stylesheet">
 
     </head>
     <body>
@@ -43,7 +45,7 @@
 
                         <li><a href="{{ route('admin.drinks.index') }}">Opcionais</a></li>
                         <li><a href="{{ route('admin.deliverymeans.index') }}">Forma de Entrega</a></li>
-                        <li><a href="{{ route('orders.index') }}"><span style="margin-left: 5px" class="badge pull-right">{{ @$totalOrders }}</span>Pedidos</a></li>
+                        <li><a href="{{ route('orders.index') }}"><span style="margin-left: 5px" class="badgePersonAlert pull-right">{{ @$totalOrders }}</span>Pedidos</a></li>
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Pizzas <b class="caret"></b></a>
@@ -93,30 +95,30 @@
         @yield('content')
 
         <!-- Scripts -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <!---<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>--->
+        <!---<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>--->
 
-        <script src="{{ URL::asset('js/jqueryMaskMoney.js') }}"></script>
+        <script src="{{{ asset('js/jquery.min.js') }}}"></script>
+        <script src="{{{ asset('assets/js/bootstrap.min.js') }}}"></script>
+        <script src="{{{ asset('js/jqueryMaskMoney.js') }}}"></script>
+        <script src="{{{ asset('js/orders.js') }}}"></script>
 
+        <!-- Necessario grafico pizza -->
+        <script src="{{{ asset('js/loader.js') }}}"></script>
+        <script src="{{{ asset('js/graficoPizza.js') }}}"></script>
+        
+        <script src="{{{ asset('js/jquery.mask.min.js') }}}"></script>
+        <script src="{{{ asset('js/my_masks.js') }}}"></script>
+        <script src="{{{ asset('js/validate_order.js') }}}"></script>
+        <script src="{{{ asset('/js/showOrder.js') }}}"></script>
 
-        <script src="../js/orders.js"></script>
-        <script src="../js/loader.js"></script>
-        <script src="../js/graficoPizza.js"></script>
-        <script src="../js/jquery.mask.min.js"></script>
-
-        <!---<script src="{{ URL::asset('js/my_masks.js') }}"></script>--->
-
-        <script src="{{ asset('/js/my_masks.js') }}"></script>
-
-        <script src="../js/validate_order.js"></script>
-        <script src="{{ asset('/js/showOrder.js') }}"></script>
         <!--- Calendario no mozzila--->
-        <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
+        <!---<script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
         <script>
           webshims.setOptions('waitReady', false);
           webshims.setOptions('forms-ext', {types: 'date'});
           webshims.polyfill('forms forms-ext');
-        </script>
+        </script>--->
         <!------>
 
     </body>

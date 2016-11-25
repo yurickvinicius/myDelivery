@@ -40,11 +40,13 @@ class OrderRequest extends Request
       ];
     }
 
-    foreach($this->request->get('pizza') as $key => $val)
-    {
-      $rules['pizza.'.$key.'.edge'] = 'required|not_in:0';
-      $rules['pizza.'.$key.'.size'] = 'required|not_in:0';
-      $rules['pizza.'.$key.'.flavor'] = 'required';
+    if($this->request->get('pizza')){
+      foreach($this->request->get('pizza') as $key => $val)
+      {
+        $rules['pizza.'.$key.'.edge'] = 'required|not_in:0';
+        $rules['pizza.'.$key.'.size'] = 'required|not_in:0';
+        $rules['pizza.'.$key.'.flavor'] = 'required';
+      }
     }
 
     return $rules;

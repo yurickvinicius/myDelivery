@@ -72,7 +72,14 @@ class AuthController extends Controller
         ]);
     }
 
+    protected function getLogout(){
+      dd('aqaa');
+    }
+
     protected function logout(){
+
+      dd('here');
+
         \Illuminate\Support\Facades\Auth::logout();
         return redirect()->to('/');
     }

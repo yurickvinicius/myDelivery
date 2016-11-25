@@ -114,39 +114,58 @@ class OrdersController extends Controller {
   }
 
   public function create() {
-    $flavors = $this->flavorModel->all();
-    $edges = $this->edgeModel->all();
-    $sizePizzas = $this->sizePizzaModel->all();
-    $options = $this->drinkModel->all();
+    ///$flavors = $this->flavorModel->where('in_use', '<>', 'n')->get();
+    ///$edges = $this->edgeModel->where('in_use', '<>', 'n')->get();
+    ///$sizePizzas = $this->sizePizzaModel->where('in_use', '<>', 'n')->get();
+    $options = $this->drinkModel->where('in_use', '<>', 'n')->get();
     $deliveryMeans = $this->deliveryMeanModel->all();
 
     return view('orders.create', compact('flavors', 'edges', 'sizePizzas', 'options', 'deliveryMeans'));
   }
 
-  public function store(OrderRequest $request) {
-    ///dd($request);
-    /// save payment form ////////////////
-    $tablePaymentForm = [
-      'form' => 'Dinheiro',
-      'status' => 'Aberto',
-      'exchange_money' => null
+  public function createPizzaJson(){
+    $flavors = $this->flavorModel->where('in_use', '<>', 'n')->get();
+    $edges = $this->edgeModel->where('in_use', '<>', 'n')->get();
+    $sizePizzas = $this->sizePizzaModel->where('in_use', '<>', 'n')->get();
+
+    /*foreach ($flavors as $flavor) {
+    echo $flavor->images;
+    $datas['flavorImgs'] = $flavor->images->lists($flavor->id)->first();
+  }*/
+
+  $datas['flavors'] = $flavors;
+  $datas['edges'] = $edges;
+  $datas['sizePizzas'] = $sizePizzas;
+
+  //dd($datas);
+
+  return json_encode($datas);
+}
+
+public function store(OrderRequest $request) {
+  ///dd($request);
+  $clientId = null;
+  $deliveryMean = null;
+  $boardId = null;
+  /// save payment form ////////////////
+  $tablePaymentForm = [
+    'form' => 'Dinheiro',
+    'status' => 'Aberto',
+    'exchange_money' => null
+  ];
+
+  $paymentForm = $this->paymentFormModel->create($tablePaymentForm);
+
+  /// save board
+  if($request->input('cadBoard')){
+    $tableBoard = [
+      'name' => $request->input('cadResponsible'),
+      'number' => $request->input('cadBoard')
     ];
 
-    $paymentForm = $this->paymentFormModel->create($tablePaymentForm);
-
-    /// save board
-    if($request->input('cadBoard')){
-      $tableBoard = [
-        'name' => $request->input('cadResponsible'),
-        'number' => $request->input('cadBoard')
-      ];
-
-      $board = $this->boardModel->create($tableBoard);
-      $boardId = $board->id;
-    }else{
-      $boardId = null;
-    }
-
+    $board = $this->boardModel->create($tableBoard);
+    $boardId = $board->id;
+  }else{
     /// savle client
     $notChar = array("(", ")", "-");
     $cellPhone = str_replace($notChar, "", $request->input('cadTelCellPhone'));
@@ -168,30 +187,28 @@ class OrdersController extends Controller {
 
       $client = $this->clientModel->create($tableClient);
       $clientId = $client->id;
-    }else{
-      $clientId = null;
     }
+  }
 
-    /// save order ///////////////////////////
-    if($request->input('delivery_means')){
-      $deliveryMean = $request->input('delivery_means');
-    }else {
-      $deliveryMean = null;
-    }
-    $tableOrder = [
-      'total' => $request->input('total'),
-      'status' => 'Aberto',
-      'type_order' => 'Pizza',
-      'user_id' => Auth::user()->id,
-      'delivery_mean_id' => $deliveryMean,
-      'payment_form_id' => $paymentForm->id,
-      'client_id' => $clientId,
-      'board_id' => $boardId,
-    ];
+  /// save order ///////////////////////////
+  if($request->input('delivery_means')){
+    $deliveryMean = $request->input('delivery_means');
+  }
+  $tableOrder = [
+    'total' => $request->input('total'),
+    'status' => 'Aberto',
+    'type_order' => 'Pizza',
+    'user_id' => Auth::user()->id,
+    'delivery_mean_id' => $deliveryMean,
+    'payment_form_id' => $paymentForm->id,
+    'client_id' => $clientId,
+    'board_id' => $boardId,
+  ];
 
-    $order = $this->orderModel->create($tableOrder);
+  $order = $this->orderModel->create($tableOrder);
 
-    //// save built pizza ////////////////////////
+  //// save built pizza ////////////////////////
+  if($request->pizza){
     foreach ($request->pizza as $pizza) {
       $tablePizzaBuilt = [
         'parts' => 1, //// eliminar este campo
@@ -225,47 +242,48 @@ class OrdersController extends Controller {
 
       $this->orderPizzaModel->create($tableOrderPizza);
     }
+  }
 
-    /// save order drinks
-    foreach ($request->input('option') as $key => $value) {
-      if($value > 0){
-        $tableOrderDrink = [
-          'drink_id' => $key,
-          'order_id' => $order->id,
-          'amount' => $value
-        ];
-        $this->orderDrinkModel->create($tableOrderDrink);
-      }
+  /// save order drinks
+  foreach ($request->input('option') as $key => $value) {
+    if($value > 0){
+      $tableOrderDrink = [
+        'drink_id' => $key,
+        'order_id' => $order->id,
+        'amount' => $value
+      ];
+      $this->orderDrinkModel->create($tableOrderDrink);
     }
-
-    $message = 'Pedido realizado com sucesso!';
-    return redirect()->route('orders.index')->withMessageSuccess($message);
   }
 
-  private function generateStatus($delivery) {
-    if ($delivery == 0) {
-      $status = 'Preparando';
-    } else if ($delivery != 0) {
-      $status = 'Enviado';
-    } else {
-      $status = 'Aberto';
-    }
+  $message = 'Pedido realizado com sucesso!';
+  return redirect()->route('orders.index')->withMessageSuccess($message);
+}
 
-    return $status;
+private function generateStatus($delivery) {
+  if ($delivery == 0) {
+    $status = 'Preparando';
+  } else if ($delivery != 0) {
+    $status = 'Enviado';
+  } else {
+    $status = 'Aberto';
   }
 
-  public function cancelOrder($id){
-    $this->orderModel
-    ->find($id)
-    ->update(
-      [
-        'in_use' => 'n',
-        'status' => 'Cancelado'
-      ]
-    );
+  return $status;
+}
 
-    $message = 'Pedido cancelado com suecesso!';
-    return redirect()->route('orders.index')->withMessageSuccess($message);
-  }
+public function cancelOrder($id){
+  $this->orderModel
+  ->find($id)
+  ->update(
+    [
+      'in_use' => 'n',
+      'status' => 'Cancelado'
+    ]
+  );
+
+  $message = 'Pedido cancelado com suecesso!';
+  return redirect()->route('orders.index')->withMessageSuccess($message);
+}
 
 }

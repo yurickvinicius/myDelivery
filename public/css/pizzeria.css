@@ -15,10 +15,11 @@
 .f_left{float: left}
 .f_right{float: right}
 .flavorSelected{background-color: #faf1d2; border-color: #dcb939}
+.styleTotal{background-color: #dce7f7; border-radius: 3px}
 
 .badgePersonAlert{
-    background-color: #dcb939; 
-    color: white; 
+    background-color: #dcb939;
+    color: white;
     padding-top: 1px;
     padding-bottom: 1px;
     padding-left: 7.7px;

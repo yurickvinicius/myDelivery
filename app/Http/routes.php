@@ -22,18 +22,12 @@ Route::post('password/reset', 'PasswordController@postReset');
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
-Route::get('auth/logoutTest', 'Auth\AuthController@logout');
+///Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('auth/logout', 'UsersController@logout');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
-
-Route::get('/', 'PizzeriaController@index');
-
-Route::get('order/pagseguro/{code}', ['as' => 'pizza.pagseguro', 'uses' => 'PizzeriaController@getPagSeguro']);
-Route::get('order', ['as' => 'pizza.order', 'uses' => 'PizzeriaController@order']);
-Route::post('store', ['as' => 'pizza.store', 'uses' => 'PizzeriaController@store']);
 
 ////
 
@@ -104,5 +98,7 @@ Route::group(['middleware' => 'authSystem', 'where' => ['id' => '[0-9]+']], func
     ///Route::get('user/search/client/{data}', ['uses' => 'UsersController@searchClient']);
 
     Route::get('client/search/{data}', ['uses' => 'ClientsController@searchClient']);
+
+    Route::get('pizza/data', ['uses' => 'OrdersController@createPizzaJson']);
 
 });

@@ -1,7 +1,6 @@
 @extends('app')
 @section('content')
 
-
   {!! Form::open(['route'=>'admin.drinks.store','class'=>'form-horizontal']) !!}
 
   <div class="container-fluid">

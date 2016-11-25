@@ -15,15 +15,18 @@ function searchCEP() {
       $("#cadNeighborhood").val(unescape(resultadoCEP["bairro"]));
     }
   })
+}
 
+function clearOrderOut(){
+  $('#divOrderOut input').val("")
+}
+
+function clearOrderIn(){
+  $('#divOrderIn input').val("")
 }
 
 function checkPizza(idFlavor, idPizza){
-  if(idPizza > 1)
-  idFlavor++;
-
   if(checkSizePizza(idPizza, idFlavor) == true){
-
     var qtd = $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').val();
     if(qtd > 0){
       $('input[type=number][id=flavorNumberPizza_'+idPizza+'][flavorId='+idFlavor+']').addClass('flavorSelected');
@@ -122,13 +125,10 @@ function fillFields(name, cep, neighborhood, address, number, complement, cell_p
   $('#cadAddress').attr('value', address);
   $('#cadNumber').attr('value', number);
   $('#cadComplement').attr('value', complement);
-
   $('#cadTelCellPhone').val(cell_phone);
   $('#cadTelCellPhone').mask("(99)9999-9999");
-
   $('#cadTelPhone').val(phone);
   $('#cadTelPhone').mask("(99)9999-9999");
-
   $('input[id=inpSearchClient]').val('');
   $('div[id=divSearchClient]').html('');
 }
@@ -237,7 +237,7 @@ function valTotalOption() {
 
     for(var i=0; i < optionName.length; i++){
       divOptions += '<tr>';
-      divOptions += '<td>'+(i+1)+'</td>';
+      divOptions += '<td>'+(i)+'</td>';
       divOptions += '<td>'+optionName[i]+'</td>';
       divOptions += '<td>R$ '+optionPrice[i]+'</td>';
       divOptions += '<td>'+optionQtd[i]+'</td>';
@@ -249,7 +249,7 @@ function valTotalOption() {
     divOptions += '<td></td>';
     divOptions += '<td></td>';
     divOptions += '<td></td>';
-    divOptions += '<td>R$ '+totalOption+'</td>';
+    divOptions += '<td class="styleTotal">R$ '+totalOption+'</td>';
     divOptions += '</tr>';
 
     divOptions += '</tbody>'
@@ -303,7 +303,7 @@ function valTotalPizza(id, option) {
   /////////////////// refatorar no futuro
   if (option == 11) { ///delete pizza
 
-    for(var i=1; i <= (qtdPizzas +1); i++){
+    for(var i=1; i <= (qtdPizzas); i++){
       totalGeneral += parseFloat($('#span_total_pizza_' + i + '').text());
     }
 
@@ -313,12 +313,12 @@ function valTotalPizza(id, option) {
 
     total = parseFloat($('#span_total_pizza_' + id + '').text());
 
-    for(var i=1; i <= (qtdPizzas +1); i++){
+    for(var i=1; i <= (qtdPizzas); i++){
       totalGeneral += parseFloat($('#span_total_pizza_' + i + '').text());
     }
 
   } else {
-    for (var i = 1; i <= (qtdPizzas + 1); i++) {
+    for (var i = 1; i <= (qtdPizzas); i++) {
       totalGeneral += parseFloat($('#span_total_pizza_' + i + '').text());
       if (Number.isNaN(total))
       totalGeneral = 0;
@@ -392,7 +392,6 @@ function orderOut(){
 }
 
 $(document).ready(function () {
-
   ///$('#divOrderIn').hide();
   $('#divOrderOut').hide();
   $('#divFineshed').hide();
@@ -400,7 +399,7 @@ $(document).ready(function () {
   var campos_max = 20;
   var optionEdge;
   var optionSize;
-  var x = 2;
+  var x = 1;
   var selectEdgeText = new Array();
   var selectEdgeVal = new Array();
   var selectEdgePrice = new Array();
@@ -417,41 +416,50 @@ $(document).ready(function () {
   var flavorsDescription = new Array();
   var flavorsId = new Array();
 
-  /// flavors
-  $("input[type=number][id='flavorNumberPizza_1']").each(function () {
-    flavorsName.push($(this).attr('flavor'));
-    flavorsPrice.push($(this).attr('price'));
-    flavorsDescription.push($(this).attr('description'));
-    flavorsId.push($(this).attr('flavorId'));
-  });
-  $("img[id='imgFlavor']").each(function () {
-    flavorsImg.push($(this).attr('src'));
-  });
+  //////////////////////////////
+  if($(location).attr('pathname') == '/order/create'){
+    $.ajax({
+      url: url + '/pizza/data',
+      dataType: "json",
+      cache: false,
+      success: function (data) {
+        /// flavors
+        for(var i=0; i < data['flavors'].length; i++){
+          flavorsName.push(data['flavors'][i]['name']);
+          flavorsPrice.push(data['flavors'][i]['price']);
+          flavorsDescription.push(data['flavors'][i]['description']);
+          flavorsId.push(data['flavors'][i]['id']);
+          ///flavorsImg.push(url+'/public/uploads/'+1+'.jpg');
+          ///url('uploads/'.$flavor->images->lists('id')->first().'.'.$flavor->images->lists('extension')->first())
+        }
+        /// edges
+        for(var i=0; i < data['edges'].length; i++){
+          selectEdgeText.push(data['edges'][i]['name']);
+          selectEdgeVal.push(data['edges'][i]['id']);
+          selectEdgePrice.push(data['edges'][i]['price']);
+        }
+        /// edges
+        for(var i=0; i < data['sizePizzas'].length; i++){
+          selectSizeText.push(data['sizePizzas'][i]['size']);
+          selectSizeVal.push(data['sizePizzas'][i]['id']);
+          selectSizeParts.push(data['sizePizzas'][i]['parts']);
+          selectSizePrice.push(data['sizePizzas'][i]['price']);
+        }
+      }
+    });
 
-  /// edge
-  $('select[id=cad_edge_1] option').each(function () {
-    selectEdgeText.push($(this).text());
-    selectEdgeVal.push($(this).val());
-    selectEdgePrice.push($(this).attr('price'));
-  });
-  /// size
-  $('select[id=cad_size_pizza_1] option').each(function () {
-    selectSizeText.push($(this).text());
-    selectSizeVal.push($(this).val());
-    selectSizeParts.push($(this).attr('parts'));
-    selectSizePrice.push($(this).attr('price'));
-  });
+  }
 
   $('.add_new_pizza').click(function (e) {
     e.preventDefault();     //prevenir novos clicks
     if (x < campos_max) {
       /// edge
-      optionEdge = '';
+      optionEdge = '<option value="0">Selecione</option>';
       for (var i = 0; i < selectEdgeVal.length; i++) {
         optionEdge += "<option value='" + selectEdgeVal[i] + "' price='" + selectEdgePrice[i] + "'>" + selectEdgeText[i] + "</option>";
       }
       /// size
-      optionSize = '';
+      optionSize = '<option value="0">Selecione</option>';
       for (var i = 0; i < selectSizeVal.length; i++) {
         optionSize += "<option value='" + selectSizeVal[i] + "' price='" + selectSizePrice[i] + "' parts='"+ selectSizeParts[i] +"'>" + selectSizeText[i] + "</option>";
       }
@@ -462,7 +470,7 @@ $(document).ready(function () {
         <tr style='cursor: pointer'>\
         <td>" + flavorsId[i] + "</td>\
         <td>\
-        <input onchange='checkPizza("+i+","+x+")'  name='pizza[" + x + "][flavor]["+ flavorsId[i] +"]' type='number' min='0' max='20' id='flavorNumberPizza_" + x + "' flavorId='" + flavorsId[i] + "' flavor='" + flavorsName[i] + "' price='" + flavorsPrice[i] + "' class='form-control' style='width:60px'>\
+        <input onchange='checkPizza("+flavorsId[i]+","+x+")'  name='pizza[" + x + "][flavor]["+ flavorsId[i] +"]' type='number' min='0' max='20' id='flavorNumberPizza_" + x + "' flavorId='" + flavorsId[i] + "' flavor='" + flavorsName[i] + "' price='" + flavorsPrice[i] + "' class='form-control' style='width:60px'>\
         </td>\
         <td>\
         <img class='img-rounded img-responsive' src='" + flavorsImg[i] + "' width='80'>\
@@ -567,7 +575,7 @@ $(document).ready(function () {
       </div>\
       \
       </div>\
-      <button onclick="valTotalPizza(' + x + ',11)" type="button" class="btn btn-danger remover_pizza"><i class="marg_right_5 glyphicon glyphicon-minus"></i>Remover Pizza</button>\
+      <button style="margin-bottom:10px" onclick="valTotalPizza(' + x + ',11)" type="button" class="btn btn-danger remover_pizza"><i class="marg_right_5 glyphicon glyphicon-minus"></i>Remover Pizza</button>\
       </pizza>\
       ');
       generateGraficPizzaDefault(x);

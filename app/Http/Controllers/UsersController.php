@@ -71,6 +71,11 @@ class UsersController extends Controller
       return view('auth.password');
     }
 
+    protected function logout(){
+      \Illuminate\Support\Facades\Auth::logout();
+      return redirect()->to('/auth/login');
+    }
+
     /*
     public function searchClient($data){
 

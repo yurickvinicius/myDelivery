@@ -59,7 +59,7 @@
             @else
               <td>No Estabelicimento</td>
             @endif
-            
+
             <td>{{ $order->status }}</td>
             <td>{{ $order->created_at }}</td>
             <td>

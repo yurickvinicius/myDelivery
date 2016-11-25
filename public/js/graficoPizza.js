@@ -10,7 +10,6 @@ function generateGraficPizza(id) {
             }
         }
 
-        ///flavorsName.push($(this).attr('flavor'));
     });
 
     ///var maxPieces = returnMaxPiecesPizza();
