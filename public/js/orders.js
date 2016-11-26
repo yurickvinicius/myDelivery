@@ -1,5 +1,5 @@
 
-var url = 'http://localhost:8000';
+var url = 'http://'+$(location).attr('host');
 
 function searchCEP() {
 

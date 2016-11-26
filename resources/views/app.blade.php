@@ -106,7 +106,7 @@
         <!-- Necessario grafico pizza -->
         <script src="{{{ asset('js/loader.js') }}}"></script>
         <script src="{{{ asset('js/graficoPizza.js') }}}"></script>
-        
+
         <script src="{{{ asset('js/jquery.mask.min.js') }}}"></script>
         <script src="{{{ asset('js/my_masks.js') }}}"></script>
         <script src="{{{ asset('js/validate_order.js') }}}"></script>
