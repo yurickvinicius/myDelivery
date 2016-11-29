@@ -128,14 +128,16 @@ class OrdersController extends Controller {
     $edges = $this->edgeModel->where('in_use', '<>', 'n')->get();
     $sizePizzas = $this->sizePizzaModel->where('in_use', '<>', 'n')->get();
 
-    /*foreach ($flavors as $flavor) {
-    echo $flavor->images;
-    $datas['flavorImgs'] = $flavor->images->lists($flavor->id)->first();
-  }*/
+    foreach ($flavors as $flavor) {
+        if(isset($flavor->id))
+            $datas['flavorImgs'][] = $flavor->images->first();
+    }
+    
+    ///dd($datas['flavorImgs']);
 
   $datas['flavors'] = $flavors;
   $datas['edges'] = $edges;
-  $datas['sizePizzas'] = $sizePizzas;
+  $datas['sizePizzas'] = $sizePizzas;  
 
   //dd($datas);
 

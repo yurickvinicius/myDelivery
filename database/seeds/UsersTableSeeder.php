@@ -29,6 +29,14 @@ class UsersTableSeeder extends Seeder {
             'role' => 'Administrador',
             'remember_token' => str_random(10),
         ]);
+        
+        factory(User::class)->create([
+            'name' => 'Administrador',
+            'email' => 'adm@adm.com',
+            'password' => Hash::make('12345'),
+            'role' => 'Administrador',
+            'remember_token' => str_random(10),
+        ]);
 
         factory(User::class)->create([
             'name' => 'Ana Carolina Rossoni',

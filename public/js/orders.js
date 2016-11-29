@@ -422,15 +422,20 @@ $(document).ready(function () {
       url: url + '/pizza/data',
       dataType: "json",
       cache: false,
-      success: function (data) {
+      success: function (data) {          
+          
         /// flavors
         for(var i=0; i < data['flavors'].length; i++){
           flavorsName.push(data['flavors'][i]['name']);
           flavorsPrice.push(data['flavors'][i]['price']);
           flavorsDescription.push(data['flavors'][i]['description']);
           flavorsId.push(data['flavors'][i]['id']);
-          ///flavorsImg.push(url+'/public/uploads/'+1+'.jpg');
-          ///url('uploads/'.$flavor->images->lists('id')->first().'.'.$flavor->images->lists('extension')->first())
+          
+          if(data['flavorImgs'][i] != null){
+                flavorsImg.push(url+'/uploads/'+data['flavorImgs'][i]['id']+'.'+data['flavorImgs'][i]['extension']);
+            }else{
+                flavorsImg.push(null);
+            }
         }
         /// edges
         for(var i=0; i < data['edges'].length; i++){
@@ -470,7 +475,7 @@ $(document).ready(function () {
         <tr style='cursor: pointer'>\
         <td>" + flavorsId[i] + "</td>\
         <td>\
-        <input onchange='checkPizza("+flavorsId[i]+","+x+")'  name='pizza[" + x + "][flavor]["+ flavorsId[i] +"]' type='number' min='0' max='20' id='flavorNumberPizza_" + x + "' flavorId='" + flavorsId[i] + "' flavor='" + flavorsName[i] + "' price='" + flavorsPrice[i] + "' class='form-control' style='width:60px'>\
+        <input onchange='checkPizza("+flavorsId[i]+","+x+"), selectedFlavorsPizza("+x+"), generateGraficPizza("+x+"), valTotalPizza("+x+")'  name='pizza[" + x + "][flavor]["+ flavorsId[i] +"]' type='number' min='0' max='20' id='flavorNumberPizza_" + x + "' flavorId='" + flavorsId[i] + "' flavor='" + flavorsName[i] + "' price='" + flavorsPrice[i] + "' class='form-control' style='width:60px'>\
         </td>\
         <td>\
         <img class='img-rounded img-responsive' src='" + flavorsImg[i] + "' width='80'>\
@@ -544,7 +549,6 @@ $(document).ready(function () {
       <h4><span id="spanMaxPiecesPizza_'+x+'"><b>Atenção:</b> Necessário escolher o tamanho da pizza!</span></h4>\
       </div>\
       <div class="f_right">\
-      <button onclick="selectedFlavorsPizza('+x+'), generateGraficPizza('+x+'), valTotalPizza('+x+')" type="button" data-dismiss="modal" class="btn btn-success">Confirma Sabores</button>\
       <button data-dismiss="modal"  class="btn btn-default">Voltar</button>\
       </div>\
       <br><br><br>\
@@ -567,7 +571,6 @@ $(document).ready(function () {
       </div>\
       <div class="modal-footer">\
       <button type="button" class="btn btn-default" data-dismiss="modal">Voltar</button>\
-      <button onclick="selectedFlavorsPizza(' + x + '), generateGraficPizza(' + x + '), valTotalPizza(' + x + ')" type="button" data-dismiss="modal" class="btn btn-primary">Salvar Escolhas</button>\
       </div>\
       </div>\
       </div>\

@@ -13,6 +13,7 @@ class ClientsController extends Controller {
         if (is_numeric($data)) {
             $datas = Client::where('cell_phone', 'like', "__$data%")
                     ->orWhere('phone', 'like', "__$data%")
+                    ->limit(6)
                     ->get();
         } else {
             $datas = Client::where('name', 'iLIKE', "$data%")->get();
